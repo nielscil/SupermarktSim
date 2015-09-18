@@ -1,13 +1,38 @@
 package supermarkt.simulator;
 
+import java.awt.Point;
+import java.util.List;
+
+/**
+ * Afdeling is een onderdeel van de winkel
+ * @author Niels
+ */
 public class Afdeling extends Pad {
 
 	private String naam;
-
-	private Personeel personeel;
-
-	public void bemanAfdeling(Personeel personeel) {
-
+	private Personeel personeel = null;
+        
+        /**
+         * Maakt een afdeling aan
+         * @param naam de naam van de afdeling
+         */
+        public Afdeling(String naam,List<Point> plaats, List<ProductWrapper> producten,int max)
+        {
+            super(plaats,producten,max);
+            this.naam = naam;
+        }
+        /**
+         * Deze methode aanroepen op het moment dat een personeelslid 
+         * de afdeling wil gaan bedienen.
+         * @param personeel personeelslid die de afdeling bemand
+         * @throws Exception wanneer afdeling al bemand is
+         */
+	public void bemanAfdeling(Personeel personeel) throws Exception
+        {
+            if(this.personeel == null)
+                this.personeel = personeel;
+            else
+                throw new Exception("Al bemand");
 	}
 
 }

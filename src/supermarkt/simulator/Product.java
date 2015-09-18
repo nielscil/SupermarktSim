@@ -3,27 +3,24 @@ package supermarkt.simulator;
 public class Product {
 
 	private String naam;
-
 	private double prijs;
-
 	private boolean voordeel;
-
 	private int isAfdeling;
 
 	public String getNaam() {
-		return null;
+		return this.naam;
 	}
 
 	public double getPrijs() {
-		return 0.0;
+		return this.prijs;
 	}
 
 	public boolean isVoordeel() {
-		return false;
+		return this.voordeel;
 	}
 
 	public int getAfdeling() {
-		return 0;
+		return this.isAfdeling;
 	}
 
 }
