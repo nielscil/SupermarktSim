@@ -19,7 +19,7 @@ public class Controller {
 	private Voordeelstraat voordeelstraat;
 	private Vrachtwagen vrachtwagen = null;
 	private Database voorrraad = new Database();
-        public BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
+        public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
         
         public Controller()
         {

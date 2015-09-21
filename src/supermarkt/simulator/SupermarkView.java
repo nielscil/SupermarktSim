@@ -24,6 +24,7 @@ public class SupermarkView extends JPanel implements Observer
     private final int sizeBlok = 20;
     private final int lineThickness = 1;
     private final int boardSize = aantalBlokjes * sizeBlok + (aantalBlokjes + 1) * lineThickness;
+    private boolean firstTime = true;
     
     public SupermarkView()
     {
@@ -38,6 +39,22 @@ public class SupermarkView extends JPanel implements Observer
         g.setColor (Color.GRAY);
         g.fillRect (0, 0, getWidth (), getHeight ());
         DrawBoard (g);
+        if(firstTime){
+            firstTime = false;
+        }
+        else
+        {
+            if(Controller.bord[0][0] != null)
+        {
+            for(int i = 0; i < Controller.bord.length; i++)
+            {
+                for(int j =0; j < Controller.bord[i].length; j++)
+                {
+                    DrawCell(Controller.bord[i][j], g);
+                }
+            }
+        }
+        }
     }
     
     @Override
