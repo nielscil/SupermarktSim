@@ -1,6 +1,7 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,5 +30,12 @@ public class Voordeelstraat extends Pad
     public void vulProduct(String product) throws Exception
     {
         this.producten = ProductWrapper.Add(product, producten, maxProduct);
+    }
+    
+    public static List<Point> getVoordeelstraatPoints()
+    {
+        List<Point> punten = new ArrayList<>();
+        //load voordeelstraat
+        return punten;
     }
 }

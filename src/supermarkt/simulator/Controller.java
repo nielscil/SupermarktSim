@@ -3,6 +3,7 @@ package supermarkt.simulator;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
 
@@ -12,12 +13,12 @@ public class Controller {
         private Appview view;
 	private List<Klant> klanten = new ArrayList<>();
 	private List<Personeel> personeel = new ArrayList<>();
-	private List<Pad> paden = new ArrayList<>();
-	private List<Afdeling> afdelingen = new ArrayList<>();
-	private List<Kassa> kassas = new ArrayList<>();
+	public List<Pad> paden = new ArrayList<>();
+	public List<Afdeling> afdelingen = new ArrayList<>();
+	public List<Kassa> kassas = new ArrayList<>();
         private List<Product> producten = new ArrayList<>();
-	private Voordeelstraat voordeelstraat;
-	private Vrachtwagen vrachtwagen = null;
+	public Voordeelstraat voordeelstraat;
+	public Vrachtwagen vrachtwagen = null;
 	private Database voorrraad = new Database();
         public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
         
@@ -28,6 +29,14 @@ public class Controller {
             endDay = 100;
             //set GUI
             //add listener
+        }
+        
+        public void deletePersoon(Persoon persoon)
+        {
+            if(persoon instanceof Klant)
+                klanten.remove(persoon);
+            else if(persoon instanceof Personeel)
+                personeel.remove(persoon);
         }
 
 	private void saveData() 
@@ -45,25 +54,42 @@ public class Controller {
             }
             personeel.stream().forEach((p) ->
             {
-                p.move();
+                try
+                {
+                    p.move();
+                }
+                catch(Exception e){};
             });
             klanten.stream().forEach((k) ->
             {
-                k.move();
+                try
+                {
+                    k.move();
+                }
+                catch(Exception e){};
             });
             saveData();
             ronde++;
 	}
 
 	private void setVoordeelstraat() 
-        {             
-            //get 2 random products
-            voordeelstraat = new Voordeelstraat(new ArrayList<Point>(),new ArrayList<ProductWrapper>(),0);
+        {
+            List<ProductWrapper> voordeel = new ArrayList<>();
+            List<Product> choose = new ArrayList<>(producten);
+            for(int i = 0; i < 2; i++)
+            {
+                int index = ThreadLocalRandom.current().nextInt(0, choose.size() -1);
+                voordeel.add(new ProductWrapper(choose.get(index)));
+                choose.remove(index);
+            }
+            voordeelstraat = new Voordeelstraat(Voordeelstraat.getVoordeelstraatPoints(),voordeel,5);
 	}
 
-	private void createPersonen() 
+	private void createPersonen()
         {
-            
+            //load groepen
+            //maak klanten
+            //maak personeel
 	}
 
 	private void createWinkel() 
@@ -80,7 +106,7 @@ public class Controller {
                     {
                         bord[i][j] = new BordPunt(i,j,3,view.getSupermarkView());
                     }
-                    else if((j == 0 && i > SupermarkView.aantalBlokjes - 8 && i < SupermarkView.aantalBlokjes - 3))
+                    else if((j == 0 && i > SupermarkView.aantalBlokjes - 8 && i < SupermarkView.aantalBlokjes - 2))
                     {
                         bord[i][j] = new BordPunt(i,j,4,view.getSupermarkView());
                     }

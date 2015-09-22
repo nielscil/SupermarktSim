@@ -9,12 +9,15 @@ import java.util.List;
  */
 public class Afdeling extends Pad {
 
-	private String naam;
+	private final String naam;
 	private Personeel personeel = null;
         
         /**
          * Maakt een afdeling aan
          * @param naam de naam van de afdeling
+         * @param plaats de plaats van de afdeling
+         * @param producten de producten op de afdeling
+         * @param max maximum producten in de stelling
          */
         public Afdeling(String naam,List<Point> plaats, List<ProductWrapper> producten,int max)
         {

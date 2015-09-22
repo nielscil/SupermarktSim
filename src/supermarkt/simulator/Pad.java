@@ -10,7 +10,6 @@ import java.util.Observable;
  */
 public class Pad extends Observable
 {
-
 	protected List<ProductWrapper> producten;
 	protected int maxProduct;
 	protected List<Point> plaats;
@@ -30,6 +29,10 @@ public class Pad extends Observable
             this.notifyObservers();
         }
 
+        public boolean heeftProduct(String naam)
+        {
+            return ProductWrapper.Search(naam, producten) != -1;
+        }
         /**
          * Geef een product vanuit het pad aan de klant
          * @param product het gevraagde product

@@ -95,6 +95,11 @@ public class ProductWrapper {
          */
         public static int Search(String product,List<ProductWrapper> lijst)
         {
+            for(int i = 0; i < lijst.size(); i++)
+            {
+                if(lijst.get(i).getProductNaam() == product)
+                    return i;
+            }
             return -1;
         }
         

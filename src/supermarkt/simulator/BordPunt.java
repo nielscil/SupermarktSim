@@ -15,7 +15,7 @@ import java.util.Observer;
  */
 public class BordPunt extends Observable
 {
-    private Point positie;
+    private final Point positie;
     private int item;
     
     public BordPunt(Point punt,int item, Observer o)
