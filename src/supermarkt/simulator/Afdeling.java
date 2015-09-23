@@ -24,6 +24,20 @@ public class Afdeling extends Pad {
             super(plaats,producten,max);
             this.naam = naam;
         }
+        
+        @Override
+        public void padPoint(Point p)
+        {
+            if(naam == "Kaas")
+            {
+                Controller.bord[p.x][p.y].setItem(5);
+            }
+            else
+            {
+                Controller.bord[p.x][p.y].setItem(6);
+            }
+            
+        }
         /**
          * Deze methode aanroepen op het moment dat een personeelslid 
          * de afdeling wil gaan bedienen.

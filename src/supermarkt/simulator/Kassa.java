@@ -1,8 +1,11 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.MatchResult;
 
 public class Kassa {
 
@@ -15,6 +18,10 @@ public class Kassa {
         {
             this.nummer = nummer;
             this.plaats = plaats;
+            for(Point p : plaats)
+            {
+                kassaPoint(p);
+            }
         }
 
 	public void bemanKassa(Personeel personeel) 
@@ -87,5 +94,40 @@ public class Kassa {
                 return -1;
             return sortedlist.get(0).nummer;
         }
-
+        
+        public void kassaPoint(Point p)
+        {
+            Controller.bord[p.x][p.y].setItem(7);
+        }
+        
+        public static List<Kassa> loadKassa()
+        {                    
+            List<Kassa> kassas = new ArrayList<>();
+            File file = new File("src\\supermarkt\\simulator\\Kassa.txt");
+            try
+            {
+                Scanner sc = new Scanner(file);
+                int i = 1;
+                while(sc.hasNextLine())
+                {
+                    List<Point> kassa = new ArrayList<>();
+                    while(sc.findInLine("\\s*\\(\\s*(\\d+)\\s*\\,\\s*(\\d+)\\s*\\)") != null) //"\\d+\\s\\d+\\s\\t"
+                    {
+                        MatchResult result = sc.match();
+                        kassa.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
+                    }
+                    kassas.add(new Kassa(i, kassa));
+                    i++;
+                    sc.skip("\\s*");
+                }
+            } catch (Exception e)
+            {
+                return kassas;
+            }
+            //inlezen
+            //voor elke regel lees punten in
+            //maak kassa aan
+            //voeg aan lijst toe
+            return kassas;
+        } 
 }
