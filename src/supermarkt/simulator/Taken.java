@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Taken {
 
-        public static enum Taak {Pad1, Pad2, Pad3, Pad4, Afdeling1, Afdeling2, Voordeelstraat, Kassa1, Kassa2, Kassa3, Kassa4, Magazijn,Vrachtwagen,Uitgang};
+        public static enum Taak {Pad1, Pad2, Pad3, Pad4, Afdeling1, Afdeling1_Personeel, Afdeling2, Afdeling2_Personeel, Voordeelstraat, Kassa1, Kassa1_Personeel, Kassa2, Kassa2_Personeel, Kassa3, Kassa3_Personeel, Kassa4, Kassa4_Personeel, Magazijn,Vrachtwagen,Uitgang};
 	private int tijdsduur;
 	private Taak taak;
         private List<Point> route;
@@ -43,16 +43,28 @@ public class Taken {
                         return new Point(16,25);
                     case Afdeling1:
                         return new Point(16,25);
+                    case Afdeling1_Personeel:
+                        return new Point(16,25);
                     case Afdeling2:
                         return new Point(16,25);
+                    case Afdeling2_Personeel:
+                        return new Point(16,25);
                     case Kassa1:
-                        return new Point(16,25);
+                        return new Point(27,26);
+                    case Kassa1_Personeel:
+                        return new Point(29,26);
                     case Kassa2:
-                        return new Point(16,25);
+                        return new Point(23,26);
+                    case Kassa2_Personeel:
+                        return new Point(25,26);
                     case Kassa3:
-                        return new Point(16,25);
+                        return new Point(19,26);
+                    case Kassa3_Personeel:
+                        return new Point(21,26);
                     case Kassa4:
-                        return new Point(16,25);
+                        return new Point(15,26);
+                    case Kassa4_Personeel:
+                        return new Point(17,26);
                     case Magazijn:
                         return new Point(16,25);
                     case Vrachtwagen:
@@ -102,19 +114,31 @@ public class Taken {
                         
                         break;
                     case Kassa1:
-                        calculatePath(begin, new Point(16,25));
+                        calculatePath(begin, new Point(27,26));
+                        break;
+                    case Kassa1_Personeel:
+                        calculatePath(begin, new Point(29,26));
                         break;
                     case Kassa2:
-
+                        calculatePath(begin, new Point(23,26));
+                        break;
+                    case Kassa2_Personeel:
+                        calculatePath(begin, new Point(25,26));
                         break;
                     case Kassa3:
-
+                        calculatePath(begin, new Point(19,26));
+                        break;
+                    case Kassa3_Personeel:
+                        calculatePath(begin, new Point(21,26));
                         break;
                     case Kassa4:
-
+                        calculatePath(begin, new Point(15,26));
+                        break;
+                    case Kassa4_Personeel:
+                        calculatePath(begin, new Point(17,26));
                         break;
                     case Magazijn:
-
+                        calculatePath(begin, new Point(16,25));
                         break;
                     case Vrachtwagen:
                         calculatePath(begin, new Point(SupermarkView.aantalBlokjes - 6,1));
@@ -171,7 +195,8 @@ public class Taken {
                 {
                     for(int j = 0; j < bord[i].length; j++)
                     {
-                        map[i][j] = new Node(bord[i][j].getItem() != 0,i,j);
+                        int item = bord[i][j].getItem();
+                        map[i][j] = new Node(item != 0 && item != 9 && item != 10,i,j);
                     }
                 }
             }
