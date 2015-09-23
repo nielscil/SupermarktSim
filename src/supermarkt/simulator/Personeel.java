@@ -10,18 +10,28 @@ public class Personeel extends Persoon
     private int maxTaken;
     private List<Taken> taken = new ArrayList<>();
     
-    public Personeel(String naam, Point beginpositie, int maxTaken)
+    public Personeel(String naam, Point beginpositie, int maxTaken,Controller controller)
     {
-        super(naam, beginpositie);
+        super(naam, beginpositie,controller);
         this.maxTaken = maxTaken;
     }
     
-    public Personeel(String naam, Point beginpositie, int maxTaken,List<Taken> taken)
+    public Personeel(String naam, Point beginpositie, int maxTaken,List<Taken> taken,Controller controller)
     {
-        super(naam, beginpositie);
+        super(naam, beginpositie,controller);
         this.maxTaken = maxTaken;
         this.taken = taken;
     }
+    
+    @Override
+        protected void setPostition(Point p)
+        {
+            this.positie = p;
+            if(Controller.bord[0][0] != null)
+            {
+                Controller.bord[p.x][p.y].setItem(7);
+            }
+        }
     
     public void voegTaakToe(Taken taak)
     {
@@ -29,9 +39,9 @@ public class Personeel extends Persoon
     }
         
     @Override
-    public void move()
+    public void move() throws Exception
     {
-        if(taken.size() == 0)
+        if(taken.isEmpty())
             return;
     }
 }

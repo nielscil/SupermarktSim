@@ -1,6 +1,7 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,39 +10,56 @@ import java.util.List;
  */
 public class Klant extends Persoon {
 
-	private Groep groep;
+	private final Groep groep;
 	private List<ProductWrapper> boodschappenlijst;
-	private List<Product> winkelwagen;
+	public List<Product> winkelwagen;
+        private Taken taak;
+        
         
         /**
          * Maakt nieuwe klant aan
          * @param naam naam van de klant
          * @param beginpositie beginpositie van de klant
          * @param groep de groep van de klant
+         * @param controller de controller
          */
-        public Klant(String naam,Point beginpositie,Groep groep)
+        public Klant(String naam,Point beginpositie,Groep groep,Controller controller)
         {
-            super(naam, beginpositie);
+            super(naam, beginpositie,controller);
             this.groep = groep;
+            maakBoodschappenlijst();
         }
 
         /**
          * Maak een boodschappenlijst aan voor de klant
          */
-	private void maakBoodschappenlijst() 
+	private void maakBoodschappenlijst()
         {
-
+            boodschappenlijst = new ArrayList<>();
+            //kjeld z'n werk
 	}
+        
+        @Override
+        protected void setPostition(Point p)
+        {
+            this.positie = p;
+            if(Controller.bord[0][0] != null)
+            {
+                Controller.bord[p.x][p.y].setItem(6);
+            }
+        }
         
         /**
          * Pakt een aantal producten uit de paden
          * @param aantal aantal producten
          * @param product naam van het product
          * @param huidigePad de huidige pad
+         * @return aantal items gepakt
          */
-	public void paktProduct(int aantal, String product, Pad huidigePad) 
+	public int paktProduct(int aantal, String product, Pad huidigePad) 
         {
-            for(int i = 0; i < aantal;i++)
+            int pakken = aantal > 2 ? 2 : aantal;
+            for(int i = 0; i < pakken ;i++)
             {
                 try
                 {
@@ -50,14 +68,261 @@ public class Klant extends Persoon {
                 catch(Exception e)
                 {
                     //doe iets, stelling is leeg.
+                    return i;
                 }
             }
+            return pakken;
 	}
         
-        @Override
-        public void move()
+        private void makeTaak()
         {
-            
+            if(!boodschappenlijst.isEmpty())
+            {
+                ProductWrapper pw = boodschappenlijst.get(0);
+                if(controller.voordeelstraat.heeftProduct(pw.getProductNaam()))
+                {
+                    taak = new Taken(Taken.Taak.Voordeelstraat);
+                    return;
+                }
+                if(controller.paden.size() >=4 )
+                {
+                    if(controller.paden.get(0).heeftProduct(pw.getProductNaam()))
+                    {
+                        taak = new Taken(Taken.Taak.Pad1);
+                        return;
+                    }
+                    if(controller.paden.get(1).heeftProduct(pw.getProductNaam()))
+                    {
+                        taak = new Taken(Taken.Taak.Pad2);
+                        return;
+                    }
+                    if(controller.paden.get(2).heeftProduct(pw.getProductNaam()))
+                    {
+                        taak = new Taken(Taken.Taak.Pad3);
+                        return;
+                    }
+                    if(controller.paden.get(3).heeftProduct(pw.getProductNaam()))
+                    {
+                        taak = new Taken(Taken.Taak.Pad4);
+                    }
+                }
+                if(controller.afdelingen.size() >= 2)
+                {
+                    if(controller.afdelingen.get(0).heeftProduct(naam))
+                    {
+                        taak = new Taken(Taken.Taak.Afdeling1);
+                        return;
+                    }
+                    if(controller.afdelingen.get(1).heeftProduct(naam))
+                    {
+                        taak = new Taken(Taken.Taak.Afdeling2);
+                        return;
+                    }
+                }
+            }
+            if(!winkelwagen.isEmpty())
+            {
+                int nr = Kassa.BesteKassa(controller.kassas);
+                switch(nr)
+                {
+                    case 1:
+                        taak = new Taken(Taken.Taak.Kassa1);
+                        return;
+                    case 2:
+                        taak = new Taken(Taken.Taak.Kassa2);
+                        return;
+                    case 3:
+                        taak = new Taken(Taken.Taak.Kassa3);
+                        return;
+                    case 4:
+                        taak = new Taken(Taken.Taak.Kassa4);
+                        return;
+                }               
+            }
+            taak = new Taken(Taken.Taak.Uitgang);
+        }
+                
+        @Override
+        public void move() throws Exception
+        {
+            if(taak == null)
+            {
+                makeTaak();
+            }
+            if(positie == taak.getEindPunt())
+            {
+                switch(taak.getTaak())
+                {
+                    case Pad1:
+                        if(controller.paden.size() >= 1)
+                        {
+                           Pad pad = controller.paden.get(0);
+                           ProductWrapper pw = boodschappenlijst.get(0);
+                           if(pad.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Pad2:
+                        if(controller.paden.size() >= 2)
+                        {
+                           Pad pad = controller.paden.get(1);
+                           ProductWrapper pw = boodschappenlijst.get(0);
+                           if(pad.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Pad3:
+                        if(controller.paden.size() >= 3)
+                        {
+                           Pad pad = controller.paden.get(2);
+                           ProductWrapper pw = boodschappenlijst.get(0);
+                           if(pad.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Pad4:
+                        if(controller.paden.size() >= 4)
+                        {
+                           Pad pad = controller.paden.get(3);
+                           ProductWrapper pw = boodschappenlijst.get(0);
+                           if(pad.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Voordeelstraat:
+                        if(controller.voordeelstraat != null)
+                        {
+                            ProductWrapper pw = boodschappenlijst.get(0);
+                           if(controller.voordeelstraat.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),controller.voordeelstraat); // <- kijken of dit goed gaat!
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Afdeling1:
+                        if(controller.afdelingen.size() >= 1)
+                        {
+                            Afdeling af = controller.afdelingen.get(0);
+                            ProductWrapper pw = boodschappenlijst.get(0);
+                           if(af.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),af); // <- kijken of dit goed gaat!
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Afdeling2:
+                        if(controller.afdelingen.size() >= 2)
+                        {
+                            Afdeling af = controller.afdelingen.get(0);
+                            ProductWrapper pw = boodschappenlijst.get(0);
+                           if(af.heeftProduct(pw.getProductNaam()))
+                           {
+                               int aantal = pw.getAantal();
+                               int gepakt = paktProduct(aantal, pw.getProductNaam(),af); // <- kijken of dit goed gaat!
+                               if(aantal == gepakt)
+                                   boodschappenlijst.remove(0);
+                               pw.setAantal(aantal - gepakt);
+                               return;
+                           }
+                           makeTaak();
+                        }
+                        return;
+                    case Kassa1:
+                        if(controller.kassas.size() >= 1)
+                        {
+                            if(!winkelwagen.isEmpty())
+                            {
+                                controller.kassas.get(0).klantBijKassa(this);
+                                return;
+                            }
+                            taak = new Taken(Taken.Taak.Uitgang);
+                        }
+                        return;
+                    case Kassa2:
+                        if(controller.kassas.size() >= 2)
+                        {
+                            if(!winkelwagen.isEmpty())
+                            {
+                                controller.kassas.get(1).klantBijKassa(this);
+                                return;
+                            }
+                            taak = new Taken(Taken.Taak.Uitgang);
+                        }
+                        return;
+                    case Kassa3:
+                        if(controller.kassas.size() >= 3)
+                        {
+                            if(!winkelwagen.isEmpty())
+                            {
+                                controller.kassas.get(2).klantBijKassa(this);
+                                return;
+                            }
+                            taak = new Taken(Taken.Taak.Uitgang);
+                        }
+                        return;
+                    case Kassa4:
+                        if(controller.kassas.size() >= 4)
+                        {
+                            if(!winkelwagen.isEmpty())
+                            {
+                                controller.kassas.get(3).klantBijKassa(this);
+                                return;
+                            }
+                            taak = new Taken(Taken.Taak.Uitgang);
+                        }
+                        return;
+                    default:
+                        Controller.bord[positie.x][positie.y].setItem(1);
+                        controller.deletePersoon(this);
+                        return;
+                }
+            }
+            Point p = taak.getTaakBeschrijving(positie);
+            setPostition(p);       
         }
 
 }

@@ -5,14 +5,17 @@ import java.awt.Point;
 public abstract class Persoon {
 
 	protected String naam;
-
 	protected Point positie;
+        protected Controller controller;
         
-        public Persoon(String naam,Point beginPositie)
+        public Persoon(String naam,Point beginPositie,Controller controller)
         {
             this.naam = naam;
             this.positie = beginPositie;
+            this.controller = controller;
         }
+        
+        protected abstract void setPostition(Point p);
 
-	public abstract void move();
+	public abstract void move() throws Exception;
 }
