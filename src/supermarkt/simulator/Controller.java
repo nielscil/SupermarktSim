@@ -100,24 +100,20 @@ public class Controller {
                 {
                     if((j == SupermarkView.aantalBlokjes -1 && i > 0 && i < 3))
                     {
-                        bord[i][j] = new BordPunt(i,j,2,view.getSupermarkView());
+                        bord[i][j] = new BordPunt(i,j,0,view.getSupermarkView());
                     }
                     else if((i == (SupermarkView.aantalBlokjes + 1) / 2 && j < 4 && j > 1))
                     {
-                        bord[i][j] = new BordPunt(i,j,3,view.getSupermarkView());
+                        bord[i][j] = new BordPunt(i,j,0,view.getSupermarkView());
                     }
                     else if((j == 0 && i > SupermarkView.aantalBlokjes - 8 && i < SupermarkView.aantalBlokjes - 2))
                     {
-                        bord[i][j] = new BordPunt(i,j,4,view.getSupermarkView());
+                        bord[i][j] = new BordPunt(i,j,0,view.getSupermarkView());
                     }
                     else if(i == 0 || j == 0 || i == SupermarkView.aantalBlokjes -1 || j == SupermarkView.aantalBlokjes -1 || (j == 5 && i > (SupermarkView.aantalBlokjes + 1) / 2) || (i == (SupermarkView.aantalBlokjes + 1) / 2 && j <=5) || (i > 2 && i < 14 && j == SupermarkView.aantalBlokjes - 5) || (i == SupermarkView.aantalBlokjes - 2 && j == SupermarkView.aantalBlokjes - 5))
                     {
                         bord[i][j] = new BordPunt(i,j,1,view.getSupermarkView());
                     }
-//                    else if(j <= SupermarkView.aantalBlokjes - 8 && j > SupermarkView.aantalBlokjes - 13 && i > 4 && i <8 )
-//                    {
-//                        bord[i][j] = new BordPunt(i, j, 5, view.getSupermarkView());
-//                    }
                     else
                     {
                         bord[i][j] = new BordPunt(i,j,0,view.getSupermarkView());

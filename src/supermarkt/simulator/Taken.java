@@ -34,17 +34,17 @@ public class Taken {
             switch(taak)
                 {
                     case Pad1:
-                        return new Point(16,25);
+                        return new Point(8,9);
                     case Pad2:
-                        return new Point(16,25);
+                        return new Point(8,13);
                     case Pad3:
-                        return new Point(16,25);
+                        return new Point(8,17);
                     case Pad4:
-                        return new Point(16,25);
+                        return new Point(8,21);
                     case Afdeling1:
-                        return new Point(16,25);
+                        return new Point(5,5);
                     case Afdeling1_Personeel:
-                        return new Point(16,25);
+                        return new Point(5,3);
                     case Afdeling2:
                         return new Point(16,25);
                     case Afdeling2_Personeel:
@@ -90,63 +90,7 @@ public class Taken {
         {
             if(route == null)
             {
-                switch(taak)
-                {
-                    case Pad1:
-
-                        break;
-                    case Pad2:
-
-                        break;
-                    case Pad3:
-
-                        break;
-                    case Pad4:
-
-                        break;
-                    case Afdeling1:
-
-                        break;
-                    case Afdeling2:
-
-                        break;
-                    case Voordeelstraat:
-                        
-                        break;
-                    case Kassa1:
-                        calculatePath(begin, new Point(27,26));
-                        break;
-                    case Kassa1_Personeel:
-                        calculatePath(begin, new Point(29,26));
-                        break;
-                    case Kassa2:
-                        calculatePath(begin, new Point(23,26));
-                        break;
-                    case Kassa2_Personeel:
-                        calculatePath(begin, new Point(25,26));
-                        break;
-                    case Kassa3:
-                        calculatePath(begin, new Point(19,26));
-                        break;
-                    case Kassa3_Personeel:
-                        calculatePath(begin, new Point(21,26));
-                        break;
-                    case Kassa4:
-                        calculatePath(begin, new Point(15,26));
-                        break;
-                    case Kassa4_Personeel:
-                        calculatePath(begin, new Point(17,26));
-                        break;
-                    case Magazijn:
-                        calculatePath(begin, new Point(16,25));
-                        break;
-                    case Vrachtwagen:
-                        calculatePath(begin, new Point(SupermarkView.aantalBlokjes - 6,1));
-                        break;
-                    default:
-                        calculatePath(begin, new Point(1,31));
-                        break;
-                }
+                calculatePath(begin, getEindPunt());
             }
             if(route == null)
                 throw new Exception("Geen route gevonden");
