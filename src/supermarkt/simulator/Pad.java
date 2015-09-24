@@ -59,9 +59,16 @@ public class Pad extends Observable
          * @param product het product
          * @throws Exception wanneer de voordeelstraat vol zit
          */
-	public void vulProduct(String product) throws Exception
+	public boolean vulProduct() throws Exception
         {
-            this.producten = ProductWrapper.Add(product, producten,maxProduct);
+            String product = productVullen();
+            
+            if(product == null)
+            {
+                return true;
+            }
+            this.producten = ProductWrapper.Add(productVullen(), producten,maxProduct);
+            return false;
 	}
         
         public void padPoint(Point p)
@@ -96,5 +103,16 @@ public class Pad extends Observable
             }
             return paden;
         } 
-
+        public String productVullen()
+        {
+            
+            for(ProductWrapper product : producten)
+            {
+                if(product.getAantal() < 3)
+                {
+                    return product.getProductNaam();
+                }
+            }
+            return null;
+        }
 }
