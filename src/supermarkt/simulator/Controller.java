@@ -127,7 +127,6 @@ public class Controller {
             afdelingen = Afdeling.loadAfdeling();
             //load afdelingen
             setVoordeelstraat();
-            //createPersonen();
 	}
         
         private void laadKassa()
