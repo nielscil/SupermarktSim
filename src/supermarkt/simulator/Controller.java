@@ -126,6 +126,7 @@ public class Controller {
             }          
             kassas = Kassa.loadKassa();
             paden = Pad.loadPad();
+            afdelingen = Afdeling.loadAfdeling();
             //load afdelingen
             //setVoordeelstraat();
             //createPersonen();
