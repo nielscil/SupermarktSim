@@ -119,6 +119,9 @@ public class SupermarkView extends JPanel implements Observer
             case 10:
                 g.setColor(Color.PINK); //klanten
                 break;
+            case 11:
+                g.setColor(Color.magenta);
+                break;
        }
        g.fillRect (offset.x, offset.y, sizeBlok, sizeBlok);
     }

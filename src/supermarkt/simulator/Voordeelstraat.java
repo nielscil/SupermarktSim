@@ -22,6 +22,10 @@ public class Voordeelstraat extends Pad
     public Voordeelstraat(List<Point> plaats,List<ProductWrapper> producten,int max)
     {
         super(plaats,producten,max);
+        for(Point p : plaats)
+        {
+                padPoint(p);
+        }
     }
     
     /**
@@ -35,11 +39,10 @@ public class Voordeelstraat extends Pad
         this.producten = ProductWrapper.Add(product, producten, maxProduct);
     }
     
-    public static List<Point> getVoordeelstraatPoints()
+    @Override
+    public void padPoint(Point p)
     {
-        List<Point> punten = new ArrayList<>();
-        //load voordeelstraat
-        return punten;
+            Controller.bord[p.x][p.y].setItem(11);
     }
     
     public static List<Point> loadVoordeelstraat()
@@ -49,24 +52,15 @@ public class Voordeelstraat extends Pad
             try
             {
                 Scanner sc = new Scanner(file);
-//                int i = 1;
                 while(sc.findInLine("\\s*\\(\\s*(\\d+)\\s*\\,\\s*(\\d+)\\s*\\)") != null) //"\\d+\\s\\d+\\s\\t"
                 {
                     MatchResult result = sc.match();
                     voordeelstraat.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                 }
-//                    kassas.add(new Kassa(i, kassa));
-//                    i++;
-//                    sc.skip("\\s*");
-                
             } catch (Exception e)
             {
                 return voordeelstraat;
             }
-            //inlezen
-            //voor elke regel lees punten in
-            //maak kassa aan
-            //voeg aan lijst toe
             return voordeelstraat;
         } 
 }

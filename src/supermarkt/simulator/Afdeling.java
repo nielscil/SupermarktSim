@@ -1,7 +1,11 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.MatchResult;
 
 /**
  * Afdeling is een onderdeel van de winkel
@@ -23,6 +27,10 @@ public class Afdeling extends Pad {
         {
             super(plaats,producten,max);
             this.naam = naam;
+            for(Point p : plaats)
+            {
+                padPoint(p);
+            }
         }
         
         @Override
@@ -51,5 +59,39 @@ public class Afdeling extends Pad {
             else
                 throw new Exception("Al bemand");
 	}
+        
+        public static List<Afdeling> loadAfdeling()
+        {                    
+            List<Afdeling> afdelingen = new ArrayList<>();
+            File file = new File("src\\supermarkt\\simulator\\Afdeling.txt");
+            try
+            {
+                Scanner sc = new Scanner(file);
+                int i = 1;
+                String naam = "Kaas";
+                while(sc.hasNextLine())
+                {
+                    List<Point> afdeling = new ArrayList<>();
+                    while(sc.findInLine("\\s*\\(\\s*(\\d+)\\s*\\,\\s*(\\d+)\\s*\\)") != null) //"\\d+\\s\\d+\\s\\t"
+                    {
+                        MatchResult result = sc.match();
+                        afdeling.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
+                    }
+                    afdelingen.add(new Afdeling(naam, afdeling, new ArrayList<ProductWrapper>() ,4));
+                    i++;
+                    naam = "Vers";
+                    sc.skip("\\s*");
+                }
+            } 
+            catch (Exception e)
+            {
+                return afdelingen;
+            }
+            //inlezen
+            //voor elke regel lees punten in
+            //maak kassa aan
+            //voeg aan lijst toe
+            return afdelingen;
+        } 
 
 }
