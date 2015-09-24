@@ -27,18 +27,19 @@ public class Pad extends Observable
         public Pad(List<Point> plaats,List<ProductWrapper> producten,int max)
         {
             this.plaats = plaats;
-            this.producten = producten;
+            this.producten = new ArrayList<>(producten);
             this.maxProduct = max;
             this.setChanged();
             this.notifyObservers();
-            for(Point p : plaats)
+            plaats.stream().forEach((p)->
             {
                 padPoint(p);
-            }
+            });
         }
 
         public boolean heeftProduct(String naam)
         {
+            int test = ProductWrapper.Search(naam, producten);
             return ProductWrapper.Search(naam, producten) != -1;
         }
         /**
@@ -68,14 +69,14 @@ public class Pad extends Observable
             Controller.bord[p.x][p.y].setItem(8);    
         }
         
-        public static List<Pad> loadPad()
+        public static List<Pad> loadPad(List<List<ProductWrapper>> pws)
         {                    
             List<Pad> paden = new ArrayList<>();
             File file = new File("src\\supermarkt\\simulator\\Pad.txt");
             try
             {
                 Scanner sc = new Scanner(file);
-                int i = 1;
+                int i = 2;
                 while(sc.hasNextLine())
                 {
                     List<Point> pad = new ArrayList<>();
@@ -84,7 +85,7 @@ public class Pad extends Observable
                         MatchResult result = sc.match();
                         pad.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                     }
-                    paden.add(new Pad(pad, new ArrayList<ProductWrapper>() ,4));
+                    paden.add(new Pad(pad, pws.get(i) ,4));
                     i++;
                     sc.skip("\\s*");
                 }
@@ -93,10 +94,6 @@ public class Pad extends Observable
             {
                 return paden;
             }
-            //inlezen
-            //voor elke regel lees punten in
-            //maak kassa aan
-            //voeg aan lijst toe
             return paden;
         } 
 

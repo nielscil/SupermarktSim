@@ -3,6 +3,7 @@ package supermarkt.simulator;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Een klant van de supermarkt
@@ -36,12 +37,27 @@ public class Klant extends Persoon {
 	private void maakBoodschappenlijst()
         {
             boodschappenlijst = new ArrayList<>();
-            //kjeld z'n werk
+            List<Product> producten = new ArrayList<>(groep.getProducten());
+            int aantalP = ThreadLocalRandom.current().nextInt(1, producten.size());
+            int prod;
+            int aantalPP;
+            for(int i = 0; i < aantalP; i++)
+            {
+                prod = ThreadLocalRandom.current().nextInt(1, producten.size());
+                Product product = groep.getProducten().get(prod);
+                producten.remove(product);
+                aantalPP = ThreadLocalRandom.current().nextInt(1, 4);
+                boodschappenlijst.add(new ProductWrapper(product, aantalPP));
+            }
 	}
         
         @Override
         protected void setPostition(Point p)
         {
+            if(Controller.bord[0][0] != null)
+            {
+                Controller.bord[positie.x][positie.y].setItem(0);
+            }
             this.positie = p;
             if(Controller.bord[0][0] != null)
             {

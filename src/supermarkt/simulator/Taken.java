@@ -70,7 +70,7 @@ public class Taken {
                     case Magazijn:
                         return new Point(16,25);
                     case Vrachtwagen:
-                        return new Point(16,25);
+                        return new Point(23,1);
                     default:
                         return new Point(1,31);
                         

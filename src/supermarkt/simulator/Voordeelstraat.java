@@ -22,10 +22,10 @@ public class Voordeelstraat extends Pad
     public Voordeelstraat(List<Point> plaats,List<ProductWrapper> producten,int max)
     {
         super(plaats,producten,max);
-        for(Point p : plaats)
+        plaats.stream().forEach((p)->
         {
-                padPoint(p);
-        }
+            padPoint(p);
+        });
     }
     
     /**

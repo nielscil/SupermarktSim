@@ -1,5 +1,6 @@
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,7 +98,8 @@ public class ProductWrapper {
         {
             for(int i = 0; i < lijst.size(); i++)
             {
-                if(lijst.get(i).getProductNaam() == product)
+                String name = lijst.get(i).getProductNaam();
+                if(lijst.get(i).getProductNaam().equals(product))
                     return i;
             }
             return -1;
@@ -172,5 +174,33 @@ public class ProductWrapper {
             lijst.add(index, productwrap);
             return lijst;
         }
+        
+        public static List<List<ProductWrapper>> loadProductWrappers()
+        {
+            List<ProductWrapper> pws = Database.getWinkelproducten();
+            List<List<ProductWrapper>> padPws = new ArrayList<>();
+            for(int i = 0; i < 6; i++)
+            {
+                padPws.add(new ArrayList<>());
+            }
+            pws.stream().forEach((p)->
+            {
+                if(p.product.getAfdeling() == 1)
+                    padPws.get(0).add(p);
+                else if(p.product.getAfdeling() == 2)
+                    padPws.get(1).add(p);
+                else if(p.product.getAfdeling() == 3)
+                    padPws.get(2).add(p);
+                else if(p.product.getAfdeling() == 4)
+                    padPws.get(3).add(p);
+                else if(p.product.getAfdeling() == 5)
+                    padPws.get(4).add(p);
+                else if(p.product.getAfdeling() == 6)
+                    padPws.get(5).add(p);
+            });
+            return padPws;
+        }
+        
+        
 
 }

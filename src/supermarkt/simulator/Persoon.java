@@ -13,6 +13,7 @@ public abstract class Persoon {
             this.naam = naam;
             this.positie = beginPositie;
             this.controller = controller;
+            setPostition(positie);
         }
         
         protected abstract void setPostition(Point p);

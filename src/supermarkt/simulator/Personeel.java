@@ -26,6 +26,10 @@ public class Personeel extends Persoon
     @Override
         protected void setPostition(Point p)
         {
+            if(Controller.bord[0][0] != null)
+            {
+                Controller.bord[positie.x][positie.y].setItem(0);
+            }
             this.positie = p;
             if(Controller.bord[0][0] != null)
             {

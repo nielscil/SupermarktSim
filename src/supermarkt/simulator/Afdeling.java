@@ -59,15 +59,21 @@ public class Afdeling extends Pad {
             else
                 throw new Exception("Al bemand");
 	}
+       
         
-        public static List<Afdeling> loadAfdeling()
+        public String getNaam()
+        {
+            return naam;
+        }
+        
+        public static List<Afdeling> loadAfdeling(List<List<ProductWrapper>> productWrappers)
         {                    
             List<Afdeling> afdelingen = new ArrayList<>();
             File file = new File("src\\supermarkt\\simulator\\Afdeling.txt");
             try
             {
                 Scanner sc = new Scanner(file);
-                int i = 1;
+                int i = 0;
                 String naam = "Kaas";
                 while(sc.hasNextLine())
                 {
@@ -77,7 +83,7 @@ public class Afdeling extends Pad {
                         MatchResult result = sc.match();
                         afdeling.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                     }
-                    afdelingen.add(new Afdeling(naam, afdeling, new ArrayList<ProductWrapper>() ,4));
+                    afdelingen.add(new Afdeling(naam, afdeling, productWrappers.get(i) ,4));
                     i++;
                     naam = "Vers";
                     sc.skip("\\s*");

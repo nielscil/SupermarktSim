@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Main.java</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Kassa.txt</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Pad.java</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Pad.txt</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Afdeling.txt</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Controller.java</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/SupermarkView.java</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/Afdeling.java</file>
-            <file>file:/C:/Users/Dell/Documents/School/OOP/Supermarktsimulatie/Code/src/supermarkt/simulator/BordPunt.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Product.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Controller.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Klant.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Taken.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Kassa.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Afdeling.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/ProductWrapper.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Main.java</file>
+            <file>file:/C:/Users/Niels/Documents/NetBeansProjects/Supermarkt%20Simulator/src/supermarkt/simulator/Database.java</file>
         </group>
     </open-files>
 </project-private>

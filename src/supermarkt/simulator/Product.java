@@ -5,7 +5,14 @@ public class Product {
 	private String naam;
 	private double prijs;
 	private boolean voordeel;
-	private int isAfdeling;
+	private int afdeling;
+        
+        public Product(String naam, double prijs,int isAfdeling)
+        {
+            this.naam = naam;
+            this.prijs = prijs;
+            this.afdeling = isAfdeling;
+        }
 
 	public String getNaam() {
 		return this.naam;
@@ -20,7 +27,7 @@ public class Product {
 	}
 
 	public int getAfdeling() {
-		return this.isAfdeling;
+		return this.afdeling;
 	}
 
 }

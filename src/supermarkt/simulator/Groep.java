@@ -1,5 +1,6 @@
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,5 +30,4 @@ public class Groep {
 	public List<Product> getProducten() {
 		return productKeus;
 	}
-
 }

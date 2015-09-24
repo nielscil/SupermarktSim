@@ -8,27 +8,35 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Controller {
 
 	private final int endDay;
+        public static int DAG = 0;
         private final int maxKlanten = 10;
         private int ronde = 0;
         private Appview view;
 	private List<Klant> klanten = new ArrayList<>();
 	private List<Personeel> personeel = new ArrayList<>();
+        private List<Groep> groepen;
 	public List<Pad> paden = new ArrayList<>();
 	public List<Afdeling> afdelingen = new ArrayList<>();
 	public List<Kassa> kassas = new ArrayList<>();
-        private List<Product> producten = new ArrayList<>();
+        private List<Product> producten;
 	public Voordeelstraat voordeelstraat;
 	public Vrachtwagen vrachtwagen = null;
-	private Database voorrraad = new Database();
         public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
         
         public Controller()
         {
             view = new Appview();
+            DAG = Database.getDay();
+            producten = Database.getProductTypes();
+            groepen = Database.loadGroepen();
+            if(producten.isEmpty() || groepen.isEmpty())
+                System.exit(1);
             createWinkel();
-            endDay = 100;
-            //set GUI
-            //add listener
+            endDay = 6000;
+            while(ronde <= endDay) //andere thread
+            {
+                makeMove();
+            }
         }
         
         public void deletePersoon(Persoon persoon)
@@ -39,18 +47,18 @@ public class Controller {
                 personeel.remove(persoon);
         }
 
-	private void saveData() 
-        {
-            
-	}
-
 	private void makeMove() 
         {
-            while(personeel.size() < 6){
-                //maak personeel aan
+            while(personeel.size() < 6)
+            {
+                int size = personeel.size() + 1;
+                personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2, this)); //naam veranderen
             }
-            while(klanten.size() < maxKlanten){
-                //maak klanten aan
+            while(klanten.size() < maxKlanten)
+            {
+                int size = klanten.size() + 1;
+                int randomK = ThreadLocalRandom.current().nextInt(0, groepen.size());
+                klanten.add(new Klant("Klant " + size, new Point(1,31), groepen.get(randomK), this)); //naam veranderen
             }
             personeel.stream().forEach((p) ->
             {
@@ -68,7 +76,6 @@ public class Controller {
                 }
                 catch(Exception e){};
             });
-            saveData();
             ronde++;
 	}
 
@@ -85,13 +92,6 @@ public class Controller {
             }
             }
             voordeelstraat = new Voordeelstraat(Voordeelstraat.loadVoordeelstraat(),voordeel,5);
-	}
-
-	private void createPersonen()
-        {
-            //load groepen
-            //maak klanten
-            //maak personeel
 	}
 
 	private void createWinkel() 
@@ -121,19 +121,11 @@ public class Controller {
                         bord[i][j] = new BordPunt(i,j,0,view.getSupermarkView());
                     }
                 }
-            }          
+            }
             kassas = Kassa.loadKassa();
-            paden = Pad.loadPad();
-            afdelingen = Afdeling.loadAfdeling();
-            //load afdelingen
+            List<List<ProductWrapper>> pws = ProductWrapper.loadProductWrappers();
+            paden = Pad.loadPad(pws);
+            afdelingen = Afdeling.loadAfdeling(pws);
             setVoordeelstraat();
-            //createPersonen();
 	}
-        
-        private void laadKassa()
-        {
-            int i = 0;
-            //Kassa kassa = new Kassa(1,new ArrayList<Point> {new Point(1,2)} );
-            //kassas.add(kassa);
-        }
 }

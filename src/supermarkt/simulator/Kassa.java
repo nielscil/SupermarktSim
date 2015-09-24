@@ -50,7 +50,7 @@ public class Kassa {
                     break;
                 Product p = winkelwagen.get(0);
                 winkelwagen.remove(0);
-                //verander in db
+                Database.lowerWinkelproduct(p);
                 i++;
             }
         }
