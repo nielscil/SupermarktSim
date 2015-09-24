@@ -4,43 +4,43 @@ import java.util.List;
 
 public class Database {
 
-	public List<ProductWrapper> getProducten() {
+	public static List<ProductWrapper> getProducten() {
 		return null;
 	}
 
-	public List<ProductWrapper> getWinkelproducten() {
+	public static List<ProductWrapper> getWinkelproducten() {
 		return null;
 	}
 
-	public void setProducten(List<ProductWrapper> producten) {
+	public static void setProducten(List<ProductWrapper> producten) {
 
 	}
 
-	public void getGemiddelde(Afdeling afdeling) {
+	public static void getGemiddelde(Afdeling afdeling) {
 
 	}
 
-	public void lowerWinkelproducten(List<Product> producten) {
+	public static void lowerWinkelproducten(List<Product> producten) {
 
 	}
 
-	public void setWinkelproduct(ProductWrapper product) {
+	public static void setWinkelproduct(ProductWrapper product) {
 
 	}
 
-	public double getOmzet() {
+	public static double getOmzet() {
 		return 0.0;
 	}
 
-	public double getDagelijkseOmzet() {
+	public static double getDagelijkseOmzet() {
 		return 0.0;
 	}
 
-	public List<Product> getProductTypes() {
+	public static List<Product> getProductTypes() {
 		return null;
 	}
 
-	private void lowerProducten(ProductWrapper product) {
+	private static void lowerProducten(ProductWrapper product) {
 
 	}
 
