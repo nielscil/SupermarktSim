@@ -1,8 +1,11 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.MatchResult;
 
 /**
  * Een voordeelstraat met verschillende voordeel producten
@@ -38,4 +41,32 @@ public class Voordeelstraat extends Pad
         //load voordeelstraat
         return punten;
     }
+    
+    public static List<Point> loadVoordeelstraat()
+        {                    
+            List<Point> voordeelstraat = new ArrayList<>();
+            File file = new File("src\\supermarkt\\simulator\\Voordeelstraat.txt");
+            try
+            {
+                Scanner sc = new Scanner(file);
+//                int i = 1;
+                while(sc.findInLine("\\s*\\(\\s*(\\d+)\\s*\\,\\s*(\\d+)\\s*\\)") != null) //"\\d+\\s\\d+\\s\\t"
+                {
+                    MatchResult result = sc.match();
+                    voordeelstraat.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
+                }
+//                    kassas.add(new Kassa(i, kassa));
+//                    i++;
+//                    sc.skip("\\s*");
+                
+            } catch (Exception e)
+            {
+                return voordeelstraat;
+            }
+            //inlezen
+            //voor elke regel lees punten in
+            //maak kassa aan
+            //voeg aan lijst toe
+            return voordeelstraat;
+        } 
 }

@@ -76,13 +76,15 @@ public class Controller {
         {
             List<ProductWrapper> voordeel = new ArrayList<>();
             List<Product> choose = new ArrayList<>(producten);
+            if(choose.size() > 0){
             for(int i = 0; i < 2; i++)
             {
-                int index = ThreadLocalRandom.current().nextInt(0, choose.size() -1);
+                int index = ThreadLocalRandom.current().nextInt(0, choose.size());
                 voordeel.add(new ProductWrapper(choose.get(index)));
                 choose.remove(index);
             }
-            voordeelstraat = new Voordeelstraat(Voordeelstraat.getVoordeelstraatPoints(),voordeel,5);
+            }
+            voordeelstraat = new Voordeelstraat(Voordeelstraat.loadVoordeelstraat(),voordeel,5);
 	}
 
 	private void createPersonen()
@@ -127,7 +129,7 @@ public class Controller {
             kassas = Kassa.loadKassa();
             paden = Pad.loadPad();
             //load afdelingen
-            //setVoordeelstraat();
+            setVoordeelstraat();
             //createPersonen();
 	}
         
