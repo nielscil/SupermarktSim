@@ -46,9 +46,9 @@ public class Taken {
                     case Afdeling1_Personeel:
                         return new Point(5,3);
                     case Afdeling2:
-                        return new Point(16,25);
+                        return new Point(25,11);
                     case Afdeling2_Personeel:
-                        return new Point(16,25);
+                        return new Point(27,11);
                     case Voordeelstraat:
                         return new Point(19,13);
                     case Kassa1:
