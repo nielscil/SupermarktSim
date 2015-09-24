@@ -18,9 +18,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM product");
                 while(rs.next())
@@ -30,7 +31,14 @@ public class Database {
             } 
             catch (Exception e)
             {
-            }   
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return products;
 	}
 
@@ -41,9 +49,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM product");
                 while(rs.next())
@@ -53,7 +62,14 @@ public class Database {
             } 
             catch (Exception e)
             {
-            }   
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return products;
 	}
 
@@ -64,9 +80,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM groep");
                 while(rs.next())
@@ -81,11 +98,18 @@ public class Database {
                     }
                     groepen.add(new Groep(naam, producten));
                 }
-            } 
+            }
             catch (Exception e)
             {
                 System.err.println(e.getMessage());
-            }   
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return groepen;
         }
         
@@ -95,9 +119,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 for(ProductWrapper pw : producten)
                 {
@@ -107,6 +132,14 @@ public class Database {
             catch (Exception e)
             {
             }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
+            
 	}
 
 	public static int getGemiddelde(Afdeling afdeling) 
@@ -125,11 +158,11 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                //count(product.naam) / count(dag) 
                 ResultSet rs = statement.executeQuery("SELECT (COUNT(product.naam) / COUNT(dag)) AS Gemiddeld FROM product INNER JOIN voorraadMutatie On product.naam = voorraadMutatie.product WHERE product.afdeling = " + afnr + " GROUP BY product.naam,dag");
                 while(rs.next())
                 {
@@ -140,6 +173,13 @@ public class Database {
             catch (Exception e)
             {
                 return -1;
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
             }
             if(aantal == 0)
                 return -1;
@@ -152,9 +192,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT dag FROM voorraadmutatie ORDER BY dag DESC LIMIT 1");
                 while(rs.next())
@@ -166,6 +207,13 @@ public class Database {
             {
                 return 0;
             }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return 0;
         }
 
@@ -176,14 +224,22 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT winkelVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam()+ "\";INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (-1," + Controller.DAG + ",\"" + product.getNaam() + "\")");
             } 
             catch (Exception e)
             {
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
             }
 	}
 
@@ -193,14 +249,22 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT winkelVoorraad + 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam() + "\"");
             } 
             catch (Exception e)
             {
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
             }
             lowerProducten(product);
 	}
@@ -211,9 +275,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT IFNULL(SUM(product.prijs),0.0) AS Omzet FROM product INNER JOIN voorraadmutatie ON product.naam = voorraadmutatie.product GROUP BY product.naam");
                 while(rs.next())
@@ -224,7 +289,14 @@ public class Database {
             catch (Exception e)
             {
                 return 0.0;
-            }   
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return 0.0;
 	}
 
@@ -234,9 +306,10 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM product");
                 while(rs.next())
@@ -246,7 +319,14 @@ public class Database {
             } 
             catch (Exception e)
             {
-            }   
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
             return products;
 	}
 
@@ -256,14 +336,22 @@ public class Database {
             prop.put("zeroDateTimeBehavior","convertToNull");
             prop.put("user", "bba54e4fa78020");
             prop.put("password", "ca954bed");
+            Connection conn = null;
             try
             {
-                Connection conn = DriverManager.getConnection(dbName, prop);
+                conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
                 statement.executeUpdate("UPDATE product SET magazijnVoorraad = (SELECT magazijnVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam() + "\"");
             } 
             catch (Exception e)
             {
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
             }
 	}
         

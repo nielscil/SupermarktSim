@@ -34,11 +34,11 @@ public class Taken {
             switch(taak)
                 {
                     case Pad1:
-                        return new Point(8,9);
+                        return new Point(8,8);
                     case Pad2:
-                        return new Point(8,13);
+                        return new Point(8,12);
                     case Pad3:
-                        return new Point(8,17);
+                        return new Point(8,16);
                     case Pad4:
                         return new Point(8,21);
                     case Afdeling1:
@@ -72,8 +72,7 @@ public class Taken {
                     case Vrachtwagen:
                         return new Point(23,1);
                     default:
-                        return new Point(1,31);
-                        
+                        return new Point(1,31);    
                 }
         }
         

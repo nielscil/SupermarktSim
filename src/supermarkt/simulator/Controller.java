@@ -32,6 +32,10 @@ public class Controller {
             if(producten.isEmpty() || groepen.isEmpty())
                 System.exit(1);
             createWinkel();
+            try
+            {
+                Thread.sleep(1000);
+            }catch(Exception e){};
             endDay = 6000;
             while(ronde <= endDay) //andere thread
             {
@@ -52,7 +56,31 @@ public class Controller {
             while(personeel.size() < 6)
             {
                 int size = personeel.size() + 1;
-                personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2, this)); //naam veranderen
+                List<Taken> taken = new ArrayList<>();
+                switch (size)
+                {
+                    case 1:
+                        taken.add(new Taken(Taken.Taak.Pad1));
+                        taken.add(new Taken(Taken.Taak.Pad2));
+                        taken.add(new Taken(Taken.Taak.Kassa3_Personeel));
+                        break;
+                    case 2:
+                        taken.add(new Taken(Taken.Taak.Pad3));
+                        taken.add(new Taken(Taken.Taak.Pad4));
+                        taken.add(new Taken(Taken.Taak.Kassa4_Personeel));
+                        break;
+                    case 3:
+                        taken.add(new Taken(Taken.Taak.Afdeling1_Personeel));
+                    case 4:
+                        taken.add(new Taken(Taken.Taak.Afdeling2_Personeel));
+                    case 5:
+                        taken.add(new Taken(Taken.Taak.Voordeelstraat));
+                        taken.add(new Taken(Taken.Taak.Kassa2_Personeel));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                    case 6:
+                        taken.add(new Taken(Taken.Taak.Kassa1_Personeel));                       
+                }
+                personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2,taken, this)); //naam veranderen
             }
             while(klanten.size() < maxKlanten)
             {
@@ -60,23 +88,27 @@ public class Controller {
                 int randomK = ThreadLocalRandom.current().nextInt(0, groepen.size());
                 klanten.add(new Klant("Klant " + size, new Point(1,31), groepen.get(randomK), this)); //naam veranderen
             }
-            personeel.stream().forEach((p) ->
+            for(int i = 0; i < personeel.size();i++)
             {
                 try
                 {
-                    p.move();
+                    personeel.get(i).move();
                 }
                 catch(Exception e){};
-            });
-            klanten.stream().forEach((k) ->
+            }
+            for(int i = 0; i < klanten.size();i++)
             {
                 try
                 {
-                    k.move();
+                    klanten.get(i).move();
                 }
                 catch(Exception e){};
-            });
+            }
             ronde++;
+            try
+            {
+                Thread.sleep(300);
+            }catch(Exception e){};
 	}
 
 	private void setVoordeelstraat() 

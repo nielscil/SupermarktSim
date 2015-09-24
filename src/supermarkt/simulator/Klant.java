@@ -13,7 +13,7 @@ public class Klant extends Persoon {
 
 	private final Groep groep;
 	private List<ProductWrapper> boodschappenlijst;
-	public List<Product> winkelwagen;
+	public List<Product> winkelwagen = new ArrayList<>();
         private Taken taak;
         
         
@@ -61,7 +61,7 @@ public class Klant extends Persoon {
             this.positie = p;
             if(Controller.bord[0][0] != null)
             {
-                Controller.bord[p.x][p.y].setItem(6);
+                Controller.bord[p.x][p.y].setItem(9);
             }
         }
         
@@ -120,6 +120,7 @@ public class Klant extends Persoon {
                     if(controller.paden.get(3).heeftProduct(pw.getProductNaam()))
                     {
                         taak = new Taken(Taken.Taak.Pad4);
+                        return;
                     }
                 }
                 if(controller.afdelingen.size() >= 2)
@@ -165,7 +166,7 @@ public class Klant extends Persoon {
             {
                 makeTaak();
             }
-            if(positie == taak.getEindPunt())
+            if(positie.equals(taak.getEindPunt()))
             {
                 switch(taak.getTaak())
                 {

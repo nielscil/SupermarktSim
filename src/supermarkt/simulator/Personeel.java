@@ -25,18 +25,18 @@ public class Personeel extends Persoon
     }
     
     @Override
-        protected void setPostition(Point p)
+    protected void setPostition(Point p)
+    {
+        if(Controller.bord[0][0] != null)
         {
-            if(Controller.bord[0][0] != null)
-            {
-                Controller.bord[positie.x][positie.y].setItem(0);
-            }
-            this.positie = p;
-            if(Controller.bord[0][0] != null)
-            {
-                Controller.bord[p.x][p.y].setItem(7);
-            }
+            Controller.bord[positie.x][positie.y].setItem(0);
         }
+        this.positie = p;
+        if(Controller.bord[0][0] != null)
+        {
+            Controller.bord[p.x][p.y].setItem(10);
+        }
+    }
     
     public void voegTaakToe(Taken taak)
     {
@@ -45,95 +45,77 @@ public class Personeel extends Persoon
     
     private void makeTaak()
     {
-        
+        if(taak != null)
+        {
+            taken.add(taak);
+        }
+        taak = new Taken(taken.get(0).getTaak());
+        taken.remove(0);
+        //deze nog joris
     }
         
     @Override
     public void move() throws Exception
     {
-        if(taken == null)
+        if(taak == null)
         {
             makeTaak();
         }
-        if(positie == taak.getEindPunt())
+        if(positie.equals(taak.getEindPunt()))
         {
             switch(taak.getTaak())
             {
                 case Pad1:
                     if(controller.paden.size() >= 1)
                     {
-                        Product product = new Product();
                         Pad pad = controller.paden.get(0);
-                        if(pad.heeftProduct(product.getNaam()))
-                        {
-                            pad.vulProduct();
-                            return;
-                        }
+                        if(!pad.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
                 case Pad2:
-                    if(controller.paden.size() >= 1)
+                    if(controller.paden.size() >= 2)
                     {
-                        Product product = new Product();
-                        Pad pad = controller.paden.get(0);
-                        if(pad.heeftProduct(product.getNaam()))
-                        {
-                            pad.vulProduct();
-                            return;
-                        }
+                        Pad pad = controller.paden.get(1);
+                        if(!pad.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
                 case Pad3:
-                    if(controller.paden.size() >= 1)
+                    if(controller.paden.size() >= 3)
                     {
-                        Product product = new Product();
-                        Pad pad = controller.paden.get(0);
-                        if(pad.heeftProduct(product.getNaam()))
-                        {
-                            pad.vulProduct();
-                            return;
-                        }
+                        Pad pad = controller.paden.get(2);
+                        if(!pad.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
                 case Pad4:
-                    if(controller.paden.size() >= 1)
+                    if(controller.paden.size() >= 4)
                     {
-                        Product product = new Product();
-                        Pad pad = controller.paden.get(0);
-                        if(pad.heeftProduct(product.getNaam()))
-                        {
-                            pad.vulProduct();
-                            return;
-                        }
+                        Pad pad = controller.paden.get(3);
+                        if(!pad.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
                 case Afdeling1_Personeel:
                     if(controller.afdelingen.size() >= 1)
                     {
-                        Product product = new Product();
                         Afdeling afdeling = controller.afdelingen.get(0);
-                        if(afdeling.heeftProduct(product.getNaam()))
-                        {
-                            afdeling.vulProduct();
-                            return;
-                        }
+                        if(!afdeling.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
                 case Afdeling2_Personeel:
-                    if(controller.afdelingen.size() >= 1)
+                    if(controller.afdelingen.size() >= 2)
                     {
-                        Product product = new Product();
-                        Afdeling afdeling = controller.afdelingen.get(0);
-                        if(afdeling.heeftProduct(product.getNaam()))
-                        {
-                            afdeling.vulProduct();
-                            return;
-                        }
+                        Afdeling afdeling = controller.afdelingen.get(1);
+                        if(!afdeling.vulProduct())
+                           return;
                         makeTaak();
                     }
                     return;
@@ -147,9 +129,9 @@ public class Personeel extends Persoon
                     }
                     return;
                 case Kassa2_Personeel:
-                    if(controller.kassas.size() >= 1)
+                    if(controller.kassas.size() >= 2)
                     {
-                        Kassa kassa = controller.kassas.get(0);
+                        Kassa kassa = controller.kassas.get(1);
                         if(!kassa.isOpen())
                         {
                             kassa.bemanKassa(this);
@@ -160,9 +142,9 @@ public class Personeel extends Persoon
                     }
                     return;
                 case Kassa3_Personeel:
-                    if(controller.kassas.size() >= 1)
+                    if(controller.kassas.size() >= 3)
                     {
-                        Kassa kassa = controller.kassas.get(0);
+                        Kassa kassa = controller.kassas.get(2);
                         if(!kassa.isOpen())
                         {
                             kassa.bemanKassa(this);
@@ -173,9 +155,9 @@ public class Personeel extends Persoon
                     }
                     return;
                 case Kassa4_Personeel:
-                    if(controller.kassas.size() >= 1)
+                    if(controller.kassas.size() >= 4)
                     {
-                        Kassa kassa = controller.kassas.get(0);
+                        Kassa kassa = controller.kassas.get(3);
                         if(!kassa.isOpen())
                         {
                             kassa.bemanKassa(this);
@@ -186,8 +168,10 @@ public class Personeel extends Persoon
                     }
                     return;
                 case Voordeelstraat:
-                    
+                    //deze nog joris
             }
         }
+        Point p = taak.getTaakBeschrijving(positie);
+        setPostition(p);  
     }
 }

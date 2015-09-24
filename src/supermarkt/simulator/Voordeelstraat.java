@@ -33,7 +33,7 @@ public class Voordeelstraat extends Pad
      * @param product naam van het product
      * @throws Exception wanneer de voordeelstraat vol zit
      */
-    @Override
+    //@Override
     public void vulProduct(String product) throws Exception
     {
         this.producten = ProductWrapper.Add(product, producten, maxProduct);

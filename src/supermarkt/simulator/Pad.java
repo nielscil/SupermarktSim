@@ -17,6 +17,7 @@ public class Pad extends Observable
 	protected List<ProductWrapper> producten;
 	protected int maxProduct;
 	protected List<Point> plaats;
+        protected boolean wordtGevuld = false;
         
         /**
          * Maakt een nieuw pad aan
@@ -39,7 +40,6 @@ public class Pad extends Observable
 
         public boolean heeftProduct(String naam)
         {
-            int test = ProductWrapper.Search(naam, producten);
             return ProductWrapper.Search(naam, producten) != -1;
         }
         /**
@@ -56,7 +56,7 @@ public class Pad extends Observable
 
         /**
          * Vul een product in het pad door een personeelslid
-         * @param product het product
+         * @return true als hij klaar is met vullen , anders false
          * @throws Exception wanneer de voordeelstraat vol zit
          */
 	public boolean vulProduct() throws Exception
