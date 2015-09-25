@@ -53,7 +53,8 @@ public class ProductWrapper {
          * Zet het product van de productwrapper
          * @param product product voor de wrapper
          */
-	public void setProduct(Product product) {
+	public void setProduct(Product product) 
+        {
             this.product = product;
 	}
 
@@ -76,7 +77,8 @@ public class ProductWrapper {
          * Haalt het aantal op van het product
          * @return aantal
          */
-	public int getAantal() {
+	public int getAantal() 
+        {
 		return aantal;
 	}
 
@@ -84,9 +86,15 @@ public class ProductWrapper {
          * Haalt de productnaam op
          * @return productnaam
          */
-	public String getProductNaam() {
+	public String getProductNaam() 
+        {
 		return product.getNaam();
 	}
+        
+                public Product getProduct()
+        {
+            return product;
+        }
         
         /**
          * Zoek of bepaald product in een lijst van ProductWrappers zit

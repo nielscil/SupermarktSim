@@ -71,7 +71,17 @@ public class Pad extends Observable
             return false;
 	}
         
-        public void padPoint(Point p)
+        public void setTaak()
+        {
+            wordtGevuld = true;
+        }
+        
+        public void unsetTaak()
+        {
+            wordtGevuld = false;
+        }
+        
+        protected void padPoint(Point p)
         {
             Controller.bord[p.x][p.y].setItem(8);    
         }
@@ -103,6 +113,7 @@ public class Pad extends Observable
             }
             return paden;
         } 
+        
         public String productVullen()
         {
             

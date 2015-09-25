@@ -27,10 +27,10 @@ public class Afdeling extends Pad {
         {
             super(plaats,producten,max);
             this.naam = naam;
-            for(Point p : plaats)
+            plaats.stream().forEach((p)->
             {
                 padPoint(p);
-            }
+            });
         }
         
         @Override
@@ -60,6 +60,10 @@ public class Afdeling extends Pad {
                 throw new Exception("Al bemand");
 	}
        
+        public boolean isBemand()
+        {
+            return personeel != null;
+        }
         
         public String getNaam()
         {
@@ -93,10 +97,6 @@ public class Afdeling extends Pad {
             {
                 return afdelingen;
             }
-            //inlezen
-            //voor elke regel lees punten in
-            //maak kassa aan
-            //voeg aan lijst toe
             return afdelingen;
         } 
 

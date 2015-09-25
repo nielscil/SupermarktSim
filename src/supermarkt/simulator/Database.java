@@ -11,6 +11,7 @@ import java.util.Properties;
 public class Database {
 
     private static final String dbName = "jdbc:mysql://eu-cdbr-azure-west-c.cloudapp.net:3306/supermarkt";
+    
 	public static List<ProductWrapper> getProducten()
         {
             List<ProductWrapper> products = new ArrayList<>();

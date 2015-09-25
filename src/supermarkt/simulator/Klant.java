@@ -43,7 +43,7 @@ public class Klant extends Persoon {
             int aantalPP;
             for(int i = 0; i < aantalP; i++)
             {
-                prod = ThreadLocalRandom.current().nextInt(1, producten.size());
+                prod = ThreadLocalRandom.current().nextInt(0, producten.size());
                 Product product = groep.getProducten().get(prod);
                 producten.remove(product);
                 aantalPP = ThreadLocalRandom.current().nextInt(1, 4);
@@ -56,7 +56,11 @@ public class Klant extends Persoon {
         {
             if(Controller.bord[0][0] != null)
             {
-                Controller.bord[positie.x][positie.y].setItem(0);
+                int meer = controller.staanMeerPersonen(p);
+                if(meer == -1)
+                    Controller.bord[positie.x][positie.y].setItem(0);
+                else if(meer == 0)
+                    Controller.bord[positie.x][positie.y].setItem(10);
             }
             this.positie = p;
             if(Controller.bord[0][0] != null)
@@ -125,12 +129,12 @@ public class Klant extends Persoon {
                 }
                 if(controller.afdelingen.size() >= 2)
                 {
-                    if(controller.afdelingen.get(0).heeftProduct(naam))
+                    if(controller.afdelingen.get(0).heeftProduct(pw.getProductNaam()))
                     {
                         taak = new Taken(Taken.Taak.Afdeling1);
                         return;
                     }
-                    if(controller.afdelingen.get(1).heeftProduct(naam))
+                    if(controller.afdelingen.get(1).heeftProduct(pw.getProductNaam()))
                     {
                         taak = new Taken(Taken.Taak.Afdeling2);
                         return;
@@ -179,12 +183,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Pad2:
@@ -196,12 +202,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Pad3:
@@ -213,12 +221,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                                                              if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Pad4:
@@ -230,12 +240,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),pad);
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Voordeelstraat:
@@ -246,12 +258,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),controller.voordeelstraat); // <- kijken of dit goed gaat!
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Afdeling1:
@@ -263,12 +277,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),af); // <- kijken of dit goed gaat!
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               } 
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Afdeling2:
@@ -280,12 +296,14 @@ public class Klant extends Persoon {
                            {
                                int aantal = pw.getAantal();
                                int gepakt = paktProduct(aantal, pw.getProductNaam(),af); // <- kijken of dit goed gaat!
-                               if(aantal == gepakt)
-                                   boodschappenlijst.remove(0);
                                pw.setAantal(aantal - gepakt);
+                               if(aantal == gepakt)
+                               {
+                                   boodschappenlijst.remove(0);
+                                   taak = null;
+                               }
                                return;
                            }
-                           makeTaak();
                         }
                         return;
                     case Kassa1:
@@ -293,6 +311,11 @@ public class Klant extends Persoon {
                         {
                             if(!winkelwagen.isEmpty())
                             {
+                                if(!controller.kassas.get(0).isOpen())
+                                {
+                                    taak = null;
+                                    return;
+                                }
                                 controller.kassas.get(0).klantBijKassa(this);
                                 return;
                             }
@@ -304,6 +327,11 @@ public class Klant extends Persoon {
                         {
                             if(!winkelwagen.isEmpty())
                             {
+                                if(!controller.kassas.get(1).isOpen())
+                                {
+                                    taak = null;
+                                    return;
+                                }
                                 controller.kassas.get(1).klantBijKassa(this);
                                 return;
                             }
@@ -315,6 +343,11 @@ public class Klant extends Persoon {
                         {
                             if(!winkelwagen.isEmpty())
                             {
+                                if(!controller.kassas.get(2).isOpen())
+                                {
+                                    taak = null;
+                                    return;
+                                }
                                 controller.kassas.get(2).klantBijKassa(this);
                                 return;
                             }
@@ -326,6 +359,11 @@ public class Klant extends Persoon {
                         {
                             if(!winkelwagen.isEmpty())
                             {
+                                if(!controller.kassas.get(3).isOpen())
+                                {
+                                    taak = null;
+                                    return;
+                                }
                                 controller.kassas.get(3).klantBijKassa(this);
                                 return;
                             }
@@ -333,7 +371,7 @@ public class Klant extends Persoon {
                         }
                         return;
                     default:
-                        Controller.bord[positie.x][positie.y].setItem(1);
+                        Controller.bord[positie.x][positie.y].setItem(0);
                         controller.deletePersoon(this);
                         return;
                 }

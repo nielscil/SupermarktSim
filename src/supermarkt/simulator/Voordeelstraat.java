@@ -28,17 +28,6 @@ public class Voordeelstraat extends Pad
         });
     }
     
-    /**
-     * Vult de product bij in de voordeelstraat
-     * @param product naam van het product
-     * @throws Exception wanneer de voordeelstraat vol zit
-     */
-    //@Override
-    public void vulProduct(String product) throws Exception
-    {
-        this.producten = ProductWrapper.Add(product, producten, maxProduct);
-    }
-    
     @Override
     public void padPoint(Point p)
     {

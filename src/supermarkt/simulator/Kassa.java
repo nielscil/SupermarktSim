@@ -28,6 +28,11 @@ public class Kassa {
         {
             this.bemand = personeel;
 	}
+        
+        public void onbemanKassa()
+        {
+            bemand = null;
+        }
 
 	public void rekenAf() throws Exception
         {

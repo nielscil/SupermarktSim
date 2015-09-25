@@ -21,6 +21,7 @@ public class Controller {
         private List<Product> producten;
 	public Voordeelstraat voordeelstraat;
 	public Vrachtwagen vrachtwagen = null;
+        public List<Integer> openTaken = new ArrayList<>();
         public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
         
         public Controller()
@@ -36,7 +37,7 @@ public class Controller {
             {
                 Thread.sleep(1000);
             }catch(Exception e){};
-            endDay = 6000;
+            endDay = 8000;
             while(ronde <= endDay) //andere thread
             {
                 makeMove();
@@ -51,42 +52,23 @@ public class Controller {
                 personeel.remove(persoon);
         }
 
+        
+        public void requestVrachtwagen(List<Product> benodigd)
+        {
+            vrachtwagen = new Vrachtwagen(benodigd, ronde);
+        }
+
 	private void makeMove() 
         {
+            checkWinkel();
             while(personeel.size() < 6)
             {
-                int size = personeel.size() + 1;
-                List<Taken> taken = new ArrayList<>();
-                switch (size)
-                {
-                    case 1:
-                        taken.add(new Taken(Taken.Taak.Pad1));
-                        taken.add(new Taken(Taken.Taak.Pad2));
-                        taken.add(new Taken(Taken.Taak.Kassa3_Personeel));
-                        break;
-                    case 2:
-                        taken.add(new Taken(Taken.Taak.Pad3));
-                        taken.add(new Taken(Taken.Taak.Pad4));
-                        taken.add(new Taken(Taken.Taak.Kassa4_Personeel));
-                        break;
-                    case 3:
-                        taken.add(new Taken(Taken.Taak.Afdeling1_Personeel));
-                    case 4:
-                        taken.add(new Taken(Taken.Taak.Afdeling2_Personeel));
-                    case 5:
-                        taken.add(new Taken(Taken.Taak.Voordeelstraat));
-                        taken.add(new Taken(Taken.Taak.Kassa2_Personeel));
-                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
-                    case 6:
-                        taken.add(new Taken(Taken.Taak.Kassa1_Personeel));                       
-                }
-                personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2,taken, this)); //naam veranderen
+                createPersoneel();
             }
-            while(klanten.size() < maxKlanten)
+            while(klanten.size() < maxKlanten && ronde > 20)
             {
-                int size = klanten.size() + 1;
-                int randomK = ThreadLocalRandom.current().nextInt(0, groepen.size());
-                klanten.add(new Klant("Klant " + size, new Point(1,31), groepen.get(randomK), this)); //naam veranderen
+                createKlant();
+                break;
             }
             for(int i = 0; i < personeel.size();i++)
             {
@@ -110,6 +92,56 @@ public class Controller {
                 Thread.sleep(300);
             }catch(Exception e){};
 	}
+        
+        private void createPersoneel()
+        {
+            int size = personeel.size() + 1;
+                List<Taken> taken = new ArrayList<>();
+                switch (size)
+                {
+                    case 1:
+                        taken.add(new Taken(Taken.Taak.Pad1));
+                        taken.add(new Taken(Taken.Taak.Pad2));
+                        taken.add(new Taken(Taken.Taak.Pad3));
+                        taken.add(new Taken(Taken.Taak.Pad4));
+                        taken.add(new Taken(Taken.Taak.Voordeelstraat));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                        taken.add(new Taken(Taken.Taak.Magazijn));
+                        taken.add(new Taken(Taken.Taak.Kassa3_Personeel));
+                        break;
+                    case 2:
+                        taken.add(new Taken(Taken.Taak.Pad1));
+                        taken.add(new Taken(Taken.Taak.Pad2));
+                        taken.add(new Taken(Taken.Taak.Pad3));
+                        taken.add(new Taken(Taken.Taak.Pad4));
+                        taken.add(new Taken(Taken.Taak.Voordeelstraat));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                        taken.add(new Taken(Taken.Taak.Magazijn));
+                        taken.add(new Taken(Taken.Taak.Kassa4_Personeel));
+                        break;
+                    case 3:
+                        taken.add(new Taken(Taken.Taak.Afdeling1_Personeel));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                    case 4:
+                        taken.add(new Taken(Taken.Taak.Afdeling2_Personeel));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                    case 5:
+                        taken.add(new Taken(Taken.Taak.Voordeelstraat));
+                        taken.add(new Taken(Taken.Taak.Kassa2_Personeel));
+                        taken.add(new Taken(Taken.Taak.Magazijn));
+                        taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                    case 6:
+                        taken.add(new Taken(Taken.Taak.Kassa1_Personeel));                   
+                }
+                personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2,taken, this)); //naam veranderen
+        }
+        
+        private void createKlant()
+        {
+            int size = klanten.size() + 1;
+            int randomK = ThreadLocalRandom.current().nextInt(0, groepen.size());
+            klanten.add(new Klant("Klant " + size, new Point(1,31), groepen.get(randomK), this)); //naam veranderen
+        }
 
 	private void setVoordeelstraat() 
         {
@@ -125,8 +157,78 @@ public class Controller {
             }
             voordeelstraat = new Voordeelstraat(Voordeelstraat.loadVoordeelstraat(),voordeel,5);
 	}
+        
+        private void checkWinkel() //werkt nog niet helemaal goed
+        {
+            openTaken.clear();
+            int index = 1;
+            boolean needsKassa = false;
+            int kassaCount = 0;
+            for(Kassa k : kassas)
+            {
+                if(k.isOpen())
+                {
+                    kassaCount++;
+                    if(k.checkKlanten() > 3)
+                    {
+                        needsKassa = true;
+                        continue;
+                    }
+                    needsKassa = false;
+                }
+            }
+            if(kassaCount == 0)
+                needsKassa = true;
+            for(Kassa k : kassas)
+            {
+                if(!k.isOpen() && needsKassa)
+                {
+                    openTaken.add(index);
+                    needsKassa = false;
+                }
+                index++;
+            }
+            for(Afdeling af : afdelingen)
+            {
+                if(af.productVullen() != null && !af.wordtGevuld || !af.isBemand()) //check mensen
+                    openTaken.add(index);
+                index++;
+            }
+            for(Pad p : paden)
+            {
+                if(p.productVullen() != null && !p.wordtGevuld)
+                    openTaken.add(index);
+                index++;
+            }
+            if(voordeelstraat.productVullen() != null && !voordeelstraat.wordtGevuld)
+                openTaken.add(index);
+            index++;
+            if(vrachtwagen != null)
+            {
+                if(vrachtwagen.getAangeroepen() == ronde && !vrachtwagen.wordtGelost)
+                    openTaken.add(index);
+            }
+            index++;
+            if(ronde % 10 == 0)
+                openTaken.add(index);
+        }
+        
+        public int staanMeerPersonen(Point p)
+        {
+            for(Klant k : klanten)
+            {
+                if(k.positie.equals(p))
+                    return 1;
+            }
+            for(Personeel ps : personeel)
+            {
+                if(ps.positie.equals(p))
+                    return 0;
+            }
+            return -1;
+        }
 
-	private void createWinkel() 
+	private void createWinkel()
         {
             for(int i= 0; i < SupermarkView.aantalBlokjes; i++)
             {

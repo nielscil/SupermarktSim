@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Taken {
 
-        public static enum Taak {Pad1, Pad2, Pad3, Pad4, Afdeling1, Afdeling1_Personeel, Afdeling2, Afdeling2_Personeel, Voordeelstraat, Kassa1, Kassa1_Personeel, Kassa2, Kassa2_Personeel, Kassa3, Kassa3_Personeel, Kassa4, Kassa4_Personeel, Magazijn,Vrachtwagen,Uitgang};
+        public static enum Taak {Pad1, Pad2, Pad3, Pad4, Afdeling1, Afdeling1_Personeel, Afdeling2, Afdeling2_Personeel, Voordeelstraat, Kassa1, Kassa1_Personeel, Kassa2, Kassa2_Personeel, Kassa3, Kassa3_Personeel, Kassa4, Kassa4_Personeel, Magazijn,Vrachtwagen,Uitgang,Pauze};
 	private int tijdsduur;
 	private Taak taak;
         private List<Point> route;
@@ -40,7 +40,7 @@ public class Taken {
                     case Pad3:
                         return new Point(8,16);
                     case Pad4:
-                        return new Point(8,21);
+                        return new Point(8,20);
                     case Afdeling1:
                         return new Point(5,5);
                     case Afdeling1_Personeel:
@@ -71,6 +71,8 @@ public class Taken {
                         return new Point(16,25);
                     case Vrachtwagen:
                         return new Point(23,1);
+                    case Pauze:
+                        return new Point(19,4);
                     default:
                         return new Point(1,31);    
                 }
