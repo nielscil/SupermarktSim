@@ -52,13 +52,21 @@ public class Afdeling extends Pad {
          * @param personeel personeelslid die de afdeling bemand
          * @throws Exception wanneer afdeling al bemand is
          */
-	public void bemanAfdeling(Personeel personeel) throws Exception
+	public void bemanAfdeling(Personeel personeel)
         {
             if(this.personeel == null)
+            {
                 this.personeel = personeel;
-            else
-                throw new Exception("Al bemand");
+                wordtGevuld = true;
+            }
+                
 	}
+        
+        public void onbemanAfdeling()
+        {
+            this.personeel = null;
+            wordtGevuld = false;
+        }
        
         public boolean isBemand()
         {

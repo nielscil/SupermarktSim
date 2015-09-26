@@ -68,7 +68,7 @@ public class Taken {
                     case Kassa4_Personeel:
                         return new Point(17,26);
                     case Magazijn:
-                        return new Point(16,25);
+                        return new Point(18,1);
                     case Vrachtwagen:
                         return new Point(23,1);
                     case Pauze:

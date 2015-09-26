@@ -1,10 +1,11 @@
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vrachtwagen {
 
-	private List<ProductWrapper> lading;
+	private List<ProductWrapper> lading = new ArrayList<>();
 	private int aangeroepen;
         private boolean isGeregisteerd = false;
         public boolean  wordtGelost = false;
@@ -13,7 +14,7 @@ public class Vrachtwagen {
         {
             benodigdeProducten.stream().forEach((p)->
             {
-                lading.add(new ProductWrapper(p, 20));
+                lading.add(new ProductWrapper(p,20));
             });
             this.aangeroepen = aangeroepen + 10;
         }

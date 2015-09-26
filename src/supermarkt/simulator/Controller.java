@@ -21,7 +21,7 @@ public class Controller {
         private List<Product> producten;
 	public Voordeelstraat voordeelstraat;
 	public Vrachtwagen vrachtwagen = null;
-        public List<Integer> openTaken = new ArrayList<>();
+        public static List<Integer> openTaken = new ArrayList<>();
         public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
         
         public Controller()
@@ -122,16 +122,20 @@ public class Controller {
                     case 3:
                         taken.add(new Taken(Taken.Taak.Afdeling1_Personeel));
                         taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                        break;
                     case 4:
                         taken.add(new Taken(Taken.Taak.Afdeling2_Personeel));
                         taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                        break;
                     case 5:
                         taken.add(new Taken(Taken.Taak.Voordeelstraat));
                         taken.add(new Taken(Taken.Taak.Kassa2_Personeel));
                         taken.add(new Taken(Taken.Taak.Magazijn));
                         taken.add(new Taken(Taken.Taak.Vrachtwagen));
+                        break;
                     case 6:
-                        taken.add(new Taken(Taken.Taak.Kassa1_Personeel));                   
+                        taken.add(new Taken(Taken.Taak.Kassa1_Personeel));
+                        break;
                 }
                 personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2,taken, this)); //naam veranderen
         }
@@ -160,7 +164,6 @@ public class Controller {
         
         private void checkWinkel() //werkt nog niet helemaal goed
         {
-            openTaken.clear();
             int index = 1;
             boolean needsKassa = false;
             int kassaCount = 0;
@@ -183,7 +186,10 @@ public class Controller {
             {
                 if(!k.isOpen() && needsKassa)
                 {
-                    openTaken.add(index);
+                    if(!openTaken.contains(index))
+                    {
+                        openTaken.add(index);
+                    }
                     needsKassa = false;
                 }
                 index++;
@@ -191,37 +197,46 @@ public class Controller {
             for(Afdeling af : afdelingen)
             {
                 if(af.productVullen() != null && !af.wordtGevuld || !af.isBemand()) //check mensen
-                    openTaken.add(index);
+                    if(!openTaken.contains(index))
+                        openTaken.add(index);
                 index++;
             }
             for(Pad p : paden)
             {
                 if(p.productVullen() != null && !p.wordtGevuld)
-                    openTaken.add(index);
+                    if(!openTaken.contains(index))
+                        openTaken.add(index);
                 index++;
             }
             if(voordeelstraat.productVullen() != null && !voordeelstraat.wordtGevuld)
-                openTaken.add(index);
+                if(!openTaken.contains(index))
+                    openTaken.add(index);
             index++;
             if(vrachtwagen != null)
             {
                 if(vrachtwagen.getAangeroepen() == ronde && !vrachtwagen.wordtGelost)
-                    openTaken.add(index);
+                    if(!openTaken.contains(index))
+                        openTaken.add(index);
             }
             index++;
-            if(ronde % 10 == 0)
-                openTaken.add(index);
+//            if(ronde % 10 == 0)
+//                if(!openTaken.contains(index))
+//                    openTaken.add(index);
         }
         
-        public int staanMeerPersonen(Point p)
+        public int staanMeerPersonen(Point p,Persoon persoon)
         {
             for(Klant k : klanten)
             {
+                if(k.equals(persoon))
+                    continue;
                 if(k.positie.equals(p))
                     return 1;
             }
             for(Personeel ps : personeel)
             {
+                if(ps.equals(persoon))
+                    continue;
                 if(ps.positie.equals(p))
                     return 0;
             }

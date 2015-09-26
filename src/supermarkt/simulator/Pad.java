@@ -67,7 +67,19 @@ public class Pad extends Observable
             {
                 return true;
             }
-            this.producten = ProductWrapper.Add(productVullen(), producten,maxProduct);
+            try
+            {
+                this.producten = ProductWrapper.Add(productVullen(), producten,maxProduct);
+            }
+            catch(Exception e)
+            {
+                if(!e.getMessage().equals("Stelling is vol"))
+                {
+                    if(!Controller.openTaken.contains(13))
+                        Controller.openTaken.add(13);
+                }
+                return true;   
+            }
             return false;
 	}
         

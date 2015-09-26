@@ -56,7 +56,7 @@ public class Klant extends Persoon {
         {
             if(Controller.bord[0][0] != null)
             {
-                int meer = controller.staanMeerPersonen(p);
+                int meer = controller.staanMeerPersonen(positie,this);
                 if(meer == -1)
                     Controller.bord[positie.x][positie.y].setItem(0);
                 else if(meer == 0)
@@ -290,7 +290,7 @@ public class Klant extends Persoon {
                     case Afdeling2:
                         if(controller.afdelingen.size() >= 2)
                         {
-                            Afdeling af = controller.afdelingen.get(0);
+                            Afdeling af = controller.afdelingen.get(1);
                             ProductWrapper pw = boodschappenlijst.get(0);
                            if(af.heeftProduct(pw.getProductNaam()))
                            {

@@ -29,7 +29,7 @@ public class Personeel extends Persoon
     {
         if(Controller.bord[0][0] != null)
         {
-            int meer = controller.staanMeerPersonen(p);
+            int meer = controller.staanMeerPersonen(positie,this);
             if(meer == -1)
                 Controller.bord[positie.x][positie.y].setItem(0);
             else if(meer == 1)
@@ -115,6 +115,7 @@ public class Personeel extends Persoon
                            {
                                taak = new Taken(Taken.Taak.Afdeling1_Personeel);
                                controller.afdelingen.get(0).setTaak();
+                               controller.afdelingen.get(0).bemanAfdeling(this);
                                controller.openTaken.remove(Integer.valueOf(5));
                                return;
                            }    
@@ -128,6 +129,7 @@ public class Personeel extends Persoon
                            {
                                taak = new Taken(Taken.Taak.Afdeling2_Personeel);
                                controller.afdelingen.get(1).setTaak();
+                               controller.afdelingen.get(1).bemanAfdeling(this);
                                controller.openTaken.remove(Integer.valueOf(6));
                                return;
                            }  
@@ -225,10 +227,8 @@ public class Personeel extends Persoon
                        break;
                }
            }
-            return;
         }
         taak = new Taken(Taken.Taak.Pauze);
-        return;
     }
         
     @Override
@@ -248,6 +248,7 @@ public class Personeel extends Persoon
                         Pad pad = controller.paden.get(0);
                         if(!pad.vulProduct())
                            return;
+                        pad.wordtGevuld = false;
                         makeTaak();
                     }
                     return;
@@ -257,6 +258,7 @@ public class Personeel extends Persoon
                         Pad pad = controller.paden.get(1);
                         if(!pad.vulProduct())
                            return;
+                        pad.wordtGevuld = false;
                         makeTaak();
                     }
                     return;
@@ -266,6 +268,7 @@ public class Personeel extends Persoon
                         Pad pad = controller.paden.get(2);
                         if(!pad.vulProduct())
                            return;
+                        pad.wordtGevuld = false;
                         makeTaak();
                     }
                     return;
@@ -275,6 +278,7 @@ public class Personeel extends Persoon
                         Pad pad = controller.paden.get(3);
                         if(!pad.vulProduct())
                            return;
+                        pad.wordtGevuld = false;
                         makeTaak();
                     }
                     return;
@@ -282,18 +286,20 @@ public class Personeel extends Persoon
                     if(controller.afdelingen.size() >= 1)
                     {
                         Afdeling afdeling = controller.afdelingen.get(0);
-                        if(!afdeling.vulProduct())
+                        if(!afdeling.vulProduct()) //<- nog wat voor bedenken
                            return;
-                        makeTaak();
+                        //afdeling.onbemanAfdeling();
+                        //makeTaak();
                     }
                     return;
                 case Afdeling2_Personeel:
                     if(controller.afdelingen.size() >= 2)
                     {
                         Afdeling afdeling = controller.afdelingen.get(1);
-                        if(!afdeling.vulProduct())
+                        if(!afdeling.vulProduct()) //<-nog wat voor bedenken
                            return;
-                        makeTaak();
+                        //afdeling.onbemanAfdeling();
+                        //makeTaak();
                     }
                     return;
                 case Kassa1_Personeel:                    
@@ -315,6 +321,7 @@ public class Personeel extends Persoon
                             kassa.rekenAf();
                             return;
                         }
+                        kassa.onbemanKassa();
                         makeTaak();
                     }
                     return;
@@ -328,6 +335,7 @@ public class Personeel extends Persoon
                             kassa.rekenAf();
                             return;
                         }
+                        kassa.onbemanKassa();
                         makeTaak();
                     }
                     return;
@@ -341,6 +349,7 @@ public class Personeel extends Persoon
                             kassa.rekenAf();
                             return;
                         }
+                        kassa.onbemanKassa();
                         makeTaak();
                     }
                     return;
@@ -349,6 +358,7 @@ public class Personeel extends Persoon
                     {
                         if(!controller.voordeelstraat.vulProduct())
                             return;
+                        controller.voordeelstraat.wordtGevuld = false;
                         makeTaak();
                     }
                     return;
@@ -360,6 +370,7 @@ public class Personeel extends Persoon
                         controller.vrachtwagen = null;
                         makeTaak();
                     }
+                    return;
                 case Magazijn:
                     if(controller.vrachtwagen != null)
                     {

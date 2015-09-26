@@ -124,7 +124,7 @@ public class ProductWrapper {
             int index = Search(product, lijst);
             ProductWrapper productwrap = lijst.get(index);
             productwrap.setAantal();
-            lijst.add(index, productwrap);
+            lijst.set(index, productwrap);
             return lijst;
         }
         
@@ -140,7 +140,7 @@ public class ProductWrapper {
             int index = Search(product, lijst);
             ProductWrapper productwrap = lijst.get(index);
             productwrap.setAantal(aantal);
-            lijst.add(index, productwrap);
+            lijst.set(index, productwrap);
             return lijst;
         }
         
@@ -158,8 +158,9 @@ public class ProductWrapper {
             ProductWrapper productwrap = lijst.get(index);
             if(productwrap.getAantal()>= max)
                 throw new Exception("Stelling is vol");
+            //check db
             productwrap.setAantal();
-            lijst.add(index, productwrap);
+            lijst.set(index, productwrap);
             return lijst;
         }
         
@@ -179,7 +180,7 @@ public class ProductWrapper {
             if(productwrap.getAantal()>= max)
                 throw new Exception("Stelling is vol");
             productwrap.setAantal(aantal);
-            lijst.add(index, productwrap);
+            lijst.set(index, productwrap);
             return lijst;
         }
         
