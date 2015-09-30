@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
-
+//javaDoc volledig ingevuld
 /**
  * Afdeling is een onderdeel van de winkel
  * @author Niels
@@ -33,6 +33,11 @@ public class Afdeling extends Pad {
             });
         }
         
+        /**
+         * Geeft de punten van de afdelingen op het spelbord
+         * Kaas afdeling heeft een andere kleur dan de vers afdeling
+         * @param p punt in het brod
+         */
         @Override
         public void padPoint(Point p)
         {
@@ -62,12 +67,18 @@ public class Afdeling extends Pad {
                 
 	}
         
+        /**
+         * Op de afdeling is geen personeel aanwezig
+         */
         public void onbemanAfdeling()
         {
             this.personeel = null;
             wordtGevuld = false;
         }
-       
+        
+        /**
+         * Op de afdeling is geen personeel aanwezig
+         */
         public boolean isBemand()
         {
             return personeel != null;
@@ -78,6 +89,11 @@ public class Afdeling extends Pad {
             return naam;
         }
         
+        /**
+         * Laadt de punten waar de afdelingen komen te staan uit een .txt bestand
+         * @param productWrappers Lijst van producten op de afdelingen
+         * @return een ArrayList met punten waar de afdelingen komen te staan
+         */
         public static List<Afdeling> loadAfdeling(List<List<ProductWrapper>> productWrappers)
         {                    
             List<Afdeling> afdelingen = new ArrayList<>();

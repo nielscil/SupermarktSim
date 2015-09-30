@@ -42,11 +42,19 @@ public class Personeel extends Persoon
         }
     }
     
+    /**
+     * Geeft taken aan personeel
+     * @param taak een bepaalde taak
+     */
     public void voegTaakToe(Taken taak)
     {
         taken.add(taak);
     }
     
+    /**
+     * Maakt een taak aan voor een personeelslid
+     * Kijkt of de taak "bemand" is, zo niet 
+     */
     private void makeTaak()
     {
         if(!controller.openTaken.isEmpty())

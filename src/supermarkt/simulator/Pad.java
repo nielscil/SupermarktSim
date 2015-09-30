@@ -37,7 +37,12 @@ public class Pad extends Observable
                 padPoint(p);
             });
         }
-
+        
+        /**
+         * Kijkt of het padeen prudct bevat
+         * @param naam naam van het product
+         * @return 
+         */
         public boolean heeftProduct(String naam)
         {
             return ProductWrapper.Search(naam, producten) != -1;

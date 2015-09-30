@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+//javaDoc volledig ingevuld
 /**
  *
  * @author Niels
@@ -19,6 +19,9 @@ public class Appview
     private static final int GAP = 5;
     private SupermarkView bord;
     
+    /**
+     * Maakt GUI aan
+     */
     public Appview()
     {
         JFrame frame = new JFrame();

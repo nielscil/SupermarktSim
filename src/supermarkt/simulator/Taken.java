@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+//javaDoc volledig ingevuld
 /**
  * klasse die de taken/route bij houdt van de klanten en personeel
  * @author Niels

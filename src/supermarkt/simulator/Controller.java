@@ -93,6 +93,13 @@ public class Controller {
             }catch(Exception e){};
 	}
         
+        /**
+         * Maakt 6 personeelsleden aan
+         * lid 1 & 2 zijn overal inzetbaar
+         * lid 3 & 4 zitten/vullen de afdelingen
+         * lid 5 vult de voordeelstraat en kan achter de kassa zitten
+         * lid 6 zit standaard achter de kassa
+         */
         private void createPersoneel()
         {
             int size = personeel.size() + 1;
@@ -140,6 +147,9 @@ public class Controller {
                 personeel.add(new Personeel("personeelslid " + size, new Point(23,1), 2,taken, this)); //naam veranderen
         }
         
+        /**
+         * Klaten worden aangemaakt en in groepen gedeeld
+         */
         private void createKlant()
         {
             int size = klanten.size() + 1;
@@ -147,6 +157,10 @@ public class Controller {
             klanten.add(new Klant("Klant " + size, new Point(1,31), groepen.get(randomK), this)); //naam veranderen
         }
 
+        /**
+         * De voordeelstraat wordt aangemaakt
+         * De voordeelstraat wordt random gevuld met producten
+         */
 	private void setVoordeelstraat() 
         {
             List<ProductWrapper> voordeel = new ArrayList<>();
@@ -224,6 +238,7 @@ public class Controller {
 //                    openTaken.add(index);
         }
         
+        
         public int staanMeerPersonen(Point p,Persoon persoon)
         {
             for(Klant k : klanten)
@@ -243,6 +258,9 @@ public class Controller {
             return -1;
         }
 
+        /**
+         * De muren en deuren van de winkel worden in het veld gezet
+         */
 	private void createWinkel()
         {
             for(int i= 0; i < SupermarkView.aantalBlokjes; i++)

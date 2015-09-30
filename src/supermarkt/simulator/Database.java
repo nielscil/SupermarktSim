@@ -12,6 +12,12 @@ public class Database {
 
     private static final String dbName = "jdbc:mysql://eu-cdbr-azure-west-c.cloudapp.net:3306/supermarkt";
     
+        /**
+         * Haalt de magazijnvoorraad van producten uit de database 
+         * en stopt ze in een lijst met prudcten
+         * Deze producten hebben een naam, prijs, afdeling, en voorraad aantal
+         * @return een lijst met producten uit de magazijnvoorraad
+         */
 	public static List<ProductWrapper> getProducten()
         {
             List<ProductWrapper> products = new ArrayList<>();
@@ -43,6 +49,12 @@ public class Database {
             return products;
 	}
 
+        /**
+         * Haalt de winkelvoorraad van producten uit de database 
+         * en stopt ze in een lijst met prudcten
+         * Deze producten hebben een naam, prijs, afdeling, en voorraad aantal
+         * @return een lijst met producten uit de winkelvoorraad
+         */
 	public static List<ProductWrapper> getWinkelproducten() 
         {
             List<ProductWrapper> products = new ArrayList<>();
@@ -74,6 +86,11 @@ public class Database {
             return products;
 	}
 
+        /**
+         * Laadt soorten klanten uit de database
+         * @return een lijst van groepen
+         * deze hebben een naam en een aantal producten die ze kopen
+         */
         public static List<Groep> loadGroepen()
         {
             List<Groep> groepen = new ArrayList<>();
@@ -114,6 +131,10 @@ public class Database {
             return groepen;
         }
         
+        /**
+         * Update de voorraad van producten (mutatie)
+         * @param producten Lijst van producten die geüpdate worden in de databases
+         */
 	public static void setProducten(List<ProductWrapper> producten) 
         {
             Properties prop = new Properties();
@@ -143,6 +164,14 @@ public class Database {
             
 	}
 
+        /**
+         * Rekent gemiddeld uit hoeveel producten er van een product op 
+         * de afdeling verkocht worden
+         * Zodat er altijd genoeg is voor de klant
+         * @param afdeling wordt gebruikt om te kijken of het om de 
+         * kaas of vers afdeling gaat
+         * @return 
+         */
 	public static int getGemiddelde(Afdeling afdeling) 
         {
             int afnr = 0;
@@ -187,6 +216,12 @@ public class Database {
             return som / aantal;
 	}
         
+        /**
+         * Haalt uit de database de dag, dus dag 1, dag 2, etc.
+         * Wordt gebruikt voor de methode Database.getGemiddelde
+         * Dit wordt weergegeven als een int
+         * @return de dag (als integer)
+         */
         public static int getDay()
         {
             Properties prop = new Properties();
@@ -218,6 +253,10 @@ public class Database {
             return 0;
         }
 
+        /**
+         * Verlaagt de voorraad van producten
+         * @param product wordt in een lijst van producten gestopt
+         */
 	public static void lowerWinkelproduct(Product product) 
         {
             List<ProductWrapper> products = new ArrayList<>();

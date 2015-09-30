@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
-
+//javaDoc volledig ingevuld
 public class Kassa {
 
 	private Personeel bemand = null;
@@ -23,17 +23,28 @@ public class Kassa {
                 kassaPoint(p);
             }
         }
-
+        
+        /**
+         * Kassa wordt bemand door personeelslid
+         * @param personeel personeelslid
+         */
 	public void bemanKassa(Personeel personeel) 
         {
             this.bemand = personeel;
 	}
         
+        /**
+         * Personeel verlaat kassa
+         */
         public void onbemanKassa()
         {
             bemand = null;
         }
-
+        
+        /**
+         * Rekent de producten in de het lijstje van winkelwagen af
+         * @throws Exception als de kassa niet bemand is
+         */
 	public void rekenAf() throws Exception
         {
             if(bemand == null)
@@ -46,6 +57,11 @@ public class Kassa {
                     rij.remove(0);
             }
 	}
+        
+        /**
+         * Maakt een lijstje van alle producten, wordt gebruikt in methode 'rekenAf'
+         * @param winkelwagen lijst met producten die de klant bij zich heeft
+         */
         private void rekenAf(List<Product> winkelwagen)
         {
             int i = 0;
@@ -59,17 +75,29 @@ public class Kassa {
                 i++;
             }
         }
-
+        
+        /**
+         * Kijkt hoeveel klanten er in de rij staan voor de kassa
+         * @return het aantal klanten in de rij
+         */
 	public int checkKlanten() 
         {
             return rij.size();
 	}
         
+        /**
+         * Kijkt of de kassa open/bemand is
+         * @return boolean of de kassa bemand is
+         */
         public boolean isOpen()
         {
             return bemand != null;
         }
         
+        /**
+         * Voegt klanten toe aan de rij bij de kassa
+         * @param klant klanten in de rij bij de kassa
+         */
         public void klantBijKassa(Klant klant)
         {
             if(!rij.contains(klant))
@@ -78,6 +106,11 @@ public class Kassa {
             }
         }
         
+        /**
+         * Kijkt naar welke kassa de klant het beste toe kan
+         * @param kassas lijst van kassa's die vergeleken worden
+         * @return 
+         */
         public static int BesteKassa(List<Kassa> kassas)
         {
             List<Kassa> sortedlist = new ArrayList<>();
@@ -100,11 +133,19 @@ public class Kassa {
             return sortedlist.get(0).nummer;
         }
         
+        /**
+         * 
+         * @param p punt waar de kassa's staan, de kassa wordt aangegeven dmv SuperMarkView.DrawCell()
+         */
         public void kassaPoint(Point p)
         {
             Controller.bord[p.x][p.y].setItem(7);
         }
         
+        /**
+         * Laadt de punten waar de kassa's komen te staan uit een .txt bestand
+         * @return een ArrayList met punten waar kassa's komen te staan
+         */
         public static List<Kassa> loadKassa()
         {                    
             List<Kassa> kassas = new ArrayList<>();
@@ -129,10 +170,6 @@ public class Kassa {
             {
                 return kassas;
             }
-            //inlezen
-            //voor elke regel lees punten in
-            //maak kassa aan
-            //voeg aan lijst toe
             return kassas;
         } 
 }

@@ -1,7 +1,7 @@
 package supermarkt.simulator;
 
 import java.util.List;
-
+//javaDoc volledig ingevuld
 /**
  * Groep voor klanten
  * @author Niels
