@@ -56,6 +56,7 @@ public class Kassa {
                 Product p = winkelwagen.get(0);
                 winkelwagen.remove(0);
                 Database.lowerWinkelproduct(p);
+                Appview.Log("rekent product " + p.getNaam() + " af van klant " + rij.get(0).naam + " bij kassa " + nummer, bemand);
                 i++;
             }
         }

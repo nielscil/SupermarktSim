@@ -142,7 +142,7 @@ public class Personeel extends Persoon
                            if(t.getTaak() == Taken.Taak.Pad1)
                            {
                                taak = new Taken(Taken.Taak.Pad1);
-                               controller.afdelingen.get(0).setTaak();
+                               controller.paden.get(0).setTaak();
                                controller.openTaken.remove(Integer.valueOf(7));
                                return;
                            }
@@ -155,7 +155,7 @@ public class Personeel extends Persoon
                             if(t.getTaak() == Taken.Taak.Pad2)
                            {
                                taak = new Taken(Taken.Taak.Pad2);
-                               controller.afdelingen.get(1).setTaak();
+                               controller.paden.get(1).setTaak();
                                controller.openTaken.remove(Integer.valueOf(8));
                                return;
                            }
@@ -168,7 +168,7 @@ public class Personeel extends Persoon
                            if(t.getTaak() == Taken.Taak.Pad3)
                            {
                                taak = new Taken(Taken.Taak.Pad3);
-                               controller.afdelingen.get(2).setTaak();
+                               controller.paden.get(2).setTaak();
                                controller.openTaken.remove(Integer.valueOf(9));
                                return;
                            }
@@ -178,10 +178,10 @@ public class Personeel extends Persoon
                    case 10:
                        for(Taken t : taken)
                        {
-                           if(t.getTaak() == Taken.Taak.Pad3)
+                           if(t.getTaak() == Taken.Taak.Pad4)
                            {
                                taak = new Taken(Taken.Taak.Pad4);
-                               controller.paden.get(3).wordtGevuld = true;
+                               controller.paden.get(3).setTaak();
                                controller.openTaken.remove(Integer.valueOf(10));
                                return;
                            }
@@ -246,7 +246,7 @@ public class Personeel extends Persoon
                     if(controller.paden.size() >= 1)
                     {
                         Pad pad = controller.paden.get(0);
-                        if(!pad.vulProduct())
+                        if(!pad.vulProduct(this))
                            return;
                         pad.wordtGevuld = false;
                         makeTaak();
@@ -256,7 +256,7 @@ public class Personeel extends Persoon
                     if(controller.paden.size() >= 2)
                     {
                         Pad pad = controller.paden.get(1);
-                        if(!pad.vulProduct())
+                        if(!pad.vulProduct(this))
                            return;
                         pad.wordtGevuld = false;
                         makeTaak();
@@ -266,7 +266,7 @@ public class Personeel extends Persoon
                     if(controller.paden.size() >= 3)
                     {
                         Pad pad = controller.paden.get(2);
-                        if(!pad.vulProduct())
+                        if(!pad.vulProduct(this))
                            return;
                         pad.wordtGevuld = false;
                         makeTaak();
@@ -276,7 +276,7 @@ public class Personeel extends Persoon
                     if(controller.paden.size() >= 4)
                     {
                         Pad pad = controller.paden.get(3);
-                        if(!pad.vulProduct())
+                        if(!pad.vulProduct(this))
                            return;
                         pad.wordtGevuld = false;
                         makeTaak();
@@ -286,7 +286,7 @@ public class Personeel extends Persoon
                     if(controller.afdelingen.size() >= 1)
                     {
                         Afdeling afdeling = controller.afdelingen.get(0);
-                        if(!afdeling.vulProduct()) //<- nog wat voor bedenken
+                        if(!afdeling.vulProduct(this)) //<- nog wat voor bedenken
                            return;
                         //afdeling.onbemanAfdeling();
                         //makeTaak();
@@ -296,7 +296,7 @@ public class Personeel extends Persoon
                     if(controller.afdelingen.size() >= 2)
                     {
                         Afdeling afdeling = controller.afdelingen.get(1);
-                        if(!afdeling.vulProduct()) //<-nog wat voor bedenken
+                        if(!afdeling.vulProduct(this)) //<-nog wat voor bedenken
                            return;
                         //afdeling.onbemanAfdeling();
                         //makeTaak();
@@ -356,7 +356,7 @@ public class Personeel extends Persoon
                 case Voordeelstraat:
                     if(controller.voordeelstraat != null)
                     {
-                        if(!controller.voordeelstraat.vulProduct())
+                        if(!controller.voordeelstraat.vulProduct(this))
                             return;
                         controller.voordeelstraat.wordtGevuld = false;
                         makeTaak();
@@ -367,6 +367,7 @@ public class Personeel extends Persoon
                     {
                         if(!controller.vrachtwagen.ontladen())
                             return;
+                        Appview.Log("Heeft vrachtwagen gelost", this);
                         controller.vrachtwagen = null;
                         makeTaak();
                     }
@@ -378,12 +379,13 @@ public class Personeel extends Persoon
                         return;
                     }
                     List<Product> producten = new ArrayList<>();
-                    List<ProductWrapper> magazijn = Database.getProducten();
+                    List<ProductWrapper> magazijn = Controller.voorraad.getProducts();
                     magazijn.stream().forEach((p)->
                     {
                         if(p.getAantal() < 5)
                             producten.add(p.getProduct());
                     });
+                    Appview.Log("Vraagt vrachtwagen aan", this);
                     controller.requestVrachtwagen(producten);
                     return;
                 case Pauze:

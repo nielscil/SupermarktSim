@@ -83,7 +83,7 @@ public class Klant extends Persoon {
             {
                 try
                 {
-                    winkelwagen.add(huidigePad.geefProduct(product));
+                    winkelwagen.add(huidigePad.geefProduct(product,this));
                 }
                 catch(Exception e)
                 {
