@@ -24,6 +24,7 @@ public class Pad extends Observable
          * Maakt een nieuw pad aan
          * @param plaats de plek van het pad in de winkel 
          * @param producten de producten met aantallen in dit pad
+         * @param logString de string die wordt gebruikt om aan te geven dat het in dit pad gebeurd
          * @param max maximaal aantal per product in dit pad
          */
         public Pad(List<Point> plaats,List<ProductWrapper> producten,int max,String logString)
@@ -47,6 +48,7 @@ public class Pad extends Observable
         /**
          * Geef een product vanuit het pad aan de klant
          * @param product het gevraagde product
+         * @param klant de klant die het product wil
          * @return het product wat wordt gegeven
          * @throws Exception wanneer de voordeelstraat vol zit
          */
@@ -61,6 +63,7 @@ public class Pad extends Observable
 
         /**
          * Vul een product in het pad door een personeelslid
+         * @param p het personeelslid die het pad vult
          * @return true als hij klaar is met vullen , anders false
          * @throws Exception wanneer de voordeelstraat vol zit
          */

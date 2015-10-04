@@ -147,14 +147,13 @@ public class Database {
 	public static int getGemiddelde(Afdeling afdeling) 
         {
             int afnr = 0;
-            if(afdeling.getNaam() == "Kaas")
+            if(afdeling.getNaam().equals("Kaas"))
             {
                afnr = 1;
             }else
             {
                afnr = 2;
             }
-            int som = 0;
             int aantal = 0;
             Properties prop = new Properties();
             prop.put("zeroDateTimeBehavior","convertToNull");
@@ -168,8 +167,7 @@ public class Database {
                 ResultSet rs = statement.executeQuery("SELECT CEIL((COUNT(product.naam) / (SELECT max(dag) FROM voorraadMutatie))) AS Gemiddeld FROM product INNER JOIN voorraadMutatie On product.naam = voorraadMutatie.product WHERE product.afdeling = " + afnr + " AND aantal= \"-1\" GROUP BY product.naam ORDER BY Gemiddeld DESC");
                 while(rs.next())
                 {
-                    som += rs.getInt("Gemiddeld");
-                    aantal++;
+                    aantal = rs.getInt("Gemiddeld");
                 }
             } 
             catch (Exception e)
@@ -184,8 +182,8 @@ public class Database {
                 }catch(Exception e){};
             }
             if(aantal == 0)
-                return -1;
-            return som / aantal;
+                return 10;
+            return aantal;
 	}
         
         public static int getDay()

@@ -50,7 +50,6 @@ public class Afdeling extends Pad {
          * Deze methode aanroepen op het moment dat een personeelslid 
          * de afdeling wil gaan bedienen.
          * @param personeel personeelslid die de afdeling bemand
-         * @throws Exception wanneer afdeling al bemand is
          */
 	public void bemanAfdeling(Personeel personeel)
         {
