@@ -62,6 +62,11 @@ public class Afdeling extends Pad {
                 
 	}
         
+        public void setMax(int max)
+        {
+            maxProduct = max;
+        }
+        
         public void onbemanAfdeling()
         {
             this.personeel = null;
@@ -95,7 +100,7 @@ public class Afdeling extends Pad {
                         MatchResult result = sc.match();
                         afdeling.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                     }
-                    afdelingen.add(new Afdeling(naam, afdeling, productWrappers.get(i) ,4));
+                    afdelingen.add(new Afdeling(naam, afdeling, productWrappers.get(i) ,10));
                     i++;
                     naam = "Vers";
                     sc.skip("\\s*");

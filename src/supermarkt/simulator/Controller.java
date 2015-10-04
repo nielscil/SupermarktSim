@@ -66,7 +66,7 @@ public class Controller {
             {
                 createPersoneel();
             }
-            while(klanten.size() < maxKlanten && ronde > 20)
+            while(klanten.size() < 1 && ronde > 20)
             {
                 createKlant();
                 break;
@@ -197,19 +197,19 @@ public class Controller {
             }
             for(Afdeling af : afdelingen)
             {
-                if(af.productVullen() != null && !af.wordtGevuld || !af.isBemand()) //check mensen
+                if(af.productChecken() != null && !af.wordtGevuld || !af.isBemand()) //check mensen
                     if(!openTaken.contains(index))
                         openTaken.add(index);
                 index++;
             }
             for(Pad p : paden)
             {
-                if(p.productVullen() != null && !p.wordtGevuld)
+                if(p.productChecken() != null && !p.wordtGevuld)
                     if(!openTaken.contains(index))
                         openTaken.add(index);
                 index++;
             }
-            if(voordeelstraat.productVullen() != null && !voordeelstraat.wordtGevuld)
+            if(voordeelstraat.productChecken() != null && !voordeelstraat.wordtGevuld)
                 if(!openTaken.contains(index))
                     openTaken.add(index);
             index++;
@@ -281,6 +281,10 @@ public class Controller {
             List<List<ProductWrapper>> pws = ProductWrapper.loadProductWrappers();
             paden = Pad.loadPad(pws);
             afdelingen = Afdeling.loadAfdeling(pws);
+            afdelingen.stream().forEach((k)->
+            {
+                k.setMax(Database.getGemiddelde(k));
+            });
             setVoordeelstraat();
 	}
         

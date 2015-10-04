@@ -54,8 +54,9 @@ public class Pad extends Observable
         {
                 int index = ProductWrapper.Search(product, producten);
                 ProductWrapper pw = this.producten.get(index);
+                Product p = this.producten.get(index).pakEen();
                 Appview.Log("pakt " + pw.getProductNaam() + " uit " + logString, klant);
-		return this.producten.get(index).pakEen();
+		return p;
 	}
 
         /**
@@ -139,12 +140,25 @@ public class Pad extends Observable
             return paden;
         } 
         
-        public String productVullen()
+        public String productChecken()
         {
             
             for(ProductWrapper product : producten)
             {
                 if(product.getAantal() < 3)
+                {
+                    return product.getProductNaam();
+                }
+            }
+            return null;
+        }
+        
+        public String productVullen()
+        {
+            
+            for(ProductWrapper product : producten)
+            {
+                if(product.getAantal() < maxProduct)
                 {
                     return product.getProductNaam();
                 }

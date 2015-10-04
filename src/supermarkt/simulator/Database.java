@@ -165,7 +165,7 @@ public class Database {
             {
                 conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT (COUNT(product.naam) / COUNT(dag)) AS Gemiddeld FROM product INNER JOIN voorraadMutatie On product.naam = voorraadMutatie.product WHERE product.afdeling = " + afnr + " GROUP BY product.naam,dag");
+                ResultSet rs = statement.executeQuery("SELECT CEIL((COUNT(product.naam) / (SELECT max(dag) FROM voorraadMutatie))) AS Gemiddeld FROM product INNER JOIN voorraadMutatie On product.naam = voorraadMutatie.product WHERE product.afdeling = " + afnr + " AND aantal= \"-1\" GROUP BY product.naam ORDER BY Gemiddeld DESC");
                 while(rs.next())
                 {
                     som += rs.getInt("Gemiddeld");
@@ -231,7 +231,7 @@ public class Database {
             {
                 conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT * FROM (SELECT winkelVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\")tblTmp) WHERE naam = \""+ product.getNaam()+ "\";");
+                //statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT * FROM (SELECT winkelVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\")tblTmp) WHERE naam = \""+ product.getNaam()+ "\";");
                 statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (-1," + Controller.DAG + ",\"" + product.getNaam() + "\")");
             }
             catch (Exception e)
