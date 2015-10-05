@@ -24,6 +24,7 @@ public class Pad extends Observable
          * Maakt een nieuw pad aan
          * @param plaats de plek van het pad in de winkel 
          * @param producten de producten met aantallen in dit pad
+         * @param logString de string die wordt gebruikt om aan te geven dat het in dit pad gebeurd
          * @param max maximaal aantal per product in dit pad
          */
         public Pad(List<Point> plaats,List<ProductWrapper> producten,int max,String logString)
@@ -52,6 +53,7 @@ public class Pad extends Observable
         /**
          * Geef een product vanuit het pad aan de klant
          * @param product het gevraagde product
+         * @param klant de klant die het product wil
          * @return het product wat wordt gegeven
          * @throws Exception wanneer de voordeelstraat vol zit
          */
@@ -59,12 +61,14 @@ public class Pad extends Observable
         {
                 int index = ProductWrapper.Search(product, producten);
                 ProductWrapper pw = this.producten.get(index);
+                Product p = this.producten.get(index).pakEen();
                 Appview.Log("pakt " + pw.getProductNaam() + " uit " + logString, klant);
-		return this.producten.get(index).pakEen();
+		return p;
 	}
 
         /**
          * Vul een product in het pad door een personeelslid
+         * @param p het personeelslid die het pad vult
          * @return true als hij klaar is met vullen , anders false
          * @throws Exception wanneer de voordeelstraat vol zit
          */
@@ -158,12 +162,26 @@ public class Pad extends Observable
          * Als er minder dan 3 producten in het schap liggen, worden deze bijgevuld
          * @return de productnaam van het product wat bijgevuld moet worden
          */
-        public String productVullen()
+
+        public String productChecken()
         {
             
             for(ProductWrapper product : producten)
             {
                 if(product.getAantal() < 3)
+                {
+                    return product.getProductNaam();
+                }
+            }
+            return null;
+        }
+        
+        public String productVullen()
+        {
+            
+            for(ProductWrapper product : producten)
+            {
+                if(product.getAantal() < maxProduct)
                 {
                     return product.getProductNaam();
                 }

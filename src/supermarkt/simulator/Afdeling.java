@@ -55,7 +55,6 @@ public class Afdeling extends Pad {
          * Deze methode aanroepen op het moment dat een personeelslid 
          * de afdeling wil gaan bedienen.
          * @param personeel personeelslid die de afdeling bemand
-         * @throws Exception wanneer afdeling al bemand is
          */
 	public void bemanAfdeling(Personeel personeel)
         {
@@ -67,9 +66,11 @@ public class Afdeling extends Pad {
                 
 	}
         
-        /**
-         * Op de afdeling is geen personeel aanwezig
-         */
+        public void setMax(int max)
+        {
+            maxProduct = max;
+        }
+
         public void onbemanAfdeling()
         {
             this.personeel = null;
@@ -111,7 +112,7 @@ public class Afdeling extends Pad {
                         MatchResult result = sc.match();
                         afdeling.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                     }
-                    afdelingen.add(new Afdeling(naam, afdeling, productWrappers.get(i) ,4));
+                    afdelingen.add(new Afdeling(naam, afdeling, productWrappers.get(i) ,10));
                     i++;
                     naam = "Vers";
                     sc.skip("\\s*");
