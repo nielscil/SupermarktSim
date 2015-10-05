@@ -25,7 +25,7 @@ public class Afdeling extends Pad {
          */
         public Afdeling(String naam,List<Point> plaats, List<ProductWrapper> producten,int max)
         {
-            super(plaats,producten,max);
+            super(plaats,producten,max,naam + " Afdeling");
             this.naam = naam;
             plaats.stream().forEach((p)->
             {

@@ -51,6 +51,10 @@ public class Klant extends Persoon {
             }
 	}
         
+        /**
+         * Zet de beginpositie van de klanten (bij de ingang)
+         * @param p beginpunt
+         */
         @Override
         protected void setPostition(Point p)
         {
@@ -83,7 +87,7 @@ public class Klant extends Persoon {
             {
                 try
                 {
-                    winkelwagen.add(huidigePad.geefProduct(product));
+                    winkelwagen.add(huidigePad.geefProduct(product,this));
                 }
                 catch(Exception e)
                 {
@@ -94,6 +98,10 @@ public class Klant extends Persoon {
             return pakken;
 	}
         
+        /**
+         * Klant gaat de schappen langs voor producten in het boodschappenlijstje
+         * Als de winkelwagen gevuld is, kijkt de klant naar welke kassa hij moet om af te rekenen
+         */
         private void makeTaak()
         {
             if(!boodschappenlijst.isEmpty())
@@ -162,7 +170,11 @@ public class Klant extends Persoon {
             }
             taak = new Taken(Taken.Taak.Uitgang);
         }
-                
+         
+        /**
+         * 
+         * @throws Exception 
+         */
         @Override
         public void move() throws Exception
         {

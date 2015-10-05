@@ -14,7 +14,7 @@ public class Vrachtwagen {
         {
             benodigdeProducten.stream().forEach((p)->
             {
-                lading.add(new ProductWrapper(p,20));
+                lading.add(new ProductWrapper(p,50));
             });
             this.aangeroepen = aangeroepen + 10;
         }
@@ -22,10 +22,10 @@ public class Vrachtwagen {
         public boolean ontladen()
         {
             registeerLading();
-            ProductWrapper pw = lading.get(0);
-            lading.remove(0);
             if(lading.isEmpty())
                 return true;
+            ProductWrapper pw = lading.get(0);
+            lading.remove(0);
             return false;
         }
 
@@ -33,7 +33,8 @@ public class Vrachtwagen {
         {
             if(!isGeregisteerd)
             {
-                Database.setProducten(lading);
+                //Database.setProducten(lading);
+                Controller.voorraad.setProducten(lading);
                 isGeregisteerd = true;
             }       
 	}

@@ -158,7 +158,6 @@ public class ProductWrapper {
             ProductWrapper productwrap = lijst.get(index);
             if(productwrap.getAantal()>= max)
                 throw new Exception("Stelling is vol");
-            //check db
             productwrap.setAantal();
             lijst.set(index, productwrap);
             return lijst;

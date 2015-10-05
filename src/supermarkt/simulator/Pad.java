@@ -18,6 +18,7 @@ public class Pad extends Observable
 	protected int maxProduct;
 	protected List<Point> plaats;
         protected boolean wordtGevuld = false;
+        private String logString = "";
         
         /**
          * Maakt een nieuw pad aan
@@ -25,11 +26,12 @@ public class Pad extends Observable
          * @param producten de producten met aantallen in dit pad
          * @param max maximaal aantal per product in dit pad
          */
-        public Pad(List<Point> plaats,List<ProductWrapper> producten,int max)
+        public Pad(List<Point> plaats,List<ProductWrapper> producten,int max,String logString)
         {
             this.plaats = plaats;
             this.producten = new ArrayList<>(producten);
             this.maxProduct = max;
+            this.logString = logString;
             this.setChanged();
             this.notifyObservers();
             plaats.stream().forEach((p)->
@@ -39,7 +41,7 @@ public class Pad extends Observable
         }
         
         /**
-         * Kijkt of het padeen prudct bevat
+         * Kijkt of het pad een prudct bevat
          * @param naam naam van het product
          * @return 
          */
@@ -53,9 +55,11 @@ public class Pad extends Observable
          * @return het product wat wordt gegeven
          * @throws Exception wanneer de voordeelstraat vol zit
          */
-	public Product geefProduct(String product) throws Exception
+	public Product geefProduct(String product,Klant klant) throws Exception
         {
                 int index = ProductWrapper.Search(product, producten);
+                ProductWrapper pw = this.producten.get(index);
+                Appview.Log("pakt " + pw.getProductNaam() + " uit " + logString, klant);
 		return this.producten.get(index).pakEen();
 	}
 
@@ -64,7 +68,7 @@ public class Pad extends Observable
          * @return true als hij klaar is met vullen , anders false
          * @throws Exception wanneer de voordeelstraat vol zit
          */
-	public boolean vulProduct() throws Exception
+	public boolean vulProduct(Personeel p) throws Exception
         {
             String product = productVullen();
             
@@ -72,9 +76,18 @@ public class Pad extends Observable
             {
                 return true;
             }
+            if(!Controller.voorraad.checkProduct(product))
+            {
+                if(!Controller.openTaken.contains(13))
+                        Controller.openTaken.add(13);
+                return true;
+            }
+            Appview.Log("Heeft " + product + " bij gevuld in " + logString, p);
             try
             {
-                this.producten = ProductWrapper.Add(productVullen(), producten,maxProduct);
+                Controller.voorraad.lowerProduct(product);
+                //Database.setWinkelproduct(product);
+                this.producten = ProductWrapper.Add(product, producten,maxProduct);
             }
             catch(Exception e)
             {
@@ -98,11 +111,21 @@ public class Pad extends Observable
             wordtGevuld = false;
         }
         
+        /**
+         * Maakt van bepaalde punten op het veld een kassa
+         * de punten worden uit de methode Pad.loadPad gehaald
+         * @param p 
+         */
         protected void padPoint(Point p)
         {
             Controller.bord[p.x][p.y].setItem(8);    
         }
         
+        /**
+         * Laadt de punten waar de paden komen te staan uit een .txt bestand
+         * @param pws Lijst met producten in de paden
+         * @return een lijst met punten
+         */
         public static List<Pad> loadPad(List<List<ProductWrapper>> pws)
         {                    
             List<Pad> paden = new ArrayList<>();
@@ -119,7 +142,7 @@ public class Pad extends Observable
                         MatchResult result = sc.match();
                         pad.add(new Point(Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))));
                     }
-                    paden.add(new Pad(pad, pws.get(i) ,4));
+                    paden.add(new Pad(pad, pws.get(i) ,10,"Pad " + (i - 1)));
                     i++;
                     sc.skip("\\s*");
                 }
@@ -131,6 +154,10 @@ public class Pad extends Observable
             return paden;
         } 
         
+        /**
+         * Als er minder dan 3 producten in het schap liggen, worden deze bijgevuld
+         * @return de productnaam van het product wat bijgevuld moet worden
+         */
         public String productVullen()
         {
             

@@ -4,13 +4,14 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.SwingWorker;
 
 public class Controller {
 
 	private final int endDay;
         public static int DAG = 0;
         private final int maxKlanten = 10;
-        private int ronde = 0;
+        private static int ronde = 0;
         private Appview view;
 	private List<Klant> klanten = new ArrayList<>();
 	private List<Personeel> personeel = new ArrayList<>();
@@ -23,13 +24,16 @@ public class Controller {
 	public Vrachtwagen vrachtwagen = null;
         public static List<Integer> openTaken = new ArrayList<>();
         public static BordPunt[][] bord = new BordPunt[SupermarkView.aantalBlokjes][SupermarkView.aantalBlokjes];
+        public static Voorraad voorraad;
+        public Simulatie sim;
         
         public Controller()
         {
-            view = new Appview();
             DAG = Database.getDay();
             producten = Database.getProductTypes();
             groepen = Database.loadGroepen();
+            voorraad = new Voorraad();
+            view = new Appview(this,DAG);
             if(producten.isEmpty() || groepen.isEmpty())
                 System.exit(1);
             createWinkel();
@@ -38,10 +42,8 @@ public class Controller {
                 Thread.sleep(1000);
             }catch(Exception e){};
             endDay = 8000;
-            while(ronde <= endDay) //andere thread
-            {
-                makeMove();
-            }
+            sim = new Simulatie();
+            sim.execute();
         }
         
         public void deletePersoon(Persoon persoon)
@@ -52,7 +54,6 @@ public class Controller {
                 personeel.remove(persoon);
         }
 
-        
         public void requestVrachtwagen(List<Product> benodigd)
         {
             vrachtwagen = new Vrachtwagen(benodigd, ronde);
@@ -238,6 +239,10 @@ public class Controller {
 //                    openTaken.add(index);
         }
         
+        public static int getRonde()
+        {
+            return ronde;
+        }
         
         public int staanMeerPersonen(Point p,Persoon persoon)
         {
@@ -295,4 +300,54 @@ public class Controller {
             afdelingen = Afdeling.loadAfdeling(pws);
             setVoordeelstraat();
 	}
+        
+        public class Simulatie extends SwingWorker<BordPunt[][], BordPunt[][]>
+        {
+            private boolean pauze = false;
+            
+            public void setPauze()
+            {
+                pauze = !pauze;
+            }
+            
+            public synchronized void resume() 
+            {
+                pauze = false;
+                this.notify();
+            }
+            
+            @Override
+            protected void process(List<BordPunt[][]> chunks)
+            {
+                super.process(chunks); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            protected BordPunt[][] doInBackground() throws Exception
+            {
+                while(ronde <= endDay) //andere thread
+                {
+                    if(pauze)
+                    {
+                        try 
+                        {
+                            synchronized(this)
+                            {
+                                wait(1000);
+                            }
+                        } 
+                        catch (InterruptedException ex) 
+                        {
+                            System.out.println("Background interrupted");
+                        }
+                    }
+                    else
+                    {
+                        makeMove();
+                    }                 
+                }
+                return bord;
+            }
+            
+        }
 }

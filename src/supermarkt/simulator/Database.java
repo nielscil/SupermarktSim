@@ -148,7 +148,8 @@ public class Database {
                 Statement statement = conn.createStatement();
                 for(ProductWrapper pw : producten)
                 {
-                    statement.executeUpdate("UPDATE product SET magazijnVoorraad = " + pw.getAantal()  + " WHERE naam = \""+ pw.getProductNaam() + "\";INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (" + pw.getAantal() + "," + Controller.DAG + ",\"" + pw.getProductNaam() + "\")");
+                    statement.executeUpdate("UPDATE product SET magazijnVoorraad = \"" + pw.getAantal()  + " WHERE naam = \""+ pw.getProductNaam() + "\";");
+                    //statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (" + pw.getAantal() + "," + Controller.DAG + ",\"" + pw.getProductNaam() + "\")");
                 }
             } 
             catch (Exception e)
@@ -236,7 +237,7 @@ public class Database {
                 ResultSet rs = statement.executeQuery("SELECT dag FROM voorraadmutatie ORDER BY dag DESC LIMIT 1");
                 while(rs.next())
                 {
-                    return rs.getInt("dag");
+                    return rs.getInt("dag") + 1;
                 }
             } 
             catch (Exception e)
@@ -269,10 +270,12 @@ public class Database {
             {
                 conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT winkelVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam()+ "\";INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (-1," + Controller.DAG + ",\"" + product.getNaam() + "\")");
-            } 
+                statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT * FROM (SELECT winkelVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\")tblTmp) WHERE naam = \""+ product.getNaam()+ "\";");
+                statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (-1," + Controller.DAG + ",\"" + product.getNaam() + "\")");
+            }
             catch (Exception e)
             {
+                String test = e.getMessage();
             }
             finally
             {
@@ -283,7 +286,7 @@ public class Database {
             }
 	}
 
-	public static void setWinkelproduct(Product product) 
+	public static void setWinkelproduct(List<ProductWrapper> producten) 
         {
             Properties prop = new Properties();
             prop.put("zeroDateTimeBehavior","convertToNull");
@@ -294,7 +297,12 @@ public class Database {
             {
                 conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT winkelVoorraad + 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam() + "\"");
+                for(ProductWrapper pw : producten)
+                {
+                    statement.executeUpdate("UPDATE product SET winkelVoorraad = \"" + pw.getAantal()  + " WHERE naam = \""+ pw.getProductNaam() + "\";");
+                    //statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (" + pw.getAantal() + "," + Controller.DAG + ",\"" + pw.getProductNaam() + "\")");
+                }
+                //statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT * FROM (SELECT winkelVoorraad + 1 FROM product WHERE naam = \"" + product + "\")tblTmp) WHERE naam = \""+ product + "\"");
             } 
             catch (Exception e)
             {
@@ -306,7 +314,7 @@ public class Database {
                     conn.close();
                 }catch(Exception e){};
             }
-            lowerProducten(product);
+            //lowerProducten(product);
 	}
 
 	public static double getOmzet() 
@@ -369,8 +377,8 @@ public class Database {
             }
             return products;
 	}
-
-	private static void lowerProducten(Product product) 
+        
+        public static boolean checkProduct(String product)
         {
             Properties prop = new Properties();
             prop.put("zeroDateTimeBehavior","convertToNull");
@@ -381,7 +389,38 @@ public class Database {
             {
                 conn = DriverManager.getConnection(dbName, prop);
                 Statement statement = conn.createStatement();
-                statement.executeUpdate("UPDATE product SET magazijnVoorraad = (SELECT magazijnVoorraad - 1 FROM product WHERE naam = \"" + product.getNaam() + "\") WHERE naam = \""+ product.getNaam() + "\"");
+                ResultSet rs = statement.executeQuery("SELECT magazijnVoorraad FROM product WHERE = \"" + product + "\"" );
+                while(rs.next())
+                {
+                    return rs.getInt("magazijnVoorraad") > 0;
+                }
+            } 
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                try
+                {
+                    conn.close();
+                }catch(Exception e){};
+            }
+            return false;
+        }
+
+	private static void lowerProducten(String product) 
+        {
+            Properties prop = new Properties();
+            prop.put("zeroDateTimeBehavior","convertToNull");
+            prop.put("user", "bba54e4fa78020");
+            prop.put("password", "ca954bed");
+            Connection conn = null;
+            try
+            {
+                conn = DriverManager.getConnection(dbName, prop);
+                Statement statement = conn.createStatement();
+                statement.executeUpdate("UPDATE product SET magazijnVoorraad = (SELECT * FROM (SELECT magazijnVoorraad - 1 FROM product WHERE naam = \"" + product + "\")tblTmp) WHERE naam = \""+ product + "\"");
             } 
             catch (Exception e)
             {
