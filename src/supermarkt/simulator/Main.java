@@ -6,11 +6,15 @@
 package supermarkt.simulator;
 
 /**
- *
+ * Startklasse
  * @author Niels
  */
 public class Main
 {
+    /**
+     * main methode 
+     * @param args geen
+     */
     public static void main(String[] args)
     {
         Controller controller = new Controller();

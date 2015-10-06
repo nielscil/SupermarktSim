@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
 //javaDoc volledig ingevuld
+/**
+ * De kassa klasse
+ * @author Niels
+ */
 public class Kassa {
 
 	private Personeel bemand = null;
@@ -14,6 +18,11 @@ public class Kassa {
 	private final int nummer;
 	private final List<Point> plaats;
         
+        /**
+         * Maakt de kassa aan
+         * @param nummer het kassanummer
+         * @param plaats plaats van de kassa
+         */
         public Kassa(int nummer,List<Point> plaats)
         {
             this.nummer = nummer;
@@ -110,7 +119,7 @@ public class Kassa {
         /**
          * Kijkt naar welke kassa de klant het beste toe kan
          * @param kassas lijst van kassa's die vergeleken worden
-         * @return 
+         * @return de index van de beste kassa
          */
         public static int BesteKassa(List<Kassa> kassas)
         {
@@ -135,7 +144,7 @@ public class Kassa {
         }
         
         /**
-         * 
+         * Zet kassa punt
          * @param p punt waar de kassa's staan, de kassa wordt aangegeven dmv SuperMarkView.DrawCell()
          */
         public void kassaPoint(Point p)

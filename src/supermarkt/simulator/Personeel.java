@@ -4,6 +4,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Personeel klasse
+ * @author Niels
+ */
 public class Personeel extends Persoon 
 {
 
@@ -11,12 +15,27 @@ public class Personeel extends Persoon
     private List<Taken> taken = new ArrayList<>();
     private Taken taak;
     
+    /**
+     * Maakt personeel aan
+     * @param naam naam van personeel
+     * @param beginpositie begin positie van het personeel
+     * @param maxTaken maximaal aantal taken
+     * @param controller de controller klasse
+     */
     public Personeel(String naam, Point beginpositie, int maxTaken,Controller controller)
     {
         super(naam, beginpositie,controller);
         this.maxTaken = maxTaken;
     }
     
+    /**
+     * Maakt personeel aan
+     * @param naam naam van personeel
+     * @param beginpositie begin positie van het personeel
+     * @param maxTaken maximaal aantal taken
+     * @param taken de taken
+     * @param controller de controller klasse
+     */
     public Personeel(String naam, Point beginpositie, int maxTaken,List<Taken> taken,Controller controller)
     {
         super(naam, beginpositie,controller);
@@ -24,6 +43,10 @@ public class Personeel extends Persoon
         this.taken = taken;
     }
     
+    /**
+     * zet de positie van het persoon op het bord
+     * @param p de positie
+     */
     @Override
     protected void setPostition(Point p)
     {
@@ -238,7 +261,11 @@ public class Personeel extends Persoon
         }
         taak = new Taken(Taken.Taak.Pauze);
     }
-        
+    
+    /**
+     * Move van het personeel
+     * @throws Exception 
+     */
     @Override
     public void move() throws Exception
     {

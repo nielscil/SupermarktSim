@@ -16,11 +16,18 @@ public class Voorraad
 {
     private List<ProductWrapper> voorraad = new ArrayList<>();
     
+    /**
+     * Haalt de voorraad uit de database
+     */
     public Voorraad()
     {
         this.voorraad = Database.getProducten();
     }
     
+    /**
+     * Verlaagt de voorraad van een product
+     * @param product product waar de voorraad van verlaagd wordt
+     */
     public void lowerProduct(String product)
     {
         int pos = ProductWrapper.Search(product, voorraad);
@@ -36,6 +43,7 @@ public class Voorraad
         }
     }
     
+    
     public void setProducten(List<ProductWrapper> producten)
     {
         producten.stream().forEach((pw)->
@@ -46,11 +54,20 @@ public class Voorraad
         });
     }
     
+    /**
+     * Geeft een lijst van producten
+     * @return voorraad van producten
+     */
     public List<ProductWrapper> getProducts()
     {
         return voorraad;
     }
     
+    /**
+     * Kijkt of het product in de voorraad aanwezig is 
+     * @param product product
+     * @return de voorraad (0 of hoger)
+     */
     public boolean checkProduct(String product)
     {
         int pos = ProductWrapper.Search(product, voorraad);

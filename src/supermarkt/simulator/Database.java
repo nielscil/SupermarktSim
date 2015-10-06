@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Klasse die contact heeft met de Database 
+ * @author Niels
+ */
 public class Database {
 
     private static final String dbName = "jdbc:mysql://eu-cdbr-azure-west-c.cloudapp.net:3306/supermarkt";
     
         /**
          * Haalt de magazijnvoorraad van producten uit de database 
-         * en stopt ze in een lijst met prudcten
+         * en stopt ze in een lijst met producten
          * Deze producten hebben een naam, prijs, afdeling, en voorraad aantal
          * @return een lijst met producten uit de magazijnvoorraad
          */
@@ -51,7 +55,7 @@ public class Database {
 
         /**
          * Haalt de winkelvoorraad van producten uit de database 
-         * en stopt ze in een lijst met prudcten
+         * en stopt ze in een lijst met producten
          * Deze producten hebben een naam, prijs, afdeling, en voorraad aantal
          * @return een lijst met producten uit de winkelvoorraad
          */
@@ -171,7 +175,7 @@ public class Database {
          * Zodat er altijd genoeg is voor de klant
          * @param afdeling wordt gebruikt om te kijken of het om de 
          * kaas of vers afdeling gaat
-         * @return 
+         * @return het gemiddelde
          */
 	public static int getGemiddelde(Afdeling afdeling) 
         {
@@ -284,6 +288,10 @@ public class Database {
             }
 	}
 
+        /**
+         * Zet de winkelproducten in de database
+         * @param producten de producten
+         */
 	public static void setWinkelproduct(List<ProductWrapper> producten) 
         {
             Properties prop = new Properties();
@@ -314,7 +322,11 @@ public class Database {
             }
             //lowerProducten(product);
 	}
-
+        
+        /**
+         * Haalt de omzet op
+         * @return de omzet
+         */
 	public static double getOmzet() 
         {
             Properties prop = new Properties();
@@ -346,6 +358,10 @@ public class Database {
             return 0.0;
 	}
 
+        /**
+         * Haalt de product types op
+         * @return lijst met producten
+         */
 	public static List<Product> getProductTypes() {
             List<Product> products = new ArrayList<>();
             Properties prop = new Properties();
@@ -376,6 +392,11 @@ public class Database {
             return products;
 	}
         
+        /**
+         * Checkt of product nog op voorraad is
+         * @param product product
+         * @return true als op voorraad , false anders
+         */
         public static boolean checkProduct(String product)
         {
             Properties prop = new Properties();
@@ -407,6 +428,10 @@ public class Database {
             return false;
         }
 
+        /**
+         * verlaagt magazijnproducten
+         * @param product product
+         */
 	private static void lowerProducten(String product) 
         {
             Properties prop = new Properties();
