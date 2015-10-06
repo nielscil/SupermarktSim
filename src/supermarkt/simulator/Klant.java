@@ -172,7 +172,7 @@ public class Klant extends Persoon {
         }
          
         /**
-         * 
+         * Maakt de move
          * @throws Exception 
          */
         @Override

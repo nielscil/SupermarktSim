@@ -183,6 +183,10 @@ public class ProductWrapper {
             return lijst;
         }
         
+        /**
+         * Laad de productwrappers in
+         * @return de lijst met de lijst van de productwrappers
+         */
         public static List<List<ProductWrapper>> loadProductWrappers()
         {
             List<ProductWrapper> pws = Database.getWinkelproducten();
@@ -208,7 +212,4 @@ public class ProductWrapper {
             });
             return padPws;
         }
-        
-        
-
 }
