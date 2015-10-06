@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -19,6 +20,8 @@ import static org.junit.Assert.*;
  */
 public class PersoneelTest
 {
+    private static Personeel ps;
+    private static Controller controller;
     
     public PersoneelTest()
     {
@@ -27,6 +30,8 @@ public class PersoneelTest
     @BeforeClass
     public static void setUpClass()
     {
+        controller = new Controller();
+        ps = new Personeel("Test Personeel 1", new Point(1,31), 5, controller);
     }
     
     @AfterClass
@@ -51,11 +56,10 @@ public class PersoneelTest
     public void testSetPostition()
     {
         System.out.println("setPostition");
-        Point p = null;
-        Personeel instance = null;
+        Point p = new Point(1,30);
+        Personeel instance = ps;
         instance.setPostition(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(10, Controller.bord[p.x][p.y].getItem());
     }
 
     /**
@@ -65,24 +69,21 @@ public class PersoneelTest
     public void testVoegTaakToe()
     {
         System.out.println("voegTaakToe");
-        Taken taak = null;
-        Personeel instance = null;
+        Taken taak = new Taken(Taken.Taak.Pad1);
+        Personeel instance = ps;
         instance.voegTaakToe(taak);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(taak, ps.taken.get(0)); //Maak public voor test
     }
 
     /**
      * Test of move method, of class Personeel.
      */
-    @Test
+    @Ignore @Test
     public void testMove() throws Exception
     {
         System.out.println("move");
-        Personeel instance = null;
+        Personeel instance = ps;
         instance.move();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

@@ -19,7 +19,8 @@ import static org.junit.Assert.*;
  */
 public class TakenTest
 {
-    
+    private static Taken taak;
+    private static Controller controller;
     public TakenTest()
     {
     }
@@ -27,6 +28,8 @@ public class TakenTest
     @BeforeClass
     public static void setUpClass()
     {
+        taak = new Taken(Taken.Taak.Pad1);
+        controller = new Controller();
     }
     
     @AfterClass
@@ -51,12 +54,10 @@ public class TakenTest
     public void testGetEindPunt()
     {
         System.out.println("getEindPunt");
-        Taken instance = null;
-        Point expResult = null;
+        Taken instance = taak;
+        Point expResult = new Point(8,8);
         Point result = instance.getEindPunt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -66,12 +67,10 @@ public class TakenTest
     public void testGetTaak()
     {
         System.out.println("getTaak");
-        Taken instance = null;
-        Taken.Taak expResult = null;
+        Taken instance = taak;
+        Taken.Taak expResult = Taken.Taak.Pad1;
         Taken.Taak result = instance.getTaak();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -81,13 +80,11 @@ public class TakenTest
     public void testGetTaakBeschrijving() throws Exception
     {
         System.out.println("getTaakBeschrijving");
-        Point begin = null;
-        Taken instance = null;
-        Point expResult = null;
+        Point begin = new Point(1,31);
+        Taken instance = taak;
+        Point expResult = new Point(1,30);
         Point result = instance.getTaakBeschrijving(begin);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

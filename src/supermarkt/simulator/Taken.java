@@ -11,8 +11,10 @@ import java.util.List;
  */
 public class Taken {
 
+        /**
+        * Taken die uitgevoerd kunnen worden door zowel personeel als klant
+        */
         public static enum Taak {Pad1, Pad2, Pad3, Pad4, Afdeling1, Afdeling1_Personeel, Afdeling2, Afdeling2_Personeel, Voordeelstraat, Kassa1, Kassa1_Personeel, Kassa2, Kassa2_Personeel, Kassa3, Kassa3_Personeel, Kassa4, Kassa4_Personeel, Magazijn,Vrachtwagen,Uitgang,Pauze};
-	private int tijdsduur;
 	private Taak taak;
         private List<Point> route;
         
@@ -77,7 +79,10 @@ public class Taken {
                         return new Point(1,31);    
                 }
         }
-        
+        /**
+         * Geeft de taak terug
+         * @return de taak
+         */
         public Taak getTaak()
         {
             return this.taak;

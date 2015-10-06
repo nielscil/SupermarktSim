@@ -5,6 +5,7 @@
  */
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,6 +20,8 @@ import static org.junit.Assert.*;
  */
 public class ProductWrapperTest
 {
+    private static ProductWrapper pw;
+    private static Product productTest = null;
     
     public ProductWrapperTest()
     {
@@ -27,6 +30,8 @@ public class ProductWrapperTest
     @BeforeClass
     public static void setUpClass()
     {
+        productTest = new Product("hertog Jan", 0.0, 1);
+        pw = new ProductWrapper(productTest,2);
     }
     
     @AfterClass
@@ -51,11 +56,10 @@ public class ProductWrapperTest
     public void testSetAantal_int()
     {
         System.out.println("setAantal");
-        int aantal = 0;
-        ProductWrapper instance = null;
+        int aantal = 10;
+        ProductWrapper instance = pw;
         instance.setAantal(aantal);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(aantal, instance.getAantal());
     }
 
     /**
@@ -65,10 +69,11 @@ public class ProductWrapperTest
     public void testSetAantal_0args()
     {
         System.out.println("setAantal");
-        ProductWrapper instance = null;
+        ProductWrapper instance = pw;
+        int expResult = instance.getAantal() + 1;
         instance.setAantal();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = instance.getAantal();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -78,11 +83,10 @@ public class ProductWrapperTest
     public void testSetProduct()
     {
         System.out.println("setProduct");
-        Product product = null;
-        ProductWrapper instance = null;
+        Product product = productTest;
+        ProductWrapper instance = pw;
         instance.setProduct(product);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(product, instance.getProduct());
     }
 
     /**
@@ -92,12 +96,10 @@ public class ProductWrapperTest
     public void testPakEen() throws Exception
     {
         System.out.println("pakEen");
-        ProductWrapper instance = null;
-        Product expResult = null;
+        ProductWrapper instance = pw;
+        Product expResult = productTest;
         Product result = instance.pakEen();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -107,12 +109,10 @@ public class ProductWrapperTest
     public void testGetAantal()
     {
         System.out.println("getAantal");
-        ProductWrapper instance = null;
-        int expResult = 0;
+        ProductWrapper instance = pw;
+        //int expResult = instance.aantal; //Maak public voor test!!
         int result = instance.getAantal();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(expResult, result);
     }
 
     /**
@@ -122,12 +122,10 @@ public class ProductWrapperTest
     public void testGetProductNaam()
     {
         System.out.println("getProductNaam");
-        ProductWrapper instance = null;
-        String expResult = "";
+        ProductWrapper instance = pw;
+        //String expResult = instance.product.getNaam(); //Maak public voor Test
         String result = instance.getProductNaam();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(expResult, result);
     }
 
     /**
@@ -137,12 +135,10 @@ public class ProductWrapperTest
     public void testGetProduct()
     {
         System.out.println("getProduct");
-        ProductWrapper instance = null;
-        Product expResult = null;
+        ProductWrapper instance = pw;
+        Product expResult = productTest;
         Product result = instance.getProduct();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -152,13 +148,11 @@ public class ProductWrapperTest
     public void testSearch()
     {
         System.out.println("Search");
-        String product = "";
-        List<ProductWrapper> lijst = null;
-        int expResult = 0;
+        String product = "Hertog Jan";
+        List<ProductWrapper> lijst = new ArrayList<>();
+        int expResult = -1;
         int result = ProductWrapper.Search(product, lijst);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -168,13 +162,13 @@ public class ProductWrapperTest
     public void testAdd_String_List()
     {
         System.out.println("Add");
-        String product = "";
-        List<ProductWrapper> lijst = null;
-        List<ProductWrapper> expResult = null;
+        String product = "Hertog Jan";
+        List<ProductWrapper> lijst = new ArrayList<>();
+        lijst.add(pw);
+        List<ProductWrapper> expResult = new ArrayList<>();
+        expResult.add(pw);
         List<ProductWrapper> result = ProductWrapper.Add(product, lijst);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -184,14 +178,14 @@ public class ProductWrapperTest
     public void testAdd_3args_1()
     {
         System.out.println("Add");
-        String product = "";
-        int aantal = 0;
-        List<ProductWrapper> lijst = null;
-        List<ProductWrapper> expResult = null;
+        String product = "Hertog Jan";
+        int aantal = 1;
+        List<ProductWrapper> lijst = new ArrayList<>();
+        lijst.add(pw);
+        List<ProductWrapper> expResult = new ArrayList<>();
+        expResult.add(pw);
         List<ProductWrapper> result = ProductWrapper.Add(product, aantal, lijst);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -201,14 +195,14 @@ public class ProductWrapperTest
     public void testAdd_3args_2() throws Exception
     {
         System.out.println("Add");
-        String product = "";
-        List<ProductWrapper> lijst = null;
-        int max = 0;
-        List<ProductWrapper> expResult = null;
+        String product = "Hertog Jan";
+        List<ProductWrapper> lijst = new ArrayList<>();
+        lijst.add(pw);
+        int max = 10;
+        List<ProductWrapper> expResult = new ArrayList<>();
+        expResult.add(pw);
         List<ProductWrapper> result = ProductWrapper.Add(product, lijst, max);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -219,14 +213,14 @@ public class ProductWrapperTest
     {
         System.out.println("Add");
         String product = "";
-        int aantal = 0;
-        List<ProductWrapper> lijst = null;
-        int max = 0;
-        List<ProductWrapper> expResult = null;
+        int aantal = 1;
+        List<ProductWrapper> lijst = new ArrayList<>();
+        lijst.add(pw);
+        int max = 10;
+        List<ProductWrapper> expResult = new ArrayList<>();
+        expResult.add(pw);
         List<ProductWrapper> result = ProductWrapper.Add(product, aantal, lijst, max);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -236,11 +230,9 @@ public class ProductWrapperTest
     public void testLoadProductWrappers()
     {
         System.out.println("loadProductWrappers");
-        List<List<ProductWrapper>> expResult = null;
         List<List<ProductWrapper>> result = ProductWrapper.loadProductWrappers();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result.isEmpty())
+            fail("No Productwrappers");
     }
     
 }

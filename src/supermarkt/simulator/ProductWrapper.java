@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class ProductWrapper {
 
-	private Product product;
-	private int aantal;
+	private Product product; //Maak public voor test!
+	private int aantal; //Maak public voor test!
         
         /**
          * Aanmaken van een productwrapper
@@ -122,6 +122,10 @@ public class ProductWrapper {
         public static List<ProductWrapper> Add( String product, List<ProductWrapper> lijst)
         {
             int index = Search(product, lijst);
+            if(index == -1)
+            {
+                return lijst;
+            }
             ProductWrapper productwrap = lijst.get(index);
             productwrap.setAantal();
             lijst.set(index, productwrap);
@@ -138,6 +142,8 @@ public class ProductWrapper {
         public static List<ProductWrapper> Add( String product,int aantal ,List<ProductWrapper> lijst)
         {
             int index = Search(product, lijst);
+            if(index == -1)
+                return lijst;
             ProductWrapper productwrap = lijst.get(index);
             productwrap.setAantal(aantal);
             lijst.set(index, productwrap);
@@ -155,6 +161,8 @@ public class ProductWrapper {
         public static List<ProductWrapper> Add( String product, List<ProductWrapper> lijst,int max) throws Exception
         {
             int index = Search(product, lijst);
+            if(index == -1)
+                return lijst;            
             ProductWrapper productwrap = lijst.get(index);
             if(productwrap.getAantal()>= max)
                 throw new Exception("Stelling is vol");
@@ -175,6 +183,8 @@ public class ProductWrapper {
         public static List<ProductWrapper> Add( String product,int aantal ,List<ProductWrapper> lijst,int max) throws  Exception
         {
             int index = Search(product, lijst);
+            if(index == -1)
+                return lijst;            
             ProductWrapper productwrap = lijst.get(index);
             if(productwrap.getAantal()>= max)
                 throw new Exception("Stelling is vol");

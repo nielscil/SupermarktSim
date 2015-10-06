@@ -183,7 +183,7 @@ public class Pad extends Observable
         }
         
         /**
-         * Oekt product dat nog niet helemaal gevuld is
+         * Vult product dat nog niet helemaal gevuld is
          * @return het product
          */
         public String productVullen()

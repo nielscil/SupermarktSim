@@ -5,16 +5,15 @@
  */
 package supermarkt.simulator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Het magazijn van de winkel
  * @author Niels
  */
 public class Voorraad
 {
-    private List<ProductWrapper> voorraad = new ArrayList<>();
+    private List<ProductWrapper> voorraad; //Maak public voor test!!
     
     /**
      * Haalt de voorraad uit de database
@@ -43,14 +42,20 @@ public class Voorraad
         }
     }
     
-    
+    /**
+     * Verhoogd het aantal van de meegegeven producten
+     * @param producten de producten die verhoogd moeten worden
+     */
     public void setProducten(List<ProductWrapper> producten)
     {
         producten.stream().forEach((pw)->
         {
             int pos = ProductWrapper.Search(pw.getProductNaam(), voorraad);
-            ProductWrapper voorraadP = voorraad.get(pos);
-            voorraadP.setAantal(voorraadP.getAantal() + pw.getAantal());
+            if(pos != -1)
+            {
+                ProductWrapper voorraadP = voorraad.get(pos);
+                voorraadP.setAantal(voorraadP.getAantal() + pw.getAantal());
+            }
         });
     }
     

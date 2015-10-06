@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
  */
 public class ProductTest
 {
+    private static Product p;
     
     public ProductTest()
     {
@@ -26,6 +27,7 @@ public class ProductTest
     @BeforeClass
     public static void setUpClass()
     {
+        p = new Product("Hertog Jan", 0.0, 1);
     }
     
     @AfterClass
@@ -50,12 +52,10 @@ public class ProductTest
     public void testGetNaam()
     {
         System.out.println("getNaam");
-        Product instance = null;
-        String expResult = "";
+        Product instance = p;
+        String expResult = "Hertog Jan";
         String result = instance.getNaam();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -65,12 +65,10 @@ public class ProductTest
     public void testGetPrijs()
     {
         System.out.println("getPrijs");
-        Product instance = null;
+        Product instance = p;
         double expResult = 0.0;
         double result = instance.getPrijs();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,12 +78,10 @@ public class ProductTest
     public void testIsVoordeel()
     {
         System.out.println("isVoordeel");
-        Product instance = null;
+        Product instance = p;
         boolean expResult = false;
         boolean result = instance.isVoordeel();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -95,12 +91,10 @@ public class ProductTest
     public void testGetAfdeling()
     {
         System.out.println("getAfdeling");
-        Product instance = null;
-        int expResult = 0;
+        Product instance = p;
+        int expResult = 1;
         int result = instance.getAfdeling();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

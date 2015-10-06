@@ -5,6 +5,7 @@
  */
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,6 +20,8 @@ import static org.junit.Assert.*;
  */
 public class VoorraadTest
 {
+ 
+    private static Voorraad voorraad;
     
     public VoorraadTest()
     {
@@ -27,6 +30,8 @@ public class VoorraadTest
     @BeforeClass
     public static void setUpClass()
     {
+        voorraad = new Voorraad();
+        //voorraad.voorraad.get(ProductWrapper.Search("Hertog Jan", voorraad.getProducts())).setAantal();
     }
     
     @AfterClass
@@ -51,11 +56,12 @@ public class VoorraadTest
     public void testLowerProduct()
     {
         System.out.println("lowerProduct");
-        String product = "";
-        Voorraad instance = new Voorraad();
+        String product = "Hertog Jan";
+        int expResult = voorraad.getProducts().get(ProductWrapper.Search(product, voorraad.getProducts())).getAantal() - 1;
+        Voorraad instance = voorraad;
         instance.lowerProduct(product);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = voorraad.getProducts().get(ProductWrapper.Search(product, voorraad.getProducts())).getAantal();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -65,11 +71,15 @@ public class VoorraadTest
     public void testSetProducten()
     {
         System.out.println("setProducten");
-        List<ProductWrapper> producten = null;
-        Voorraad instance = new Voorraad();
+        String product = "Hertog Jan";
+        int expResult = voorraad.getProducts().get(ProductWrapper.Search(product, voorraad.getProducts())).getAantal() + 1;
+        List<ProductWrapper> producten = new ArrayList<>();
+        ProductWrapper hj = new ProductWrapper(new Product(product, 0.0, 1), 1);
+        producten.add(hj);
+        Voorraad instance = voorraad;
         instance.setProducten(producten);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = voorraad.getProducts().get(ProductWrapper.Search(product, voorraad.getProducts())).getAantal();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -79,12 +89,10 @@ public class VoorraadTest
     public void testGetProducts()
     {
         System.out.println("getProducts");
-        Voorraad instance = new Voorraad();
-        List<ProductWrapper> expResult = null;
+        Voorraad instance = voorraad;
+        //List<ProductWrapper> expResult = voorraad.voorraad;
         List<ProductWrapper> result = instance.getProducts();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(expResult, result);
     }
 
     /**
@@ -94,13 +102,11 @@ public class VoorraadTest
     public void testCheckProduct()
     {
         System.out.println("checkProduct");
-        String product = "";
-        Voorraad instance = new Voorraad();
-        boolean expResult = false;
+        String product = "Hertog Jan";
+        Voorraad instance = voorraad;
+        boolean expResult = true;
         boolean result = instance.checkProduct(product);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

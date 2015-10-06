@@ -320,7 +320,6 @@ public class Database {
                     conn.close();
                 }catch(Exception e){};
             }
-            //lowerProducten(product);
 	}
         
         /**

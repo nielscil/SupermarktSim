@@ -12,7 +12,7 @@ public class Personeel extends Persoon
 {
 
     private int maxTaken;
-    private List<Taken> taken = new ArrayList<>();
+    private List<Taken> taken = new ArrayList<>(); //Maak public voor test!
     private Taken taak;
     
     /**

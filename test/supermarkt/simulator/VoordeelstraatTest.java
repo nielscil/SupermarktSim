@@ -5,7 +5,9 @@
  */
 package supermarkt.simulator;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,6 +22,8 @@ import static org.junit.Assert.*;
  */
 public class VoordeelstraatTest
 {
+    private static Voordeelstraat testStraat;
+    private static Controller controller;
     
     public VoordeelstraatTest()
     {
@@ -28,6 +32,8 @@ public class VoordeelstraatTest
     @BeforeClass
     public static void setUpClass()
     {
+        testStraat = new Voordeelstraat(new ArrayList<Point>(), new ArrayList<ProductWrapper>(), 5);
+        controller = new Controller();
     }
     
     @AfterClass
@@ -52,11 +58,10 @@ public class VoordeelstraatTest
     public void testPadPoint()
     {
         System.out.println("padPoint");
-        Point p = null;
-        Voordeelstraat instance = null;
+        Point p = new Point(0,0);
+        Voordeelstraat instance = testStraat;
         instance.padPoint(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(Controller.bord[p.x][p.y].getItem(), 11);
     }
 
     /**
@@ -66,11 +71,9 @@ public class VoordeelstraatTest
     public void testLoadVoordeelstraat()
     {
         System.out.println("loadVoordeelstraat");
-        List<Point> expResult = null;
         List<Point> result = Voordeelstraat.loadVoordeelstraat();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result.isEmpty())
+            fail("No points");
     }
     
 }

@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -21,7 +22,8 @@ import static org.junit.Assert.*;
  */
 public class SupermarkViewTest
 {
-    
+    private static Controller controller;
+    private static SupermarkView view;
     public SupermarkViewTest()
     {
     }
@@ -29,6 +31,9 @@ public class SupermarkViewTest
     @BeforeClass
     public static void setUpClass()
     {
+        controller = new Controller();
+        Appview appView = new Appview(controller, 1);
+        view = appView.getSupermarkView();
     }
     
     @AfterClass
@@ -49,7 +54,7 @@ public class SupermarkViewTest
     /**
      * Test of paintComponent method, of class SupermarkView.
      */
-    @Test
+    @Ignore @Test
     public void testPaintComponent()
     {
         System.out.println("paintComponent");
@@ -63,7 +68,7 @@ public class SupermarkViewTest
     /**
      * Test of update method, of class SupermarkView.
      */
-    @Test
+    @Ignore @Test
     public void testUpdate()
     {
         System.out.println("update");
@@ -82,13 +87,11 @@ public class SupermarkViewTest
     public void testGetGridValue()
     {
         System.out.println("getGridValue");
-        Point p = null;
-        SupermarkView instance = new SupermarkView();
-        Point expResult = null;
+        Point p = new Point(0,0);
+        SupermarkView instance = view;
+        Point expResult = new Point(0,0);
         Point result = instance.getGridValue(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

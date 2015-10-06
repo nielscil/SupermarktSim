@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 //javaDoc volledig ingevuld
 /**
- * 
+ * De vrachtwagen die voorraad aan komt vullen
  * @author Joris
  */
 public class Vrachtwagen {
 
-	private List<ProductWrapper> lading = new ArrayList<>();
-	private int aangeroepen;
+	private List<ProductWrapper> lading = new ArrayList<>(); //Maak public voor test
+	private int aangeroepen; //Maak public voor test
         private boolean isGeregisteerd = false;
         public boolean  wordtGelost = false;
         
