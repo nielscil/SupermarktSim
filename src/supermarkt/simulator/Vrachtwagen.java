@@ -2,7 +2,11 @@ package supermarkt.simulator;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//javaDoc volledig ingevuld
+/**
+ * 
+ * @author Joris
+ */
 public class Vrachtwagen {
 
 	private List<ProductWrapper> lading = new ArrayList<>();
@@ -10,6 +14,11 @@ public class Vrachtwagen {
         private boolean isGeregisteerd = false;
         public boolean  wordtGelost = false;
         
+        /**
+         * Maakt vrachtwagen aan
+         * @param benodigdeProducten producten die de vrachtwagen moet leveren
+         * @param aangeroepen Kijkt welke ronde de vrachtwagen aangeroepen wordt
+         */
         public Vrachtwagen(List<Product> benodigdeProducten, int aangeroepen)
         {
             benodigdeProducten.stream().forEach((p)->
@@ -19,6 +28,9 @@ public class Vrachtwagen {
             this.aangeroepen = aangeroepen + 10;
         }
         
+        /**
+         * kijkt of de vrachtwagen uitgeladen wordt
+         */
         public boolean ontladen()
         {
             registeerLading();
@@ -28,7 +40,10 @@ public class Vrachtwagen {
             lading.remove(0);
             return false;
         }
-
+        
+        /**
+         * Zet producten in de voorraad
+         */
 	private void registeerLading() 
         {
             if(!isGeregisteerd)
@@ -39,6 +54,10 @@ public class Vrachtwagen {
             }       
 	}
 
+        /**
+         * Geeft de ronde waarin de vrachtwagen aan komt
+         * @return de ronde, dit is een getal
+         */
 	public int getAangeroepen() 
         {
 		return this.aangeroepen;

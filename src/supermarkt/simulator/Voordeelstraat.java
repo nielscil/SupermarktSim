@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
-
+//javaDoc volledig ingevuld
 /**
  * Een voordeelstraat met verschillende voordeel producten
  * @author Niels
@@ -28,12 +28,21 @@ public class Voordeelstraat extends Pad
         });
     }
     
+    /**
+    * Geeft de punten van het bord waar de voordeelstraten komen te staan
+    * @param p punt waar de voordeelstraten staan, 
+    * de voordeelstraat wordt aangegeven dmv SuperMarkView.DrawCell()
+    */
     @Override
     public void padPoint(Point p)
     {
             Controller.bord[p.x][p.y].setItem(11);
     }
     
+    /**
+    * Laadt de punten waar de voordeelstraat komen te staan uit een .txt bestand
+    * @return een ArrayList met punten waar voordeelstraten komen te staan
+    */
     public static List<Point> loadVoordeelstraat()
         {                    
             List<Point> voordeelstraat = new ArrayList<>();
