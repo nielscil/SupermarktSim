@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 
 /**
- *
+ * de GUI van de applicatie
  * @author Niels
  */
 public class Appview
@@ -41,6 +41,8 @@ public class Appview
     
     /**
      * Maakt GUI aan
+     * @param controller De controller van de applicatie
+     * @param dag de dag
      */
     public Appview(Controller controller,int dag)
     {
@@ -134,17 +136,29 @@ public class Appview
         }
         catch(InterruptedException e){}
     }
-    
+    /**
+     * Logt de gegevens in het log bestand
+     * @param logString de string die binnenkomt
+     * @param persoon het persoon die het doet
+     */
     public static void Log(String logString,Persoon persoon)
     {
         logging.add(0, persoon.naam + " " + logString + " | ronde: " + Controller.getRonde());
     }
     
+    /**
+     * Haalt supermarktview op
+     * @return supermarktview
+     */
     public SupermarkView getSupermarkView()
     {
         return bord;
     }
     
+    /**
+     * update lijst van logs
+     * @param entries lijst van logs
+     */
     private void updateList (List<String> entries) {
         listModel.removeAllElements();
         for (String entry : entries) {
@@ -152,9 +166,17 @@ public class Appview
         }
     }
     
+    /**
+     * Klasse die gebruikt wordt om de log te updaten
+     */
     private class ListUpdater extends SwingWorker<List<String>, List<String>>
     {
 
+        /**
+         * Draait in de background
+         * @return de lijst van strings
+         * @throws Exception -
+         */
         @Override
         protected List<String> doInBackground() throws Exception
         {
@@ -168,12 +190,19 @@ public class Appview
             //return null;
         }
 
+        /**
+         * Wanneer klaar wordt dit uitgevoerd
+         */
         @Override
         protected void done()
         {
             super.done(); //To change body of generated methods, choose Tools | Templates.
         }
 
+        /**
+         * Verwerkt de lijst met strings
+         * @param chunks lijst van lijst met string
+         */
         @Override
         protected void process(List<List<String>> chunks)
         {
@@ -183,10 +212,16 @@ public class Appview
         }
         
     }
-    
+    /**
+     * Maakt een mouselistener aan
+     */
     private MouseListener listener = new MouseListener()
     {
 
+        /**
+         * Wanneer op muis geklikt wordt
+         * @param e mouse event
+         */
         @Override
         public void mouseClicked(MouseEvent e)
         {

@@ -42,9 +42,9 @@ public class Pad extends Observable
         }
         
         /**
-         * Kijkt of het pad een prudct bevat
+         * Kijkt of het pad een product bevat
          * @param naam naam van het product
-         * @return 
+         * @return true wanneer gevonden, false wanneer niet
          */
         public boolean heeftProduct(String naam)
         {
@@ -105,11 +105,17 @@ public class Pad extends Observable
             return false;
 	}
         
+        /**
+         * Zet de taak naar wordt gevuld
+         */
         public void setTaak()
         {
             wordtGevuld = true;
         }
         
+        /**
+         * Zet de taak naar wordt niet gevuld
+         */
         public void unsetTaak()
         {
             wordtGevuld = false;
@@ -118,7 +124,7 @@ public class Pad extends Observable
         /**
          * Maakt van bepaalde punten op het veld een kassa
          * de punten worden uit de methode Pad.loadPad gehaald
-         * @param p 
+         * @param p het punt
          */
         protected void padPoint(Point p)
         {
@@ -176,6 +182,10 @@ public class Pad extends Observable
             return null;
         }
         
+        /**
+         * Oekt product dat nog niet helemaal gevuld is
+         * @return het product
+         */
         public String productVullen()
         {
             

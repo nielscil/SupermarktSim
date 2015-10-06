@@ -14,7 +14,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 /**
- *
+ * De supermarkt plattegrond
  * @author Niels
  */
 public class SupermarkView extends JPanel implements Observer
@@ -26,12 +26,19 @@ public class SupermarkView extends JPanel implements Observer
     private final int boardSize = aantalBlokjes * sizeBlok + (aantalBlokjes + 1) * lineThickness;
     private boolean firstTime = true;
     
+    /**
+     * Maakt de supermarktview
+     */
     public SupermarkView()
     {
         setPreferredSize(new Dimension(boardSize, boardSize));
         setFocusable(true);
     }
     
+    /**
+     * Paint het component
+     * @param g de graphics
+     */
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -57,12 +64,21 @@ public class SupermarkView extends JPanel implements Observer
         }
     }
     
+    /**
+     * Update de supermarktview
+     * @param o observer
+     * @param arg 
+     */
     @Override
     public void update(Observable o, Object arg)
     {
         DrawCell((BordPunt)o, getGraphics());
     }
     
+    /**
+     * Tekent het bord 
+     * @param g graphics
+     */
     private void DrawBoard(Graphics g)
     {
         g.setColor(Color.BLACK);
@@ -79,6 +95,11 @@ public class SupermarkView extends JPanel implements Observer
         }
     }
     
+    /**
+     * Tekent een cel
+     * @param punt het bordpunt
+     * @param g graphics
+     */
     private void DrawCell(BordPunt punt, Graphics g)
     {
         if(g == null)
@@ -125,12 +146,21 @@ public class SupermarkView extends JPanel implements Observer
        }
        g.fillRect (offset.x, offset.y, sizeBlok, sizeBlok);
     }
-    
+    /**
+     * de offset
+     * @param p het punt
+     * @return de offset
+     */
     private Point offset (Point p)
     {
         return new Point(p.x * sizeBlok + (p.x + 1) * lineThickness, p.y * sizeBlok + (p.y + 1) * lineThickness);
     }
     
+    /**
+     * De waarde van het grid
+     * @param p het punt
+     * @return het punt
+     */
     public Point getGridValue (Point p)
     {
         int x = 0;

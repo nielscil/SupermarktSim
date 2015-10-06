@@ -65,12 +65,18 @@ public class Afdeling extends Pad {
             }
                 
 	}
-        
+        /**
+         * Zet het maximale aantal producten in de afdeling
+         * @param max maximale aantal producten
+         */
         public void setMax(int max)
         {
             maxProduct = max;
         }
 
+        /**
+         * Onbeman de afdeling
+         */
         public void onbemanAfdeling()
         {
             this.personeel = null;
@@ -78,13 +84,17 @@ public class Afdeling extends Pad {
         }
         
         /**
-         * Op de afdeling is geen personeel aanwezig
+         * Check of de afdeling bemand is
          */
         public boolean isBemand()
         {
             return personeel != null;
         }
         
+        /**
+         * Haalt naam op van de afdeling
+         * @return naam
+         */
         public String getNaam()
         {
             return naam;

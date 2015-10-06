@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.SwingWorker;
 
+/**
+ * De controller klasse van de applicatie
+ * @author Niels
+ */
 public class Controller {
 
 	private final int endDay;
@@ -27,6 +31,9 @@ public class Controller {
         public static Voorraad voorraad;
         public Simulatie sim;
         
+        /**
+         * Maakt de controller aan
+         */
         public Controller()
         {
             DAG = Database.getDay();
@@ -46,6 +53,10 @@ public class Controller {
             sim.execute();
         }
         
+        /**
+         * Verwijdert persoon van de lijst en applicatie
+         * @param persoon persoon die verwijderd wordt
+         */
         public void deletePersoon(Persoon persoon)
         {
             if(persoon instanceof Klant)
@@ -54,11 +65,18 @@ public class Controller {
                 personeel.remove(persoon);
         }
 
+        /**
+         * Vraagt vrachtwagen aan
+         * @param benodigd lijst met benodigde producten
+         */
         public void requestVrachtwagen(List<Product> benodigd)
         {
             vrachtwagen = new Vrachtwagen(benodigd, ronde);
         }
 
+        /**
+         * Voert een move ronde uit
+         */
 	private void makeMove() 
         {
             checkWinkel();
@@ -177,6 +195,9 @@ public class Controller {
             voordeelstraat = new Voordeelstraat(Voordeelstraat.loadVoordeelstraat(),voordeel,5);
 	}
         
+        /**
+         * Controleert over er iets moet gebeuren in de winkel
+         */
         private void checkWinkel() //werkt nog niet helemaal goed
         {
             int index = 1;
@@ -234,16 +255,23 @@ public class Controller {
                         openTaken.add(index);
             }
             index++;
-//            if(ronde % 10 == 0)
-//                if(!openTaken.contains(index))
-//                    openTaken.add(index);
         }
         
+        /**
+         * Haalt de actuele ronde op
+         * @return de ronde
+         */
         public static int getRonde()
         {
             return ronde;
         }
         
+        /**
+         * Checkt of er meer personen staan
+         * @param p punt 
+         * @param persoon persoon
+         * @return 1 wanneer er een klant staat, 0 wanneer personeel , -1 wanneer geen een.
+         */
         public int staanMeerPersonen(Point p,Persoon persoon)
         {
             for(Klant k : klanten)
@@ -305,27 +333,45 @@ public class Controller {
             setVoordeelstraat();
 	}
         
+        /**
+         * De klasse die de simulatie uitvoerd
+         */
         public class Simulatie extends SwingWorker<BordPunt[][], BordPunt[][]>
         {
             private boolean pauze = false;
             
+            /**
+             * Zet pauze
+             */
             public void setPauze()
             {
                 pauze = !pauze;
             }
             
+            /**
+             * Zet resume
+             */
             public synchronized void resume() 
             {
                 pauze = false;
                 this.notify();
             }
             
+            /**
+             * Verwerkt Lijst met bordpunten
+             * @param chunks lijst met bordpunten
+             */
             @Override
             protected void process(List<BordPunt[][]> chunks)
             {
                 super.process(chunks); //To change body of generated methods, choose Tools | Templates.
             }
 
+            /**
+             * Voert de simulatie uit
+             * @return bordpunt
+             * @throws Exception 
+             */
             @Override
             protected BordPunt[][] doInBackground() throws Exception
             {
