@@ -14,7 +14,8 @@ import java.util.regex.MatchResult;
 public class Afdeling extends Pad {
 
 	private final String naam;
-	private Personeel personeel = null;
+        private Personeel personeel = null;
+	// public Personeel personeel = null; //Public om te testen
         
         /**
          * Maakt een afdeling aan
