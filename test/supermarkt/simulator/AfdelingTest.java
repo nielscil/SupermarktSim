@@ -60,11 +60,15 @@ public class AfdelingTest
     public void testPadPoint()
     {
         System.out.println("padPoint");
-        Point p = new Point(0, 0);
+        Point p = new Point(1, 4);
         Afdeling instance = testing;
         instance.padPoint(p);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        if(controller.bord[p.x][p.y].getItem() == 5)
+            assertEquals(controller.bord[p.x][p.y].getItem(), 5);
+        else if (controller.bord[p.x][p.y].getItem() == 6)
+            assertEquals(controller.bord[p.x][p.y].getItem(), 6);
+        else
+            fail("this is a prototype");
     }
 
     /**
@@ -77,8 +81,7 @@ public class AfdelingTest
         Personeel personeel = personeeltest;
         Afdeling instance = testing;
         instance.bemanAfdeling(personeel);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        // assertEquals(instance.personeel, personeel);  Maak personeel public!
     }
 
     /**
@@ -91,8 +94,7 @@ public class AfdelingTest
         int max = 0;
         Afdeling instance = testing;
         instance.setMax(max);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        assertEquals(instance.maxProduct, max);
     }
 
     /**
@@ -104,8 +106,7 @@ public class AfdelingTest
         System.out.println("onbemanAfdeling");
         Afdeling instance = testing;
         instance.onbemanAfdeling();
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        // assertEquals(instance.personeel, null); Maak personeel public!
     }
 
     /**
@@ -116,12 +117,8 @@ public class AfdelingTest
     {
         System.out.println("isBemand");
         Afdeling instance = testing;
-        boolean expResult = false;
         boolean result = instance.isBemand();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-        
+        assertEquals(false, result);
     }
 
     /**
@@ -132,11 +129,8 @@ public class AfdelingTest
     {
         System.out.println("getNaam");
         Afdeling instance = testing;
-        String expResult = "test afdeling";
         String result = instance.getNaam();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        assertEquals("test afdeling", result);
     }
 
     /**
@@ -150,8 +144,6 @@ public class AfdelingTest
         List<Afdeling> expResult = new ArrayList<>();
         List<Afdeling> result = Afdeling.loadAfdeling(productWrappers);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
 }
