@@ -31,11 +31,12 @@ import javax.swing.SwingWorker;
 public class Appview
 {
     private static final int GAP = 5;
-    private SupermarkView bord;
+    private SupermarkView bord; //public maken om te testen
     private DefaultListModel listModel;
     private JList list;
     private Controller controller;
     private static  List<String> logging = new ArrayList<>();
+    //public static  List<String> logging = new ArrayList<>();  //Public om te testen
     private boolean pauze = false;
     private JButton pauzebut;
     

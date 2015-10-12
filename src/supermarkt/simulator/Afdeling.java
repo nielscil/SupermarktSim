@@ -41,7 +41,9 @@ public class Afdeling extends Pad {
         @Override
         public void padPoint(Point p)
         {
-            if(naam == "Kaas")
+            if(naam == null)
+                return;
+            if(naam.equals("Kaas"))
             {
                 Controller.bord[p.x][p.y].setItem(5);
             }

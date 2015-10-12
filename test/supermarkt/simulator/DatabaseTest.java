@@ -5,6 +5,8 @@
  */
 package supermarkt.simulator;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -19,7 +22,7 @@ import static org.junit.Assert.*;
  */
 public class DatabaseTest
 {
-    
+    private static Controller controller;
     public DatabaseTest()
     {
     }
@@ -27,6 +30,7 @@ public class DatabaseTest
     @BeforeClass
     public static void setUpClass()
     {
+        controller = new Controller();
     }
     
     @AfterClass
@@ -51,11 +55,9 @@ public class DatabaseTest
     public void testGetProducten()
     {
         System.out.println("getProducten");
-        List<ProductWrapper> expResult = null;
         List<ProductWrapper> result = Database.getProducten();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result == null || result.isEmpty())
+            fail("Geen producten gevonden");
     }
 
     /**
@@ -65,11 +67,9 @@ public class DatabaseTest
     public void testGetWinkelproducten()
     {
         System.out.println("getWinkelproducten");
-        List<ProductWrapper> expResult = null;
         List<ProductWrapper> result = Database.getWinkelproducten();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result == null || result.isEmpty())
+            fail("Geen producten gevonden");
     }
 
     /**
@@ -79,24 +79,20 @@ public class DatabaseTest
     public void testLoadGroepen()
     {
         System.out.println("loadGroepen");
-        List<Groep> expResult = null;
         List<Groep> result = Database.loadGroepen();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result == null || result.isEmpty())
+            fail("Geen groepen gevonden");
     }
 
     /**
      * Test of setProducten method, of class Database.
      */
-    @Test
+    @Ignore @Test
     public void testSetProducten()
     {
         System.out.println("setProducten");
         List<ProductWrapper> producten = null;
         Database.setProducten(producten);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -106,12 +102,15 @@ public class DatabaseTest
     public void testGetGemiddelde()
     {
         System.out.println("getGemiddelde");
-        Afdeling afdeling = null;
-        int expResult = 0;
+        List<Point> plaats = new ArrayList<>();
+        plaats.add(new Point(0,0));
+        List<ProductWrapper> producten = new ArrayList<>();
+        producten.add(new ProductWrapper(new Product("brie", 1.35, 2), 5));
+        Afdeling afdeling = new Afdeling("Kaas", plaats, producten, 4);
+        int expResult = 6;
         int result = Database.getGemiddelde(afdeling);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -121,17 +120,15 @@ public class DatabaseTest
     public void testGetDay()
     {
         System.out.println("getDay");
-        int expResult = 0;
+        int expResult = 19;
         int result = Database.getDay();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of lowerWinkelproduct method, of class Database.
      */
-    @Test
+    @Ignore @Test
     public void testLowerWinkelproduct()
     {
         System.out.println("lowerWinkelproduct");
@@ -144,7 +141,7 @@ public class DatabaseTest
     /**
      * Test of setWinkelproduct method, of class Database.
      */
-    @Test
+    @Ignore @Test
     public void testSetWinkelproduct()
     {
         System.out.println("setWinkelproduct");
@@ -161,11 +158,9 @@ public class DatabaseTest
     public void testGetOmzet()
     {
         System.out.println("getOmzet");
-        double expResult = 0.0;
+        double expResult = 1296.0;
         double result = Database.getOmzet();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -175,11 +170,9 @@ public class DatabaseTest
     public void testGetProductTypes()
     {
         System.out.println("getProductTypes");
-        List<Product> expResult = null;
         List<Product> result = Database.getProductTypes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(result == null || result.isEmpty())
+            fail("Geen producten gevonden");
     }
 
     /**
@@ -189,12 +182,10 @@ public class DatabaseTest
     public void testCheckProduct()
     {
         System.out.println("checkProduct");
-        String product = "";
+        String product = "Brie";
         boolean expResult = false;
         boolean result = Database.checkProduct(product);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

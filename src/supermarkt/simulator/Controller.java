@@ -18,7 +18,7 @@ public class Controller {
         private static int ronde = 0;
         private Appview view;
 	private List<Klant> klanten = new ArrayList<>();
-	private List<Personeel> personeel = new ArrayList<>();
+	private List<Personeel> personeel = new ArrayList<>(); // Maak public om te testen
         private List<Groep> groepen;
 	public List<Pad> paden = new ArrayList<>();
 	public List<Afdeling> afdelingen = new ArrayList<>();

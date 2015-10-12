@@ -5,7 +5,6 @@
  */
 package supermarkt.simulator;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;

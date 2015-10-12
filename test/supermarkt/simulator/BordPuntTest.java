@@ -19,6 +19,8 @@ import static org.junit.Assert.*;
  */
 public class BordPuntTest
 {
+    private SupermarkView bord = new SupermarkView();
+    private BordPunt instance = new BordPunt(new Point(0,0), 5, bord);
     
     public BordPuntTest()
     {
@@ -50,12 +52,9 @@ public class BordPuntTest
     @Test
     public void testSetItem()
     {
-        System.out.println("setItem");
-        int item = 0;
-        BordPunt instance = null;
-        instance.setItem(item);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("setItem");        
+        instance.setItem(5);
+        //assertEquals(5, instance.item); //Maak item public
     }
 
     /**
@@ -65,12 +64,10 @@ public class BordPuntTest
     public void testGetPositie()
     {
         System.out.println("getPositie");
-        BordPunt instance = null;
-        Point expResult = null;
+        Point point = new Point(0,0);
         Point result = instance.getPositie();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(point, result);
+        
     }
 
     /**
@@ -80,12 +77,10 @@ public class BordPuntTest
     public void testGetItem()
     {
         System.out.println("getItem");
-        BordPunt instance = null;
-        int expResult = 0;
+        int expResult = 5;
         int result = instance.getItem();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
     
 }

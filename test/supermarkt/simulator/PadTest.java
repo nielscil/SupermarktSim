@@ -6,6 +6,7 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,13 +53,15 @@ public class PadTest
     public void testHeeftProduct()
     {
         System.out.println("heeftProduct");
-        String naam = "";
-        Pad instance = null;
-        boolean expResult = false;
+        String naam = "kroket";
+        List<Point> plaats = new ArrayList<>();
+        plaats.add(new Point(0,0));
+        List<ProductWrapper> producten = new ArrayList<>();
+        producten.add(new ProductWrapper(new Product(naam, 1.35, 1),5));
+        Pad instance = new Pad(plaats, producten, 5, "padnaam");
+        boolean expResult = true;
         boolean result = instance.heeftProduct(naam);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

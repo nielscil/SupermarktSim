@@ -5,6 +5,7 @@
  */
 package supermarkt.simulator;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,12 +52,12 @@ public class GroepTest
     public void testGetProducten()
     {
         System.out.println("getProducten");
-        Groep instance = null;
-        List<Product> expResult = null;
+        List<Product> producten = new ArrayList<>();
+        producten.add(new Product("Chips", 1.5, 1));
+        Groep instance = new Groep("studenten", producten);
+        List<Product> expResult = producten;
         List<Product> result = instance.getProducten();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

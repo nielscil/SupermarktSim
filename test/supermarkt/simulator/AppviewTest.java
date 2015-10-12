@@ -5,6 +5,7 @@
  */
 package supermarkt.simulator;
 
+import java.awt.Point;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,7 +19,8 @@ import static org.junit.Assert.*;
  */
 public class AppviewTest
 {
-    
+ 
+    private static Controller controller;
     public AppviewTest()
     {
     }
@@ -26,6 +28,7 @@ public class AppviewTest
     @BeforeClass
     public static void setUpClass()
     {
+        controller = new Controller();
     }
     
     @AfterClass
@@ -50,11 +53,10 @@ public class AppviewTest
     public void testLog()
     {
         System.out.println("Log");
-        String logString = "";
-        Persoon persoon = null;
+        String logString = "Huh??!";
+        Persoon persoon = new Personeel("Kjeld",new Point(0,0), 5, controller);
         Appview.Log(logString, persoon);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(3,Appview.logging.size()); //logging public maken om te testen
     }
 
     /**
@@ -64,12 +66,11 @@ public class AppviewTest
     public void testGetSupermarkView()
     {
         System.out.println("getSupermarkView");
-        Appview instance = null;
-        SupermarkView expResult = null;
+        Appview instance = new Appview(controller, 1);
+        //SupermarkView expResult = instance.bord; //maak bord public om te testen
         SupermarkView result = instance.getSupermarkView();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(expResult, result);
+        
     }
     
 }

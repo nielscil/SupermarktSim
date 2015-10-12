@@ -6,6 +6,7 @@
 package supermarkt.simulator;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,11 +53,11 @@ public class ControllerTest
     public void testDeletePersoon()
     {
         System.out.println("deletePersoon");
-        Persoon persoon = null;
         Controller instance = new Controller();
+        Personeel persoon = new Personeel("Allard", new Point(0,0), 1, instance); // maak personeel public
+        //instance.personeel.add(persoon);
         instance.deletePersoon(persoon);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(0,instance.personeel.size()); //Maak personeel public
     }
 
     /**
@@ -66,11 +67,13 @@ public class ControllerTest
     public void testRequestVrachtwagen()
     {
         System.out.println("requestVrachtwagen");
-        List<Product> benodigd = null;
+        List<Product> benodigd = new ArrayList<>();
+        Product prod = new Product("kaas", 1.34, 1);
+        benodigd.add(prod);
         Controller instance = new Controller();
         instance.requestVrachtwagen(benodigd);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        if(instance.vrachtwagen == null)
+            fail("Vrachtwagen mag niet null zijn");       
     }
 
     /**
@@ -83,8 +86,6 @@ public class ControllerTest
         int expResult = 0;
         int result = Controller.getRonde();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -94,14 +95,14 @@ public class ControllerTest
     public void testStaanMeerPersonen()
     {
         System.out.println("staanMeerPersonen");
-        Point p = null;
-        Persoon persoon = null;
+        Point p = new Point(0,0);
         Controller instance = new Controller();
+        Personeel persoon = new Personeel("Kjeld", p, 5, instance);
+        Personeel persoon1 = new Personeel("Joris", p, 5, instance);
+        //instance.personeel.add(persoon1);
         int expResult = 0;
         int result = instance.staanMeerPersonen(p, persoon);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
