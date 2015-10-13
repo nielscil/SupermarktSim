@@ -13,8 +13,8 @@ import java.util.regex.MatchResult;
  */
 public class Kassa {
 
-	private Personeel bemand = null;
-        private List<Klant> rij = new ArrayList<>();
+	private Personeel bemand = null; //Maak public om te testen
+        private List<Klant> rij = new ArrayList<>(); //Maak public om te testen
 	private final int nummer;
 	private final List<Point> plaats;
         
