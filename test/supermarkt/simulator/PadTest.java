@@ -8,6 +8,7 @@ package supermarkt.simulator;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -181,6 +182,21 @@ public class PadTest
         String result = instance.productVullen();
         assertEquals(expResult, result);
         
+    }
+
+    /**
+     * Test of setpadenView method, of class Pad.
+     */
+    @Ignore @Test
+    public void testSetpadenView()
+    {
+        System.out.println("setpadenView");
+        padenView pv = new padenView(controller);
+        //padenView.padView padview = new padenView.padView(pad);
+        Pad instance = null;
+        //instance.setpadenView(padview);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
     
 }
