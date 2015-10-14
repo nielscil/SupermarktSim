@@ -21,7 +21,9 @@ import static org.junit.Assert.*;
  */
 public class KassaTest
 {
-    private final Controller controller = new Controller();
+    private static Controller controller;
+    private static Personeel personeel;
+    private static Klant testKlant;
     public KassaTest()
     {
     }
@@ -29,7 +31,12 @@ public class KassaTest
     @BeforeClass
     public static void setUpClass()
     {
-        
+        controller =  new Controller();
+        personeel = new Personeel("Piet", new Point(0,0), 5, controller);
+        List<Product> producten = new ArrayList<>();
+        producten.add(new Product("sok", 1.35, 1));
+        Groep groep = new Groep("studenten", producten);
+        testKlant = new Klant("pieter", new Point(0,0), groep, controller);
     }
     
     @AfterClass
@@ -54,7 +61,6 @@ public class KassaTest
     public void testBemanKassa()
     {
         System.out.println("bemanKassa");
-        Personeel personeel = new Personeel("Piet", new Point(0,0), 5, controller);
         List<Point> plaats = new ArrayList<>();
         plaats.add(new Point(0,0));
         Kassa instance = new Kassa(1, plaats);
@@ -70,7 +76,6 @@ public class KassaTest
     public void testOnbemanKassa()
     {
         System.out.println("onbemanKassa");
-        Personeel personeel = new Personeel("Piet", new Point(0,0), 5, controller);
         List<Point> plaats = new ArrayList<>();
         plaats.add(new Point(0,0));
         Kassa instance = new Kassa(1, plaats);
@@ -87,10 +92,14 @@ public class KassaTest
     public void testRekenAf() throws Exception
     {
         System.out.println("rekenAf");
-        Kassa instance = null;
+        List<Point> plaats = new ArrayList<>();
+        plaats.add(new Point(0,0));
+        Kassa instance = new Kassa(1, plaats);
+        testKlant.winkelwagen.add(new Product("Sok", 1.0, 1));
+        instance.rij.add(testKlant);
+        instance.bemanKassa(personeel);
         instance.rekenAf();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(0, instance.rij.size());
     }
 
     /**
@@ -100,7 +109,6 @@ public class KassaTest
     public void testCheckKlanten()
     {
         System.out.println("checkKlanten");
-        Personeel personeel = new Personeel("Piet", new Point(0,0), 5, controller);
         List<Point> plaats = new ArrayList<>();
         plaats.add(new Point(0,0));
         Kassa instance = new Kassa(1, plaats);
@@ -118,7 +126,6 @@ public class KassaTest
     public void testIsOpen()
     {
         System.out.println("isOpen");
-        Personeel personeel = new Personeel("Piet", new Point(0,0), 5, controller);
         List<Point> plaats = new ArrayList<>();
         plaats.add(new Point(0,0));
         Kassa instance = new Kassa(1, plaats);
@@ -138,13 +145,9 @@ public class KassaTest
         System.out.println("klantBijKassa");
         List<Point> plaats = new ArrayList<>();
         plaats.add(new Point(0,0));
-        List<Product> producten = new ArrayList<>();
-        producten.add(new Product("sok", 1.35, 1));
-        Groep groep = new Groep("studenten", producten);
-        Klant klant = new Klant("pieter", new Point(0,0), groep, controller);
         Kassa instance = new Kassa(1, plaats);
-        instance.klantBijKassa(klant);
-        //assertEquals(klant, instance.rij.get(0)); //Maak rij public
+        instance.klantBijKassa(testKlant);
+        assertEquals(testKlant, instance.rij.get(0)); //Maak rij public
         
     }
 
@@ -155,12 +158,10 @@ public class KassaTest
     public void testBesteKassa()
     {
         System.out.println("BesteKassa");
-        List<Kassa> kassas = null;
-        int expResult = 0;
+        List<Kassa> kassas = controller.kassas;
+        int expResult = 1;
         int result = Kassa.BesteKassa(kassas);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -186,11 +187,9 @@ public class KassaTest
     public void testLoadKassa()
     {
         System.out.println("loadKassa");
-        List<Kassa> expResult = null;
+        int expResult = 4;
         List<Kassa> result = Kassa.loadKassa();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expResult, result.size());
     }
     
 }

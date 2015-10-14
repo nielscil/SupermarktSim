@@ -14,7 +14,7 @@ import java.util.regex.MatchResult;
 public class Kassa {
 
 	private Personeel bemand = null; //Maak public om te testen
-        private List<Klant> rij = new ArrayList<>(); //Maak public om te testen
+        public List<Klant> rij = new ArrayList<>(); //Maak public om te testen
 	private final int nummer;
 	private final List<Point> plaats;
         
@@ -80,7 +80,7 @@ public class Kassa {
                     break;
                 Product p = winkelwagen.get(0);
                 winkelwagen.remove(0);
-                Database.lowerWinkelproduct(p);
+                Database.lowerWinkelproduct(p); // uitzetten tijdens testen
                 Appview.Log("rekent product " + p.getNaam() + " af van klant " + rij.get(0).naam + " bij kassa " + nummer, bemand);
                 i++;
             }

@@ -33,6 +33,7 @@ public class Appview
     private static final int GAP = 5;
     private SupermarkView bord; //public maken om te testen
     private DefaultListModel listModel;
+    public padenView paden;
     private JList list;
     private Controller controller;
     private static  List<String> logging = new ArrayList<>();
@@ -54,7 +55,7 @@ public class Appview
         framePanel.setBorder (BorderFactory.createEmptyBorder (GAP, GAP, GAP, GAP));
         framePanel.setLayout (new BorderLayout (GAP, GAP));
         bord = new SupermarkView();
-        framePanel.add (bord, BorderLayout.WEST);
+        framePanel.add (bord, BorderLayout.CENTER);
         JPanel listpanel = new JPanel();
         listpanel.setBackground(Color.LIGHT_GRAY);
         list = new JList(listModel);
@@ -63,7 +64,10 @@ public class Appview
         JScrollPane pane = new JScrollPane(listpanel);
         pane.setPreferredSize(new Dimension(400, pane.getPreferredSize().height));
         framePanel.add(pane,BorderLayout.EAST);
-        
+        //
+        paden = new padenView(controller);
+        framePanel.add(paden,BorderLayout.WEST);
+        //
         JPanel pauzePanel = new JPanel();
         pauzePanel.setLayout(new FlowLayout());
         pauzebut = new JButton("Pauze");
@@ -234,9 +238,12 @@ public class Appview
             }
             else
             {
-                controller.sim.setPauze();
-                pauze = true;
-                pauzebut.setText("Resume");
+                if(controller.sim != null)
+                {
+                    controller.sim.setPauze();
+                    pauze = true;
+                    pauzebut.setText("Resume");
+                }
             }
             
         }

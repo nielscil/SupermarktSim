@@ -48,6 +48,7 @@ public class Controller {
             {
                 Thread.sleep(1000);
             }catch(Exception e){};
+            view.paden.setPaden();
             endDay = 8000;
             sim = new Simulatie();
             sim.execute();

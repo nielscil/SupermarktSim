@@ -21,6 +21,9 @@ import static org.junit.Assert.*;
  */
 public class PadTest
 {
+    private static Controller controller;
+    private static Klant testKlant;
+    private static Pad pad;
     
     public PadTest()
     {
@@ -29,6 +32,17 @@ public class PadTest
     @BeforeClass
     public static void setUpClass()
     {
+        controller =  new Controller();
+        List<Product> producten = new ArrayList<>();
+        producten.add(new Product("sok", 1.35, 1));
+        Groep groep = new Groep("studenten", producten);
+        testKlant = new Klant("pieter", new Point(0,0), groep, controller);
+        
+        List<Point> plaats = new ArrayList<>();
+        plaats.add(new Point(0,0));
+        List<ProductWrapper> pws = new ArrayList<>();
+        pws.add(new ProductWrapper(new Product("sok", 1.35, 1),3));
+        pad = new Pad(plaats, pws, 3, "padnaam");
     }
     
     @AfterClass
@@ -53,12 +67,8 @@ public class PadTest
     public void testHeeftProduct()
     {
         System.out.println("heeftProduct");
-        String naam = "kroket";
-        List<Point> plaats = new ArrayList<>();
-        plaats.add(new Point(0,0));
-        List<ProductWrapper> producten = new ArrayList<>();
-        producten.add(new ProductWrapper(new Product(naam, 1.35, 1),5));
-        Pad instance = new Pad(plaats, producten, 5, "padnaam");
+        String naam = "sok";
+        Pad instance = pad;
         boolean expResult = true;
         boolean result = instance.heeftProduct(naam);
         assertEquals(expResult, result);
@@ -71,14 +81,12 @@ public class PadTest
     public void testGeefProduct() throws Exception
     {
         System.out.println("geefProduct");
-        String product = "";
-        Klant klant = null;
-        Pad instance = null;
-        Product expResult = null;
+        String product = "sok";
+        Klant klant = testKlant;
+        Pad instance = pad;
         Product result = instance.geefProduct(product, klant);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(product, result.getNaam());
+        
     }
 
     /**
@@ -87,14 +95,12 @@ public class PadTest
     @Test
     public void testVulProduct() throws Exception
     {
-        System.out.println("vulProduct");
-        Personeel p = null;
-        Pad instance = null;
-        boolean expResult = false;
+        System.out.println("vulProduct");      
+        Pad instance = pad;
+        Personeel p = new Personeel("fristie", new Point(0,0), 5, controller);
+        boolean expResult = true;
         boolean result = instance.vulProduct(p);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -104,10 +110,10 @@ public class PadTest
     public void testSetTaak()
     {
         System.out.println("setTaak");
-        Pad instance = null;
+        Pad instance = pad;
         instance.setTaak();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, instance.wordtGevuld);
+        
     }
 
     /**
@@ -117,10 +123,9 @@ public class PadTest
     public void testUnsetTaak()
     {
         System.out.println("unsetTaak");
-        Pad instance = null;
+        Pad instance = pad;
         instance.unsetTaak();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(false, instance.wordtGevuld);
     }
 
     /**
@@ -130,11 +135,10 @@ public class PadTest
     public void testPadPoint()
     {
         System.out.println("padPoint");
-        Point p = null;
-        Pad instance = null;
+        Point p = new Point(0,0);
+        Pad instance = pad;
         instance.padPoint(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(8, Controller.bord[p.x][p.y].getItem());
     }
 
     /**
@@ -144,12 +148,11 @@ public class PadTest
     public void testLoadPad()
     {
         System.out.println("loadPad");
-        List<List<ProductWrapper>> pws = null;
-        List<Pad> expResult = null;
+        List<List<ProductWrapper>> pws = new ArrayList<List<ProductWrapper>>();
+        List<Pad> expResult = new ArrayList<>();
         List<Pad> result = Pad.loadPad(pws);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -159,12 +162,11 @@ public class PadTest
     public void testProductChecken()
     {
         System.out.println("productChecken");
-        Pad instance = null;
-        String expResult = "";
+        Pad instance = pad;
+        String expResult = "sok";
         String result = instance.productChecken();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -174,12 +176,11 @@ public class PadTest
     public void testProductVullen()
     {
         System.out.println("productVullen");
-        Pad instance = null;
-        String expResult = "";
+        Pad instance = pad;
+        String expResult = "sok";
         String result = instance.productVullen();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
     
 }

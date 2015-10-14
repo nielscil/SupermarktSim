@@ -152,12 +152,13 @@ public class Database {
                 Statement statement = conn.createStatement();
                 for(ProductWrapper pw : producten)
                 {
-                    statement.executeUpdate("UPDATE product SET magazijnVoorraad = \"" + pw.getAantal()  + " WHERE naam = \""+ pw.getProductNaam() + "\";");
+                    statement.executeUpdate("UPDATE product SET magazijnVoorraad = \"" + pw.getAantal()  + "\" WHERE naam = \""+ pw.getProductNaam() + "\";");
                     //statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (" + pw.getAantal() + "," + Controller.DAG + ",\"" + pw.getProductNaam() + "\")");
                 }
             } 
             catch (Exception e)
             {
+                String test = e.getMessage();
             }
             finally
             {
@@ -305,13 +306,14 @@ public class Database {
                 Statement statement = conn.createStatement();
                 for(ProductWrapper pw : producten)
                 {
-                    statement.executeUpdate("UPDATE product SET winkelVoorraad = \"" + pw.getAantal()  + " WHERE naam = \""+ pw.getProductNaam() + "\";");
+                    statement.executeUpdate("UPDATE product SET winkelVoorraad = \"" + pw.getAantal()  + "\" WHERE naam = \""+ pw.getProductNaam() + "\";");
                     //statement.executeUpdate("INSERT INTO voorraadmutatie (aantal,dag,product) VALUES (" + pw.getAantal() + "," + Controller.DAG + ",\"" + pw.getProductNaam() + "\")");
                 }
                 //statement.executeUpdate("UPDATE product SET winkelVoorraad = (SELECT * FROM (SELECT winkelVoorraad + 1 FROM product WHERE naam = \"" + product + "\")tblTmp) WHERE naam = \""+ product + "\"");
             } 
             catch (Exception e)
             {
+                String test = e.getMessage();
             }
             finally
             {

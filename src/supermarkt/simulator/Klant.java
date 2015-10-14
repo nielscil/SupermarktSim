@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Klant extends Persoon {
 
 	private final Groep groep;
-	private List<ProductWrapper> boodschappenlijst;
+	public List<ProductWrapper> boodschappenlijst; //voor test
 	public List<Product> winkelwagen = new ArrayList<>();
         private Taken taak;
         
@@ -38,13 +38,17 @@ public class Klant extends Persoon {
         {
             boodschappenlijst = new ArrayList<>();
             List<Product> producten = new ArrayList<>(groep.getProducten());
-            int aantalP = ThreadLocalRandom.current().nextInt(1, producten.size());
+            int aantalP;
+            if(producten.size() != 1)
+                aantalP = ThreadLocalRandom.current().nextInt(1, producten.size());
+            else
+                aantalP = 1;
             int prod;
             int aantalPP;
             for(int i = 0; i < aantalP; i++)
             {
                 prod = ThreadLocalRandom.current().nextInt(0, producten.size());
-                Product product = groep.getProducten().get(prod);
+                Product product = producten.get(prod);
                 producten.remove(product);
                 aantalPP = ThreadLocalRandom.current().nextInt(1, 4);
                 boodschappenlijst.add(new ProductWrapper(product, aantalPP));

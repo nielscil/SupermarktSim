@@ -18,7 +18,7 @@ public class Pad extends Observable
 	protected int maxProduct;
 	protected List<Point> plaats;
         protected boolean wordtGevuld = false;
-        private String logString = "";
+        public String logString = "";
         
         /**
          * Maakt een nieuw pad aan
@@ -42,6 +42,15 @@ public class Pad extends Observable
         }
         
         /**
+         * Zet de obserable op padView
+         * @param pad padView
+         */
+        public void setpadenView(padenView.padView pad)
+        {
+            addObserver(pad);
+        }
+               
+        /**
          * Kijkt of het pad een product bevat
          * @param naam naam van het product
          * @return true wanneer gevonden, false wanneer niet
@@ -60,9 +69,10 @@ public class Pad extends Observable
 	public Product geefProduct(String product,Klant klant) throws Exception
         {
                 int index = ProductWrapper.Search(product, producten);
-                ProductWrapper pw = this.producten.get(index);
                 Product p = this.producten.get(index).pakEen();
-                Appview.Log("pakt " + pw.getProductNaam() + " uit " + logString, klant);
+                Appview.Log("pakt " + p.getNaam()+ " uit " + logString, klant);
+                this.notifyObservers();
+                this.setChanged();
 		return p;
 	}
 
@@ -80,7 +90,7 @@ public class Pad extends Observable
             {
                 return true;
             }
-            if(!Controller.voorraad.checkProduct(product))
+            if(!Controller.voorraad.checkProduct(product)) //uitzetten bij testen
             {
                 if(!Controller.openTaken.contains(13))
                         Controller.openTaken.add(13);
@@ -89,9 +99,11 @@ public class Pad extends Observable
             Appview.Log("Heeft " + product + " bij gevuld in " + logString, p);
             try
             {
-                Controller.voorraad.lowerProduct(product);
+                Controller.voorraad.lowerProduct(product); //uitzetten bij testen
                 //Database.setWinkelproduct(product);
                 this.producten = ProductWrapper.Add(product, producten,maxProduct);
+                this.notifyObservers();
+                this.setChanged();
             }
             catch(Exception e)
             {
