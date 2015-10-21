@@ -85,7 +85,7 @@ public class Controller {
             {
                 createPersoneel();
             }
-            while(klanten.size() < 1 && ronde > 20)
+            while(klanten.size() < 10 && ronde > 20)
             {
                 createKlant();
                 break;
